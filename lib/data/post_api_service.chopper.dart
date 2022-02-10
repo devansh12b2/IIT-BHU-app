@@ -509,4 +509,14 @@ class _$PostApiService extends PostApiService {
         Request('POST', $url, client.baseUrl, body: $body, headers: $headers);
     return client.send<Grievance, Grievance>($request);
   }
+
+  Future<Response<Grievance>> createLostAndFound(
+      String token, LostAndFoundPost body) {
+    final $url = '/grievance/creat/';
+    final $headers = {'Authorization': token};
+    final $body = body;
+    final $request =
+        Request('POST', $url, client.baseUrl, body: $body, headers: $headers);
+    return client.send<Grievance, Grievance>($request);
+  }
 }

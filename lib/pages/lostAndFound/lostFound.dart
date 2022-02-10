@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:iit_app/model/appConstants.dart';
 import 'package:iit_app/model/built_post.dart';
 import 'package:iit_app/model/colorConstants.dart';
-import 'package:iit_app/ui/snackbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Widget _getButton({
@@ -34,32 +33,30 @@ Widget _getButton({
   );
 }
 
-class GrievancePage extends StatefulWidget {
-  const GrievancePage({Key key}) : super(key: key);
+class LostAndFoundPage extends StatefulWidget {
+  const LostAndFoundPage({Key key}) : super(key: key);
 
   @override
-  _GrievancePageState createState() => _GrievancePageState();
+  _LostAndFoundPageState createState() => _LostAndFoundPageState();
 }
 
-class _GrievancePageState extends State<GrievancePage> {
+class _LostAndFoundPageState extends State<LostAndFoundPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameTEC = TextEditingController();
-  final TextEditingController _descConcern = TextEditingController();
+  final TextEditingController _descItem = TextEditingController();
   final TextEditingController _gDriveLink = TextEditingController();
   SharedPreferences prefs;
-  int _pending;
-  int _registered;
-  int _closed;
+
   _retrieveValues() async {
     prefs = await SharedPreferences.getInstance();
     setState(
       () {
         _nameTEC.text = prefs.getString('name') ?? "";
-        _descConcern.text = prefs.getString('description') ?? "";
+        _descItem.text = prefs.getString('description') ?? "";
         _gDriveLink.text = prefs.getString('drive') ?? "";
         _branchName = prefs.getString('branch');
         _year = prefs.getString('year');
-        _gType = prefs.getString('type');
+        _lfType = prefs.getString('type');
       },
     );
   }
@@ -75,36 +72,36 @@ class _GrievancePageState extends State<GrievancePage> {
 
   String _branchName;
   String _year;
-  String _gType;
+  String _lfType;
 
   _resetValues({bool refresh = false}) async {
     setState(() {
       _nameTEC.text = "";
-      _descConcern.text = "";
+      _descItem.text = "";
       _gDriveLink.text = "";
       _branchName = null;
       _year = null;
-      _gType = null;
+      _lfType = null;
       _clearPreferences();
     });
     if (refresh) _onRefresh();
   }
 
   Future<void> _onRefresh() async {
-    final _response =
-        await AppConstants.service.getGrievanceCount(AppConstants.djangoToken);
-    setState(() {
-      _pending = _response.body.pending;
-      _registered = _response.body.registered;
-      _closed = _response.body.closed;
-    });
+    // final _response =
+    //     await AppConstants.service.getGrievanceCount(AppConstants.djangoToken);
+    // setState(() {
+    //   _pending = _response.body.pending;
+    //   _registered = _response.body.registered;
+    //   _closed = _response.body.closed;
+    // });
   }
 
   void _showDialog({
     String name,
     String branch,
     String year,
-    String gType,
+    String lfType,
     String iDesc,
     String gDriveLink,
   }) async {
@@ -117,7 +114,7 @@ class _GrievancePageState extends State<GrievancePage> {
           branch: branch,
           year: year,
           iDesc: iDesc,
-          gType: gType,
+          lfType: lfType,
           gDriveLink: gDriveLink,
         ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -189,67 +186,11 @@ class _GrievancePageState extends State<GrievancePage> {
     );
   }
 
-  Widget _getCounterCard(String title, String number) {
-    return GestureDetector(
-      onTap: () {
-        showSnackBar(context, 'This feature is currently under development',
-            Color(0xFF176EDE), Color(0xFFBBD9FF));
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: ColorConstants.grievanceBack,
-        ),
-        padding: EdgeInsets.only(
-          top: 10,
-          bottom: 5,
-          left: 8,
-          right: 8,
-        ),
-        width: (MediaQuery.of(context).size.width / 3) - 30,
-        constraints: BoxConstraints(minHeight: 100),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Container(
-              width: (MediaQuery.of(context).size.width / 3) - 30,
-              child: Center(
-                child: Text(
-                  number.length == 1 ? '0' + number : number,
-                  style: TextStyle(
-                    color: ColorConstants.grievanceBtn,
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 10),
-            Container(
-              width: (MediaQuery.of(context).size.width / 3) - 30,
-              child: Center(
-                child: Text(
-                  title,
-                  style: TextStyle(
-                    color: ColorConstants.grievanceBtn,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   @override
   void initState() {
     super.initState();
     _retrieveValues();
     //fetching pending, closed , registered.
-    _onRefresh();
   }
 
   @override
@@ -286,7 +227,7 @@ class _GrievancePageState extends State<GrievancePage> {
             },
           ),
           title: Text(
-            'Grievance',
+            'Lost And Found',
             style: TextStyle(
                 color: ColorConstants.grievanceBack,
                 fontWeight: FontWeight.bold,
@@ -333,345 +274,315 @@ class _GrievancePageState extends State<GrievancePage> {
             ),
           ],
         ),
-        body: RefreshIndicator(
-          strokeWidth: 4,
-          color: ColorConstants.grievanceBtn,
-          displacement: 80,
-          onRefresh: _onRefresh,
-          child: ListView(children: [
-            Column(
-              children: [
-                SizedBox(
-                  height: 50,
+        body: ListView(children: [
+          Column(
+            children: [
+              SizedBox(
+                height: 50,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 35.0, bottom: 20),
+                child: SizedBox(
+                  child: Text(
+                    'Lost And Found Form',
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: ColorConstants.grievanceBtn,
+                    ),
+                  ),
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    runAlignment: WrapAlignment.spaceEvenly,
-                    alignment: WrapAlignment.spaceEvenly,
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width - 45,
+                decoration: BoxDecoration(
+                  color: ColorConstants.grievanceBack,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
                     children: [
-                      _getCounterCard('Pending',
-                          _pending == null ? '0' : _pending.toString()),
-                      _getCounterCard('Registered',
-                          _registered == null ? '0' : _registered.toString()),
-                      _getCounterCard(
-                          'Closed', _closed == null ? '0' : _closed.toString()),
+                      Container(
+                        height: 50,
+                        child: TextFormField(
+                          controller: _nameTEC,
+                          decoration: _getInputDecorationFor('Name',
+                              floatingLabelBehaviour:
+                                  FloatingLabelBehavior.auto),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
+                          onChanged: (value) {
+                            if (value.trim().isNotEmpty)
+                              prefs.setString('name', value);
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          Flexible(
+                            flex: 2,
+                            child: Container(
+                              height: 50,
+                              child: DropdownButtonFormField<String>(
+                                menuMaxHeight: 400,
+                                alignment: Alignment.bottomCenter,
+                                itemHeight: 50,
+                                style: TextStyle(
+                                    color: ColorConstants.grievanceBtn,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 18),
+                                decoration: _getInputDecorationFor('Branch'),
+                                value: _branchName,
+                                isExpanded: true,
+                                validator: (value) {
+                                  if (value == null) {
+                                    return 'Please choose a value';
+                                  }
+                                  return null;
+                                },
+                                icon: Icon(
+                                  Icons.keyboard_arrow_down_sharp,
+                                  color: ColorConstants.grievanceBack,
+                                  size: 30,
+                                ),
+                                onChanged: (nv) {
+                                  setState(() {
+                                    _branchName = nv;
+                                  });
+                                  if (nv.trim().isNotEmpty)
+                                    prefs.setString('branch', _branchName);
+                                },
+                                items: <String>[
+                                  'Architecture',
+                                  // 'Biochemical',
+                                  // 'Biomedical',
+                                  'Ceramic',
+                                  'Chemical',
+                                  //'Chemistry',
+                                  'Civil',
+                                  'Computer Science', //'Computer',
+                                  'Electrical',
+                                  'Electronics',
+                                  //'Materials',
+                                  //'Mathematics',
+                                  'Mechanical',
+                                  "Metallurgical", //'Metallurgy',
+                                  'Mining',
+                                  'Pharmaceutical',
+                                  // 'Physics',
+                                  // 'Humanities',
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return _getDropDownItem(value, value);
+                                }).toList(),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Flexible(
+                            flex: 1,
+                            child: Container(
+                              height: 50,
+                              child: DropdownButtonFormField<String>(
+                                style: TextStyle(
+                                    color: ColorConstants.grievanceBtn,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 18),
+                                decoration: _getInputDecorationFor('Year'),
+                                validator: (value) {
+                                  if (value == null) {
+                                    return 'Please choose a value';
+                                  }
+                                  return null;
+                                },
+                                value: _year,
+                                icon: Icon(
+                                  Icons.keyboard_arrow_down_sharp,
+                                  color: ColorConstants.grievanceBack,
+                                  size: 30,
+                                ),
+                                onChanged: (nv) {
+                                  setState(() {
+                                    _year = nv;
+                                  });
+                                  prefs.setString('year', _year);
+                                },
+                                items: <String>[
+                                  '1st',
+                                  '2nd',
+                                  '3rd',
+                                  '4th',
+                                  '5th',
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return _getDropDownItem(value, value);
+                                }).toList(),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        height: 50,
+                        child: DropdownButtonFormField<String>(
+                          style: TextStyle(
+                              color: ColorConstants.grievanceBtn,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18),
+                          decoration: _getInputDecorationFor('Lost OR Found'),
+                          value: _lfType,
+                          isExpanded: true,
+                          validator: (value) {
+                            if (value == null) {
+                              return 'Please choose a value';
+                            }
+                            return null;
+                          },
+                          icon: Icon(
+                            Icons.keyboard_arrow_down_sharp,
+                            color: ColorConstants.grievanceBack,
+                            size: 30,
+                          ),
+                          onChanged: (nv) {
+                            setState(() {
+                              _lfType = nv;
+                            });
+
+                            prefs.setString('type', _lfType);
+                          },
+                          items: <String>[
+                            'Lost',
+                            'Found',
+                          ].map<DropdownMenuItem<String>>((String value) {
+                            return _getDropDownItem(value, value);
+                          }).toList(),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        height: 100,
+                        child: TextFormField(
+                          maxLength: 4000,
+                          textAlignVertical: TextAlignVertical(y: -0.5),
+                          expands: true,
+                          maxLines: null,
+                          controller: _descItem,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
+                          decoration: _getInputDecorationFor(
+                              'Describe The Lost/Found Item',
+                              floatingLabelBehaviour:
+                                  FloatingLabelBehavior.auto),
+                          onChanged: (value) {
+                            if (value.trim().isNotEmpty)
+                              prefs.setString('description', value);
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        height: 50,
+                        child: TextFormField(
+                          controller: _gDriveLink,
+                          decoration: _getInputDecorationFor(
+                            'Drive Link(Optional)',
+                            floatingLabelBehaviour: FloatingLabelBehavior.auto,
+                            isRequired: false,
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) return null;
+                            if (value.isNotEmpty) {
+                              if (value
+                                      .startsWith('https://drive.google.com') ||
+                                  value.startsWith('drive.google.com')) {
+                                return null;
+                              } else
+                                return 'Enter a valid drive link';
+                            }
+                            return null;
+                          },
+                          onChanged: (value) {
+                            if (value.trim().isNotEmpty)
+                              prefs.setString('drive', value);
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          InkWell(
+                            splashColor: ColorConstants.grievanceBtn,
+                            radius: 20,
+                            onTap: () {
+                              _resetValues(refresh: false);
+                            },
+                            child: _getButton(
+                              bgColor: Colors.white,
+                              borderColor: ColorConstants.grievanceBtn,
+                              fontsize: 20,
+                              text: 'Clear',
+                              textColor: ColorConstants.grievanceBtn,
+                            ),
+                          ),
+                          InkWell(
+                            splashColor: ColorConstants.grievanceBtn,
+                            radius: 20,
+                            onTap: () {
+                              if (_formKey.currentState.validate()) {
+                                //VALIDATE VALUES FIRRST and show snackbar if wrong values.
+                                _showDialog(
+                                  name: _nameTEC.text,
+                                  branch: _branchName,
+                                  lfType: _lfType,
+                                  year: _year,
+                                  iDesc: _descItem.text,
+                                  gDriveLink: _gDriveLink.text,
+                                );
+                              }
+                            },
+                            child: _getButton(
+                              bgColor: ColorConstants.grievanceBtn,
+                              borderColor: ColorConstants.grievanceBtn,
+                              fontsize: 20,
+                              text: 'Submit',
+                              textColor: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 35.0, bottom: 20),
-                  child: SizedBox(
-                    child: Text(
-                      'Register New',
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        color: ColorConstants.grievanceBtn,
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width - 45,
-                  decoration: BoxDecoration(
-                    color: ColorConstants.grievanceBack,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        Container(
-                          height: 50,
-                          child: TextFormField(
-                            controller: _nameTEC,
-                            decoration: _getInputDecorationFor('Name',
-                                floatingLabelBehaviour:
-                                    FloatingLabelBehavior.auto),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter some text';
-                              }
-                              return null;
-                            },
-                            onChanged: (value) {
-                              if (value.trim().isNotEmpty)
-                                prefs.setString('name', value);
-                            },
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: [
-                            Flexible(
-                              flex: 2,
-                              child: Container(
-                                height: 50,
-                                child: DropdownButtonFormField<String>(
-                                  menuMaxHeight: 400,
-                                  alignment: Alignment.bottomCenter,
-                                  itemHeight: 50,
-                                  style: TextStyle(
-                                      color: ColorConstants.grievanceBtn,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 18),
-                                  decoration: _getInputDecorationFor('Branch'),
-                                  value: _branchName,
-                                  isExpanded: true,
-                                  validator: (value) {
-                                    if (value == null) {
-                                      return 'Please choose a value';
-                                    }
-                                    return null;
-                                  },
-                                  icon: Icon(
-                                    Icons.keyboard_arrow_down_sharp,
-                                    color: ColorConstants.grievanceBack,
-                                    size: 30,
-                                  ),
-                                  onChanged: (nv) {
-                                    setState(() {
-                                      _branchName = nv;
-                                    });
-                                    if (nv.trim().isNotEmpty)
-                                      prefs.setString('branch', _branchName);
-                                  },
-                                  items: <String>[
-                                    'Architecture',
-                                    // 'Biochemical',
-                                    // 'Biomedical',
-                                    'Ceramic',
-                                    'Chemical',
-                                    //'Chemistry',
-                                    'Civil',
-                                    'Computer Science', //'Computer',
-                                    'Electrical',
-                                    'Electronics',
-                                    //'Materials',
-                                    //'Mathematics',
-                                    'Mechanical',
-                                    "Metallurgical", //'Metallurgy',
-                                    'Mining',
-                                    'Pharmaceutical',
-                                    // 'Physics',
-                                    // 'Humanities',
-                                  ].map<DropdownMenuItem<String>>(
-                                      (String value) {
-                                    return _getDropDownItem(value, value);
-                                  }).toList(),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Flexible(
-                              flex: 1,
-                              child: Container(
-                                height: 50,
-                                child: DropdownButtonFormField<String>(
-                                  style: TextStyle(
-                                      color: ColorConstants.grievanceBtn,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 18),
-                                  decoration: _getInputDecorationFor('Year'),
-                                  validator: (value) {
-                                    if (value == null) {
-                                      return 'Please choose a value';
-                                    }
-                                    return null;
-                                  },
-                                  value: _year,
-                                  icon: Icon(
-                                    Icons.keyboard_arrow_down_sharp,
-                                    color: ColorConstants.grievanceBack,
-                                    size: 30,
-                                  ),
-                                  onChanged: (nv) {
-                                    setState(() {
-                                      _year = nv;
-                                    });
-                                    prefs.setString('year', _year);
-                                  },
-                                  items: <String>[
-                                    '1st',
-                                    '2nd',
-                                    '3rd',
-                                    '4th',
-                                    '5th',
-                                  ].map<DropdownMenuItem<String>>(
-                                      (String value) {
-                                    return _getDropDownItem(value, value);
-                                  }).toList(),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          height: 50,
-                          child: DropdownButtonFormField<String>(
-                            style: TextStyle(
-                                color: ColorConstants.grievanceBtn,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18),
-                            decoration:
-                                _getInputDecorationFor('Grievance type'),
-                            value: _gType,
-                            isExpanded: true,
-                            validator: (value) {
-                              if (value == null) {
-                                return 'Please choose a value';
-                              }
-                              return null;
-                            },
-                            icon: Icon(
-                              Icons.keyboard_arrow_down_sharp,
-                              color: ColorConstants.grievanceBack,
-                              size: 30,
-                            ),
-                            onChanged: (nv) {
-                              setState(() {
-                                _gType = nv;
-                              });
-
-                              prefs.setString('type', _gType);
-                            },
-                            items: <String>[
-                              'HostelMess',
-                              'Health&Hygiene',
-                              'Security',
-                              'Academics',
-                              'Council',
-                              'Others',
-                            ].map<DropdownMenuItem<String>>((String value) {
-                              return _getDropDownItem(value, value);
-                            }).toList(),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          height: 100,
-                          child: TextFormField(
-                            maxLength: 4000,
-                            textAlignVertical: TextAlignVertical(y: -0.5),
-                            expands: true,
-                            maxLines: null,
-                            controller: _descConcern,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter some text';
-                              }
-                              return null;
-                            },
-                            decoration: _getInputDecorationFor(
-                                'Describe Your Concern',
-                                floatingLabelBehaviour:
-                                    FloatingLabelBehavior.auto),
-                            onChanged: (value) {
-                              if (value.trim().isNotEmpty)
-                                prefs.setString('description', value);
-                            },
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          height: 50,
-                          child: TextFormField(
-                            controller: _gDriveLink,
-                            decoration: _getInputDecorationFor(
-                              'Drive Link(Optional)',
-                              floatingLabelBehaviour:
-                                  FloatingLabelBehavior.auto,
-                              isRequired: false,
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) return null;
-                              if (value.isNotEmpty) {
-                                if (value.startsWith(
-                                        'https://drive.google.com') ||
-                                    value.startsWith('drive.google.com')) {
-                                  return null;
-                                } else
-                                  return 'Enter a valid drive link';
-                              }
-                              return null;
-                            },
-                            onChanged: (value) {
-                              if (value.trim().isNotEmpty)
-                                prefs.setString('drive', value);
-                            },
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            InkWell(
-                              splashColor: ColorConstants.grievanceBtn,
-                              radius: 20,
-                              onTap: () {
-                                _resetValues(refresh: false);
-                              },
-                              child: _getButton(
-                                bgColor: Colors.white,
-                                borderColor: ColorConstants.grievanceBtn,
-                                fontsize: 20,
-                                text: 'Clear',
-                                textColor: ColorConstants.grievanceBtn,
-                              ),
-                            ),
-                            InkWell(
-                              splashColor: ColorConstants.grievanceBtn,
-                              radius: 20,
-                              onTap: () {
-                                if (_formKey.currentState.validate()) {
-                                  //VALIDATE VALUES FIRRST and show snackbar if wrong values.
-                                  _showDialog(
-                                    name: _nameTEC.text,
-                                    branch: _branchName,
-                                    gType: _gType,
-                                    year: _year,
-                                    iDesc: _descConcern.text,
-                                    gDriveLink: _gDriveLink.text,
-                                  );
-                                }
-                              },
-                              child: _getButton(
-                                bgColor: ColorConstants.grievanceBtn,
-                                borderColor: ColorConstants.grievanceBtn,
-                                fontsize: 20,
-                                text: 'Submit',
-                                textColor: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-              ],
-            ),
-          ]),
-        ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+            ],
+          ),
+        ]),
       ),
     );
   }
@@ -682,7 +593,7 @@ class DialogueContent extends StatefulWidget {
       {Key key,
       this.branch,
       this.gDriveLink,
-      this.gType,
+      this.lfType,
       this.iDesc,
       this.name,
       this.year})
@@ -690,7 +601,7 @@ class DialogueContent extends StatefulWidget {
   final String name;
   final String branch;
   final String year;
-  final String gType;
+  final String lfType;
   final String iDesc;
   final String gDriveLink;
 
@@ -711,9 +622,9 @@ class _DialogueContentState extends State<DialogueContent> {
       ),
       child: _confirmSelected
           ? FutureBuilder(
-              future: AppConstants.service.createGrievance(
+              future: AppConstants.service.createLostAndFound(
                 AppConstants.djangoToken,
-                GrievancePost(
+                LostAndFoundPost(
                   (b) => b
                     ..branch = widget.branch
                     ..name = widget.name
@@ -721,7 +632,7 @@ class _DialogueContentState extends State<DialogueContent> {
                     ..description = widget.iDesc
                     ..course = 'B.Tech'
                     ..drive_link = widget.gDriveLink
-                    ..type_of_complaint = widget.gType,
+                    ..type_of_lost_found = widget.lfType,
                 ),
               ),
               builder: (ctx, result) {
@@ -747,7 +658,7 @@ class _DialogueContentState extends State<DialogueContent> {
                         //width: 190,
                         child: Center(
                           child: Text(
-                            'Your grievance\n has been\n successfully\n submitted',
+                            'Your query\n has been\n successfully\n submitted',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontFamily: 'Gilroy',
@@ -798,7 +709,7 @@ class _DialogueContentState extends State<DialogueContent> {
                   //width: 190,
                   child: Center(
                     child: Text(
-                      'Are you sure, you want to submit\n your grievance ?',
+                      'Are you sure, you want to submit\n your query ?',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontFamily: 'Gilroy',
