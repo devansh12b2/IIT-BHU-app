@@ -283,12 +283,14 @@ class _LostAndFoundPageState extends State<LostAndFoundPage> {
               Padding(
                 padding: const EdgeInsets.only(top: 35.0, bottom: 20),
                 child: SizedBox(
-                  child: Text(
-                    'Lost And Found Form',
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      color: ColorConstants.grievanceBtn,
+                  child: Center(
+                    child: Text(
+                      'Lost And Found Form',
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: ColorConstants.grievanceBtn,
+                      ),
                     ),
                   ),
                 ),
@@ -300,280 +302,285 @@ class _LostAndFoundPageState extends State<LostAndFoundPage> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 50,
-                        child: TextFormField(
-                          controller: _nameTEC,
-                          decoration: _getInputDecorationFor('Name',
-                              floatingLabelBehaviour:
-                                  FloatingLabelBehavior.auto),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
-                            }
-                            return null;
-                          },
-                          onChanged: (value) {
-                            if (value.trim().isNotEmpty)
-                              prefs.setString('name', value);
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          Flexible(
-                            flex: 2,
-                            child: Container(
-                              height: 50,
-                              child: DropdownButtonFormField<String>(
-                                menuMaxHeight: 400,
-                                alignment: Alignment.bottomCenter,
-                                itemHeight: 50,
-                                style: TextStyle(
-                                    color: ColorConstants.grievanceBtn,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18),
-                                decoration: _getInputDecorationFor('Branch'),
-                                value: _branchName,
-                                isExpanded: true,
-                                validator: (value) {
-                                  if (value == null) {
-                                    return 'Please choose a value';
-                                  }
-                                  return null;
-                                },
-                                icon: Icon(
-                                  Icons.keyboard_arrow_down_sharp,
-                                  color: ColorConstants.grievanceBack,
-                                  size: 30,
-                                ),
-                                onChanged: (nv) {
-                                  setState(() {
-                                    _branchName = nv;
-                                  });
-                                  if (nv.trim().isNotEmpty)
-                                    prefs.setString('branch', _branchName);
-                                },
-                                items: <String>[
-                                  'Architecture',
-                                  // 'Biochemical',
-                                  // 'Biomedical',
-                                  'Ceramic',
-                                  'Chemical',
-                                  //'Chemistry',
-                                  'Civil',
-                                  'Computer Science', //'Computer',
-                                  'Electrical',
-                                  'Electronics',
-                                  //'Materials',
-                                  //'Mathematics',
-                                  'Mechanical',
-                                  "Metallurgical", //'Metallurgy',
-                                  'Mining',
-                                  'Pharmaceutical',
-                                  // 'Physics',
-                                  // 'Humanities',
-                                ].map<DropdownMenuItem<String>>((String value) {
-                                  return _getDropDownItem(value, value);
-                                }).toList(),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Flexible(
-                            flex: 1,
-                            child: Container(
-                              height: 50,
-                              child: DropdownButtonFormField<String>(
-                                style: TextStyle(
-                                    color: ColorConstants.grievanceBtn,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18),
-                                decoration: _getInputDecorationFor('Year'),
-                                validator: (value) {
-                                  if (value == null) {
-                                    return 'Please choose a value';
-                                  }
-                                  return null;
-                                },
-                                value: _year,
-                                icon: Icon(
-                                  Icons.keyboard_arrow_down_sharp,
-                                  color: ColorConstants.grievanceBack,
-                                  size: 30,
-                                ),
-                                onChanged: (nv) {
-                                  setState(() {
-                                    _year = nv;
-                                  });
-                                  prefs.setString('year', _year);
-                                },
-                                items: <String>[
-                                  '1st',
-                                  '2nd',
-                                  '3rd',
-                                  '4th',
-                                  '5th',
-                                ].map<DropdownMenuItem<String>>((String value) {
-                                  return _getDropDownItem(value, value);
-                                }).toList(),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        height: 50,
-                        child: DropdownButtonFormField<String>(
-                          style: TextStyle(
-                              color: ColorConstants.grievanceBtn,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18),
-                          decoration: _getInputDecorationFor('Lost OR Found'),
-                          value: _lfType,
-                          isExpanded: true,
-                          validator: (value) {
-                            if (value == null) {
-                              return 'Please choose a value';
-                            }
-                            return null;
-                          },
-                          icon: Icon(
-                            Icons.keyboard_arrow_down_sharp,
-                            color: ColorConstants.grievanceBack,
-                            size: 30,
-                          ),
-                          onChanged: (nv) {
-                            setState(() {
-                              _lfType = nv;
-                            });
-
-                            prefs.setString('type', _lfType);
-                          },
-                          items: <String>[
-                            'Lost',
-                            'Found',
-                          ].map<DropdownMenuItem<String>>((String value) {
-                            return _getDropDownItem(value, value);
-                          }).toList(),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        height: 100,
-                        child: TextFormField(
-                          maxLength: 4000,
-                          textAlignVertical: TextAlignVertical(y: -0.5),
-                          expands: true,
-                          maxLines: null,
-                          controller: _descItem,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
-                            }
-                            return null;
-                          },
-                          decoration: _getInputDecorationFor(
-                              'Describe The Lost/Found Item',
-                              floatingLabelBehaviour:
-                                  FloatingLabelBehavior.auto),
-                          onChanged: (value) {
-                            if (value.trim().isNotEmpty)
-                              prefs.setString('description', value);
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        height: 50,
-                        child: TextFormField(
-                          controller: _gDriveLink,
-                          decoration: _getInputDecorationFor(
-                            'Drive Link(Optional)',
-                            floatingLabelBehaviour: FloatingLabelBehavior.auto,
-                            isRequired: false,
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) return null;
-                            if (value.isNotEmpty) {
-                              if (value
-                                      .startsWith('https://drive.google.com') ||
-                                  value.startsWith('drive.google.com')) {
-                                return null;
-                              } else
-                                return 'Enter a valid drive link';
-                            }
-                            return null;
-                          },
-                          onChanged: (value) {
-                            if (value.trim().isNotEmpty)
-                              prefs.setString('drive', value);
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          InkWell(
-                            splashColor: ColorConstants.grievanceBtn,
-                            radius: 20,
-                            onTap: () {
-                              _resetValues(refresh: false);
-                            },
-                            child: _getButton(
-                              bgColor: Colors.white,
-                              borderColor: ColorConstants.grievanceBtn,
-                              fontsize: 20,
-                              text: 'Clear',
-                              textColor: ColorConstants.grievanceBtn,
-                            ),
-                          ),
-                          InkWell(
-                            splashColor: ColorConstants.grievanceBtn,
-                            radius: 20,
-                            onTap: () {
-                              if (_formKey.currentState.validate()) {
-                                //VALIDATE VALUES FIRRST and show snackbar if wrong values.
-                                _showDialog(
-                                  name: _nameTEC.text,
-                                  branch: _branchName,
-                                  lfType: _lfType,
-                                  year: _year,
-                                  iDesc: _descItem.text,
-                                  gDriveLink: _gDriveLink.text,
-                                );
+                child: Center(
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 50,
+                          child: TextFormField(
+                            controller: _nameTEC,
+                            decoration: _getInputDecorationFor('Name',
+                                floatingLabelBehaviour:
+                                    FloatingLabelBehavior.auto),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter some text';
                               }
+                              return null;
                             },
-                            child: _getButton(
-                              bgColor: ColorConstants.grievanceBtn,
-                              borderColor: ColorConstants.grievanceBtn,
-                              fontsize: 20,
-                              text: 'Submit',
-                              textColor: Colors.white,
-                            ),
+                            onChanged: (value) {
+                              if (value.trim().isNotEmpty)
+                                prefs.setString('name', value);
+                            },
                           ),
-                        ],
-                      ),
-                    ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            Flexible(
+                              flex: 2,
+                              child: Container(
+                                height: 50,
+                                child: DropdownButtonFormField<String>(
+                                  menuMaxHeight: 400,
+                                  alignment: Alignment.bottomCenter,
+                                  itemHeight: 50,
+                                  style: TextStyle(
+                                      color: ColorConstants.grievanceBtn,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 18),
+                                  decoration: _getInputDecorationFor('Branch'),
+                                  value: _branchName,
+                                  isExpanded: true,
+                                  validator: (value) {
+                                    if (value == null) {
+                                      return 'Please choose a value';
+                                    }
+                                    return null;
+                                  },
+                                  icon: Icon(
+                                    Icons.keyboard_arrow_down_sharp,
+                                    color: ColorConstants.grievanceBack,
+                                    size: 30,
+                                  ),
+                                  onChanged: (nv) {
+                                    setState(() {
+                                      _branchName = nv;
+                                    });
+                                    if (nv.trim().isNotEmpty)
+                                      prefs.setString('branch', _branchName);
+                                  },
+                                  items: <String>[
+                                    'Architecture',
+                                    // 'Biochemical',
+                                    // 'Biomedical',
+                                    'Ceramic',
+                                    'Chemical',
+                                    //'Chemistry',
+                                    'Civil',
+                                    'Computer Science', //'Computer',
+                                    'Electrical',
+                                    'Electronics',
+                                    //'Materials',
+                                    //'Mathematics',
+                                    'Mechanical',
+                                    "Metallurgical", //'Metallurgy',
+                                    'Mining',
+                                    'Pharmaceutical',
+                                    // 'Physics',
+                                    // 'Humanities',
+                                  ].map<DropdownMenuItem<String>>(
+                                      (String value) {
+                                    return _getDropDownItem(value, value);
+                                  }).toList(),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Flexible(
+                              flex: 1,
+                              child: Container(
+                                height: 50,
+                                child: DropdownButtonFormField<String>(
+                                  style: TextStyle(
+                                      color: ColorConstants.grievanceBtn,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 18),
+                                  decoration: _getInputDecorationFor('Year'),
+                                  validator: (value) {
+                                    if (value == null) {
+                                      return 'Please choose a value';
+                                    }
+                                    return null;
+                                  },
+                                  value: _year,
+                                  icon: Icon(
+                                    Icons.keyboard_arrow_down_sharp,
+                                    color: ColorConstants.grievanceBack,
+                                    size: 30,
+                                  ),
+                                  onChanged: (nv) {
+                                    setState(() {
+                                      _year = nv;
+                                    });
+                                    prefs.setString('year', _year);
+                                  },
+                                  items: <String>[
+                                    '1st',
+                                    '2nd',
+                                    '3rd',
+                                    '4th',
+                                    '5th',
+                                  ].map<DropdownMenuItem<String>>(
+                                      (String value) {
+                                    return _getDropDownItem(value, value);
+                                  }).toList(),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          height: 50,
+                          child: DropdownButtonFormField<String>(
+                            style: TextStyle(
+                                color: ColorConstants.grievanceBtn,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 18),
+                            decoration: _getInputDecorationFor('Lost OR Found'),
+                            value: _lfType,
+                            isExpanded: true,
+                            validator: (value) {
+                              if (value == null) {
+                                return 'Please choose a value';
+                              }
+                              return null;
+                            },
+                            icon: Icon(
+                              Icons.keyboard_arrow_down_sharp,
+                              color: ColorConstants.grievanceBack,
+                              size: 30,
+                            ),
+                            onChanged: (nv) {
+                              setState(() {
+                                _lfType = nv;
+                              });
+
+                              prefs.setString('type', _lfType);
+                            },
+                            items: <String>[
+                              'Lost',
+                              'Found',
+                            ].map<DropdownMenuItem<String>>((String value) {
+                              return _getDropDownItem(value, value);
+                            }).toList(),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          height: 100,
+                          child: TextFormField(
+                            maxLength: 4000,
+                            textAlignVertical: TextAlignVertical(y: -0.5),
+                            expands: true,
+                            maxLines: null,
+                            controller: _descItem,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter some text';
+                              }
+                              return null;
+                            },
+                            decoration: _getInputDecorationFor(
+                                'Describe The Lost/Found Item',
+                                floatingLabelBehaviour:
+                                    FloatingLabelBehavior.auto),
+                            onChanged: (value) {
+                              if (value.trim().isNotEmpty)
+                                prefs.setString('description', value);
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          height: 50,
+                          child: TextFormField(
+                            controller: _gDriveLink,
+                            decoration: _getInputDecorationFor(
+                              'Drive Link(Optional)',
+                              floatingLabelBehaviour:
+                                  FloatingLabelBehavior.auto,
+                              isRequired: false,
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) return null;
+                              if (value.isNotEmpty) {
+                                if (value.startsWith(
+                                        'https://drive.google.com') ||
+                                    value.startsWith('drive.google.com')) {
+                                  return null;
+                                } else
+                                  return 'Enter a valid drive link';
+                              }
+                              return null;
+                            },
+                            onChanged: (value) {
+                              if (value.trim().isNotEmpty)
+                                prefs.setString('drive', value);
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            InkWell(
+                              splashColor: ColorConstants.grievanceBtn,
+                              radius: 20,
+                              onTap: () {
+                                _resetValues(refresh: false);
+                              },
+                              child: _getButton(
+                                bgColor: Colors.white,
+                                borderColor: ColorConstants.grievanceBtn,
+                                fontsize: 20,
+                                text: 'Clear',
+                                textColor: ColorConstants.grievanceBtn,
+                              ),
+                            ),
+                            InkWell(
+                              splashColor: ColorConstants.grievanceBtn,
+                              radius: 20,
+                              onTap: () {
+                                if (_formKey.currentState.validate()) {
+                                  //VALIDATE VALUES FIRRST and show snackbar if wrong values.
+                                  _showDialog(
+                                    name: _nameTEC.text,
+                                    branch: _branchName,
+                                    lfType: _lfType,
+                                    year: _year,
+                                    iDesc: _descItem.text,
+                                    gDriveLink: _gDriveLink.text,
+                                  );
+                                }
+                              },
+                              child: _getButton(
+                                bgColor: ColorConstants.grievanceBtn,
+                                borderColor: ColorConstants.grievanceBtn,
+                                fontsize: 20,
+                                text: 'Submit',
+                                textColor: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

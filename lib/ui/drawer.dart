@@ -158,6 +158,7 @@ class SideBar extends Drawer {
             // getNavItem(Icons.comment, "Complaints & Suggestions", '/complaints'),
             getNavItem(Icons.settings, "Settings", '/settings'),
             getNavItem(Icons.comment, "Grievances", '/grievance'),
+            getNavItem(Icons.search_off, "Lost And Found", '/lostAndFound'),
             ListTile(
               leading: Icon(Icons.exit_to_app, color: ColorConstants.textColor),
               title: AppConstants.isGuest
