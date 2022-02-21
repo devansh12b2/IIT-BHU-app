@@ -1,6 +1,6 @@
 class Branch {
-  final String id;
+  final String tag;
   final String branchName;
   final String img;
-  Branch({this.id, this.branchName, this.img});
+  Branch({this.tag, this.branchName, this.img});
 }

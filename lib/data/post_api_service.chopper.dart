@@ -14,6 +14,24 @@ class _$PostApiService extends PostApiService {
 
   final definitionType = PostApiService;
 
+  Future<Response> getAcademicSchedule(String dept,String yearOfJoining) {
+    final $url = '/academics/academic-schedule/$dept/$yearOfJoining/';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  Future<Response> getProfsAndHODs(String dept) {
+    final $url = '/academics/profs/$dept/';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  Future<Response> getStudyMaterials(String dept) {
+    final $url = '/academics/study-materials/$dept/';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<dynamic, dynamic>($request);
+  }
+
   Future<Response<BuiltAllWorkshopsPost>> getAllWorkshops() {
     final $url = '/workshops/';
     final $request = Request('GET', $url, client.baseUrl);

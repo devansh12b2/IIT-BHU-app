@@ -18,20 +18,22 @@ class _AcademicsPageState extends State<AcademicsPage> {
   Color containerColor = Color(0xFFF3F9FF);
 
   List branches = [
-    Branch(id: 'c1', branchName: 'Architecture', img: 'assets/academics/electrical.png'),
-    Branch(id: 'c2', branchName: 'Biochemical', img: 'assets/academics/electrical.png'),
-    Branch(id: 'c3', branchName: 'Biomedical', img: 'assets/academics/electrical.png'),
-    Branch(id: 'c4', branchName: 'Ceramic', img: 'assets/academics/electrical.png'),
-    Branch(id: 'c5', branchName: 'Chemical', img: 'assets/academics/electrical.png'),
-    Branch(id: 'c6', branchName: 'Civil', img: 'assets/academics/electrical.png'),
-    Branch(id: 'c7', branchName: 'Computer Science', img: 'assets/academics/electrical.png'),
-    Branch(id: 'c8', branchName: 'Electrical', img: 'assets/academics/electrical.png'),
-    Branch(id: 'c9', branchName: 'Electronics', img: 'assets/academics/electrical.png'),
-    Branch(id: 'c10', branchName: 'Maths and Computing', img: 'assets/academics/electrical.png'),
-    Branch(id: 'c11', branchName: 'Mechanical', img: 'assets/academics/electrical.png'),
-    Branch(id: 'c12', branchName: 'Metallurgy', img: 'assets/academics/electrical.png'),
-    Branch(id: 'c13', branchName: 'Mining', img: 'assets/academics/electrical.png'),
-    Branch(id: 'c14', branchName: 'Pharmaceutical', img: 'assets/academics/electrical.png'),
+    //required tag for Architecture branch
+    Branch(tag: 'none', branchName: 'Architecture', img: 'assets/academics/electrical.png'),
+    Branch(tag: 'bce', branchName: 'Biochemical', img: 'assets/academics/electrical.png'),
+    Branch(tag: 'bme', branchName: 'Biomedical', img: 'assets/academics/electrical.png'),
+    Branch(tag: 'cer', branchName: 'Ceramic', img: 'assets/academics/electrical.png'),
+    Branch(tag: 'che', branchName: 'Chemical', img: 'assets/academics/electrical.png'),
+    Branch(tag: 'civ', branchName: 'Civil', img: 'assets/academics/electrical.png'),
+    Branch(tag: 'cse', branchName: 'Computer Science', img: 'assets/academics/electrical.png'),
+    Branch(tag: 'eee', branchName: 'Electrical', img: 'assets/academics/electrical.png'),
+    Branch(tag: 'ece', branchName: 'Electronics', img: 'assets/academics/electrical.png'),
+    Branch(tag: 'mat', branchName: 'Maths and Computing', img: 'assets/academics/electrical.png'),
+    Branch(tag: 'mec', branchName: 'Mechanical', img: 'assets/academics/electrical.png'),
+    Branch(tag: 'met', branchName: 'Metallurgy', img: 'assets/academics/electrical.png'),
+    Branch(tag: 'min', branchName: 'Mining', img: 'assets/academics/electrical.png'),
+    //required tag for Pharmaceutical branch.
+    Branch(tag: 'none', branchName: 'Pharmaceutical', img: 'assets/academics/electrical.png'),
   ];
 
   @override

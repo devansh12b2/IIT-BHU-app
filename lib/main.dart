@@ -46,7 +46,7 @@ void main() async {
       '/newhome': (BuildContext context) => NewHomePage(),
       '/home': (BuildContext context) => HomePage(),
       '/mapPage': (BuildContext context) => MapPage(),
-      '/academicsPage': (BuildContext context) => AcademicsPage(),
+      '/academicsPage':(BuildContext context) =>AcademicsPage(),
       '/mess': (BuildContext context) => MessScreen(),
       '/allWorkshops': (BuildContext context) => AllWorkshopsScreen(),
       '/allEntities': (BuildContext context) => EntitiesPage(),

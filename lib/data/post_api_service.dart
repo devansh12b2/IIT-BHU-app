@@ -13,6 +13,14 @@ abstract class PostApiService extends ChopperService {
 //! ------------------------------------------ Workshop end point APIs --------------------------------------------------------------
 
   //? ----------------------------------- Get -------------------------------
+  @Get(path: '/academics/academic-schedule/{dept}/{year}/')
+  Future<Response> getAcademicSchedule(@Path('dept') String dept,@Path('year') String yearOfJoining);
+
+  @Get(path: '/academics/profs/{dept}/')
+  Future<Response> getProfsAndHODs(@Path('dept') String dept);
+
+  @Get(path: '/academics/study-materials/{dept}/')
+  Future<Response> getStudyMaterials(@Path('dept') String dept);
 
   @Get(path: '/workshops/')
   Future<Response<BuiltAllWorkshopsPost>> getAllWorkshops();
