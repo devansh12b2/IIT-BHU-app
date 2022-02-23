@@ -371,8 +371,8 @@ abstract class PostApiService extends ChopperService {
 
   //? ----------------------------------- Post -------------------------------
 
-  @Post(path: '/grievance/creat/')
-  Future<Response<Grievance>> createLostAndFound(
+  @Post(path: '/lostandfound/create/')
+  Future<Response<LostAndFound>> createLostAndFound(
       @Header('Authorization') String token, @Body() LostAndFoundPost body);
 
 //! ------------------------------------------ LostAndFound end point APIs --------------------------------------------------------------

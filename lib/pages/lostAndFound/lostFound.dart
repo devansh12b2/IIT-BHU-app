@@ -51,23 +51,23 @@ class _LostAndFoundPageState extends State<LostAndFoundPage> {
     prefs = await SharedPreferences.getInstance();
     setState(
       () {
-        _nameTEC.text = prefs.getString('name') ?? "";
-        _descItem.text = prefs.getString('description') ?? "";
-        _gDriveLink.text = prefs.getString('drive') ?? "";
-        _branchName = prefs.getString('branch');
-        _year = prefs.getString('year');
-        _lfType = prefs.getString('type');
+        _nameTEC.text = prefs.getString('lfname') ?? "";
+        _descItem.text = prefs.getString('lfdescription') ?? "";
+        _gDriveLink.text = prefs.getString('lfdrive') ?? "";
+        _branchName = prefs.getString('lfbranch');
+        _year = prefs.getString('lfyear');
+        _lfType = prefs.getString('lftype');
       },
     );
   }
 
   _clearPreferences() async {
-    prefs.setString('name', "");
-    prefs.setString('description', "");
-    prefs.setString('drive', "");
-    prefs.setString('year', null);
-    prefs.setString('branch', null);
-    prefs.setString('type', null);
+    prefs.setString('lfname', "");
+    prefs.setString('lfdescription', "");
+    prefs.setString('lfdrive', "");
+    prefs.setString('lfyear', null);
+    prefs.setString('lfbranch', null);
+    prefs.setString('lftype', null);
   }
 
   String _branchName;
@@ -322,7 +322,7 @@ class _LostAndFoundPageState extends State<LostAndFoundPage> {
                             },
                             onChanged: (value) {
                               if (value.trim().isNotEmpty)
-                                prefs.setString('name', value);
+                                prefs.setString('lfname', value);
                             },
                           ),
                         ),
@@ -362,7 +362,7 @@ class _LostAndFoundPageState extends State<LostAndFoundPage> {
                                       _branchName = nv;
                                     });
                                     if (nv.trim().isNotEmpty)
-                                      prefs.setString('branch', _branchName);
+                                      prefs.setString('lfbranch', _branchName);
                                   },
                                   items: <String>[
                                     'Architecture',
@@ -419,7 +419,7 @@ class _LostAndFoundPageState extends State<LostAndFoundPage> {
                                     setState(() {
                                       _year = nv;
                                     });
-                                    prefs.setString('year', _year);
+                                    prefs.setString('lfyear', _year);
                                   },
                                   items: <String>[
                                     '1st',
@@ -639,7 +639,7 @@ class _DialogueContentState extends State<DialogueContent> {
                     ..description = widget.iDesc
                     ..course = 'B.Tech'
                     ..drive_link = widget.gDriveLink
-                    ..type_of_lost_found = widget.lfType,
+                    ..type_of_lost_and_found = widget.lfType,
                 ),
               ),
               builder: (ctx, result) {

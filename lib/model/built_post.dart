@@ -771,7 +771,7 @@ abstract class LostAndFoundPost
   String get branch;
   String get course;
   String get year;
-  String get type_of_lost_found;
+  String get type_of_lost_and_found;
   String get description;
   @nullable
   String get drive_link;
@@ -790,11 +790,10 @@ abstract class LostAndFound
   String get branch;
   String get course;
   String get year;
-  String get type_of_lost_found;
+  String get type_of_lost_and_found;
   String get description;
   @nullable
   String get drive_link;
-  int get status;
 
   LostAndFound._();
   factory LostAndFound([updates(LostAndFoundBuilder b)]) = _$LostAndFound;
