@@ -3168,8 +3168,8 @@ class _$LostAndFoundPostSerializer
           specifiedType: const FullType(String)),
       'year',
       serializers.serialize(object.year, specifiedType: const FullType(String)),
-      'type_of_lost_found',
-      serializers.serialize(object.type_of_lost_found,
+      'type_of_lost_and_found',
+      serializers.serialize(object.type_of_lost_and_found,
           specifiedType: const FullType(String)),
       'description',
       serializers.serialize(object.description,
@@ -3212,8 +3212,8 @@ class _$LostAndFoundPostSerializer
           result.year = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'type_of_lost_found':
-          result.type_of_lost_found = serializers.deserialize(value,
+        case 'type_of_lost_and_found':
+          result.type_of_lost_and_found = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'description':
@@ -3253,14 +3253,12 @@ class _$LostAndFoundSerializer implements StructuredSerializer<LostAndFound> {
           specifiedType: const FullType(String)),
       'year',
       serializers.serialize(object.year, specifiedType: const FullType(String)),
-      'type_of_lost_found',
-      serializers.serialize(object.type_of_lost_found,
+      'type_of_lost_and_found',
+      serializers.serialize(object.type_of_lost_and_found,
           specifiedType: const FullType(String)),
       'description',
       serializers.serialize(object.description,
           specifiedType: const FullType(String)),
-      'status',
-      serializers.serialize(object.status, specifiedType: const FullType(int)),
     ];
     if (object.drive_link != null) {
       result
@@ -3302,8 +3300,8 @@ class _$LostAndFoundSerializer implements StructuredSerializer<LostAndFound> {
           result.year = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'type_of_lost_found':
-          result.type_of_lost_found = serializers.deserialize(value,
+        case 'type_of_lost_and_found':
+          result.type_of_lost_and_found = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'description':
@@ -3313,10 +3311,6 @@ class _$LostAndFoundSerializer implements StructuredSerializer<LostAndFound> {
         case 'drive_link':
           result.drive_link = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
-          break;
-        case 'status':
-          result.status = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -8463,7 +8457,7 @@ class _$LostAndFoundPost extends LostAndFoundPost {
   @override
   final String year;
   @override
-  final String type_of_lost_found;
+  final String type_of_lost_and_found;
   @override
   final String description;
   @override
@@ -8478,7 +8472,7 @@ class _$LostAndFoundPost extends LostAndFoundPost {
       this.branch,
       this.course,
       this.year,
-      this.type_of_lost_found,
+      this.type_of_lost_and_found,
       this.description,
       this.drive_link})
       : super._() {
@@ -8494,9 +8488,9 @@ class _$LostAndFoundPost extends LostAndFoundPost {
     if (year == null) {
       throw new BuiltValueNullFieldError('LostAndFoundPost', 'year');
     }
-    if (type_of_lost_found == null) {
+    if (type_of_lost_and_found == null) {
       throw new BuiltValueNullFieldError(
-          'LostAndFoundPost', 'type_of_lost_found');
+          'LostAndFoundPost', 'type_of_lost_and_found');
     }
     if (description == null) {
       throw new BuiltValueNullFieldError('LostAndFoundPost', 'description');
@@ -8519,7 +8513,7 @@ class _$LostAndFoundPost extends LostAndFoundPost {
         branch == other.branch &&
         course == other.course &&
         year == other.year &&
-        type_of_lost_found == other.type_of_lost_found &&
+        type_of_lost_and_found == other.type_of_lost_and_found &&
         description == other.description &&
         drive_link == other.drive_link;
   }
@@ -8533,7 +8527,7 @@ class _$LostAndFoundPost extends LostAndFoundPost {
                     $jc($jc($jc(0, name.hashCode), branch.hashCode),
                         course.hashCode),
                     year.hashCode),
-                type_of_lost_found.hashCode),
+                type_of_lost_and_found.hashCode),
             description.hashCode),
         drive_link.hashCode));
   }
@@ -8545,7 +8539,7 @@ class _$LostAndFoundPost extends LostAndFoundPost {
           ..add('branch', branch)
           ..add('course', course)
           ..add('year', year)
-          ..add('type_of_lost_found', type_of_lost_found)
+          ..add('type_of_lost_and_found', type_of_lost_and_found)
           ..add('description', description)
           ..add('drive_link', drive_link))
         .toString();
@@ -8572,10 +8566,10 @@ class LostAndFoundPostBuilder
   String get year => _$this._year;
   set year(String year) => _$this._year = year;
 
-  String _type_of_lost_found;
-  String get type_of_lost_found => _$this._type_of_lost_found;
-  set type_of_lost_found(String type_of_lost_found) =>
-      _$this._type_of_lost_found = type_of_lost_found;
+  String _type_of_lost_and_found;
+  String get type_of_lost_and_found => _$this._type_of_lost_and_found;
+  set type_of_lost_and_found(String type_of_lost_and_found) =>
+      _$this._type_of_lost_and_found = type_of_lost_and_found;
 
   String _description;
   String get description => _$this._description;
@@ -8593,7 +8587,7 @@ class LostAndFoundPostBuilder
       _branch = _$v.branch;
       _course = _$v.course;
       _year = _$v.year;
-      _type_of_lost_found = _$v.type_of_lost_found;
+      _type_of_lost_and_found = _$v.type_of_lost_and_found;
       _description = _$v.description;
       _drive_link = _$v.drive_link;
       _$v = null;
@@ -8622,7 +8616,7 @@ class LostAndFoundPostBuilder
             branch: branch,
             course: course,
             year: year,
-            type_of_lost_found: type_of_lost_found,
+            type_of_lost_and_found: type_of_lost_and_found,
             description: description,
             drive_link: drive_link);
     replace(_$result);
@@ -8642,13 +8636,11 @@ class _$LostAndFound extends LostAndFound {
   @override
   final String year;
   @override
-  final String type_of_lost_found;
+  final String type_of_lost_and_found;
   @override
   final String description;
   @override
   final String drive_link;
-  @override
-  final int status;
 
   factory _$LostAndFound([void Function(LostAndFoundBuilder) updates]) =>
       (new LostAndFoundBuilder()..update(updates)).build();
@@ -8659,10 +8651,9 @@ class _$LostAndFound extends LostAndFound {
       this.branch,
       this.course,
       this.year,
-      this.type_of_lost_found,
+      this.type_of_lost_and_found,
       this.description,
-      this.drive_link,
-      this.status})
+      this.drive_link})
       : super._() {
     if (id == null) {
       throw new BuiltValueNullFieldError('LostAndFound', 'id');
@@ -8679,14 +8670,12 @@ class _$LostAndFound extends LostAndFound {
     if (year == null) {
       throw new BuiltValueNullFieldError('LostAndFound', 'year');
     }
-    if (type_of_lost_found == null) {
-      throw new BuiltValueNullFieldError('LostAndFound', 'type_of_lost_found');
+    if (type_of_lost_and_found == null) {
+      throw new BuiltValueNullFieldError(
+          'LostAndFound', 'type_of_lost_and_found');
     }
     if (description == null) {
       throw new BuiltValueNullFieldError('LostAndFound', 'description');
-    }
-    if (status == null) {
-      throw new BuiltValueNullFieldError('LostAndFound', 'status');
     }
   }
 
@@ -8706,10 +8695,9 @@ class _$LostAndFound extends LostAndFound {
         branch == other.branch &&
         course == other.course &&
         year == other.year &&
-        type_of_lost_found == other.type_of_lost_found &&
+        type_of_lost_and_found == other.type_of_lost_and_found &&
         description == other.description &&
-        drive_link == other.drive_link &&
-        status == other.status;
+        drive_link == other.drive_link;
   }
 
   @override
@@ -8719,15 +8707,13 @@ class _$LostAndFound extends LostAndFound {
             $jc(
                 $jc(
                     $jc(
-                        $jc(
-                            $jc($jc($jc(0, id.hashCode), name.hashCode),
-                                branch.hashCode),
-                            course.hashCode),
-                        year.hashCode),
-                    type_of_lost_found.hashCode),
-                description.hashCode),
-            drive_link.hashCode),
-        status.hashCode));
+                        $jc($jc($jc(0, id.hashCode), name.hashCode),
+                            branch.hashCode),
+                        course.hashCode),
+                    year.hashCode),
+                type_of_lost_and_found.hashCode),
+            description.hashCode),
+        drive_link.hashCode));
   }
 
   @override
@@ -8738,10 +8724,9 @@ class _$LostAndFound extends LostAndFound {
           ..add('branch', branch)
           ..add('course', course)
           ..add('year', year)
-          ..add('type_of_lost_found', type_of_lost_found)
+          ..add('type_of_lost_and_found', type_of_lost_and_found)
           ..add('description', description)
-          ..add('drive_link', drive_link)
-          ..add('status', status))
+          ..add('drive_link', drive_link))
         .toString();
   }
 }
@@ -8770,10 +8755,10 @@ class LostAndFoundBuilder
   String get year => _$this._year;
   set year(String year) => _$this._year = year;
 
-  String _type_of_lost_found;
-  String get type_of_lost_found => _$this._type_of_lost_found;
-  set type_of_lost_found(String type_of_lost_found) =>
-      _$this._type_of_lost_found = type_of_lost_found;
+  String _type_of_lost_and_found;
+  String get type_of_lost_and_found => _$this._type_of_lost_and_found;
+  set type_of_lost_and_found(String type_of_lost_and_found) =>
+      _$this._type_of_lost_and_found = type_of_lost_and_found;
 
   String _description;
   String get description => _$this._description;
@@ -8782,10 +8767,6 @@ class LostAndFoundBuilder
   String _drive_link;
   String get drive_link => _$this._drive_link;
   set drive_link(String drive_link) => _$this._drive_link = drive_link;
-
-  int _status;
-  int get status => _$this._status;
-  set status(int status) => _$this._status = status;
 
   LostAndFoundBuilder();
 
@@ -8796,10 +8777,9 @@ class LostAndFoundBuilder
       _branch = _$v.branch;
       _course = _$v.course;
       _year = _$v.year;
-      _type_of_lost_found = _$v.type_of_lost_found;
+      _type_of_lost_and_found = _$v.type_of_lost_and_found;
       _description = _$v.description;
       _drive_link = _$v.drive_link;
-      _status = _$v.status;
       _$v = null;
     }
     return this;
@@ -8827,10 +8807,9 @@ class LostAndFoundBuilder
             branch: branch,
             course: course,
             year: year,
-            type_of_lost_found: type_of_lost_found,
+            type_of_lost_and_found: type_of_lost_and_found,
             description: description,
-            drive_link: drive_link,
-            status: status);
+            drive_link: drive_link);
     replace(_$result);
     return _$result;
   }

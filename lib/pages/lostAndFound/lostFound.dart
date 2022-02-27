@@ -639,7 +639,7 @@ class _DialogueContentState extends State<DialogueContent> {
                     ..description = widget.iDesc
                     ..course = 'B.Tech'
                     ..drive_link = widget.gDriveLink
-                    ..type_of_lost_found = widget.lfType,
+                    ..type_of_lost_and_found = widget.lfType,
                 ),
               ),
               builder: (ctx, result) {
