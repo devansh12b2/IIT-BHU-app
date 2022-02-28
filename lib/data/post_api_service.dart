@@ -375,6 +375,16 @@ abstract class PostApiService extends ChopperService {
 
 //! ------------------------------------------ Grievance (Count) end point APIs --------------------------------------------------------------
 
+//! -----------------------------------------LostAndFound end point APIs --------------------------------------------------------------
+
+  //? ----------------------------------- Post -------------------------------
+
+  @Post(path: '/lostandfound/create/')
+  Future<Response<LostAndFound>> createLostAndFound(
+      @Header('Authorization') String token, @Body() LostAndFoundPost body);
+
+//! ------------------------------------------ LostAndFound end point APIs --------------------------------------------------------------
+
   static PostApiService create() {
     final client = ChopperClient(
       baseUrl: 'https://workshops-app-backend.herokuapp.com',

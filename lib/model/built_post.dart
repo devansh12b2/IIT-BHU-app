@@ -764,3 +764,38 @@ abstract class Grievance implements Built<Grievance, GrievanceBuilder> {
   factory Grievance([updates(GrievanceBuilder b)]) = _$Grievance;
   static Serializer<Grievance> get serializer => _$grievanceSerializer;
 }
+
+abstract class LostAndFoundPost
+    implements Built<LostAndFoundPost, LostAndFoundPostBuilder> {
+  String get name;
+  String get branch;
+  String get course;
+  String get year;
+  String get type_of_lost_and_found;
+  String get description;
+  @nullable
+  String get drive_link;
+
+  LostAndFoundPost._();
+  factory LostAndFoundPost([updates(LostAndFoundPostBuilder b)]) =
+      _$LostAndFoundPost;
+  static Serializer<LostAndFoundPost> get serializer =>
+      _$lostAndFoundPostSerializer;
+}
+
+abstract class LostAndFound
+    implements Built<LostAndFound, LostAndFoundBuilder> {
+  int get id;
+  String get name;
+  String get branch;
+  String get course;
+  String get year;
+  String get type_of_lost_and_found;
+  String get description;
+  @nullable
+  String get drive_link;
+
+  LostAndFound._();
+  factory LostAndFound([updates(LostAndFoundBuilder b)]) = _$LostAndFound;
+  static Serializer<LostAndFound> get serializer => _$lostAndFoundSerializer;
+}

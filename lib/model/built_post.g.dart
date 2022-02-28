@@ -63,6 +63,10 @@ Serializer<GrievanceCount> _$grievanceCountSerializer =
 Serializer<GrievancePost> _$grievancePostSerializer =
     new _$GrievancePostSerializer();
 Serializer<Grievance> _$grievanceSerializer = new _$GrievanceSerializer();
+Serializer<LostAndFoundPost> _$lostAndFoundPostSerializer =
+    new _$LostAndFoundPostSerializer();
+Serializer<LostAndFound> _$lostAndFoundSerializer =
+    new _$LostAndFoundSerializer();
 
 class _$ConfigVarSerializer implements StructuredSerializer<ConfigVar> {
   @override
@@ -3135,6 +3139,178 @@ class _$GrievanceSerializer implements StructuredSerializer<Grievance> {
         case 'status':
           result.status = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$LostAndFoundPostSerializer
+    implements StructuredSerializer<LostAndFoundPost> {
+  @override
+  final Iterable<Type> types = const [LostAndFoundPost, _$LostAndFoundPost];
+  @override
+  final String wireName = 'LostAndFoundPost';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, LostAndFoundPost object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'branch',
+      serializers.serialize(object.branch,
+          specifiedType: const FullType(String)),
+      'course',
+      serializers.serialize(object.course,
+          specifiedType: const FullType(String)),
+      'year',
+      serializers.serialize(object.year, specifiedType: const FullType(String)),
+      'type_of_lost_and_found',
+      serializers.serialize(object.type_of_lost_and_found,
+          specifiedType: const FullType(String)),
+      'description',
+      serializers.serialize(object.description,
+          specifiedType: const FullType(String)),
+    ];
+    if (object.drive_link != null) {
+      result
+        ..add('drive_link')
+        ..add(serializers.serialize(object.drive_link,
+            specifiedType: const FullType(String)));
+    }
+    return result;
+  }
+
+  @override
+  LostAndFoundPost deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new LostAndFoundPostBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'branch':
+          result.branch = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'course':
+          result.course = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'year':
+          result.year = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'type_of_lost_and_found':
+          result.type_of_lost_and_found = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'description':
+          result.description = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'drive_link':
+          result.drive_link = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$LostAndFoundSerializer implements StructuredSerializer<LostAndFound> {
+  @override
+  final Iterable<Type> types = const [LostAndFound, _$LostAndFound];
+  @override
+  final String wireName = 'LostAndFound';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, LostAndFound object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(int)),
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'branch',
+      serializers.serialize(object.branch,
+          specifiedType: const FullType(String)),
+      'course',
+      serializers.serialize(object.course,
+          specifiedType: const FullType(String)),
+      'year',
+      serializers.serialize(object.year, specifiedType: const FullType(String)),
+      'type_of_lost_and_found',
+      serializers.serialize(object.type_of_lost_and_found,
+          specifiedType: const FullType(String)),
+      'description',
+      serializers.serialize(object.description,
+          specifiedType: const FullType(String)),
+    ];
+    if (object.drive_link != null) {
+      result
+        ..add('drive_link')
+        ..add(serializers.serialize(object.drive_link,
+            specifiedType: const FullType(String)));
+    }
+    return result;
+  }
+
+  @override
+  LostAndFound deserialize(Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new LostAndFoundBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'branch':
+          result.branch = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'course':
+          result.course = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'year':
+          result.year = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'type_of_lost_and_found':
+          result.type_of_lost_and_found = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'description':
+          result.description = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'drive_link':
+          result.drive_link = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -8266,6 +8442,374 @@ class GrievanceBuilder implements Builder<Grievance, GrievanceBuilder> {
             description: description,
             drive_link: drive_link,
             status: status);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$LostAndFoundPost extends LostAndFoundPost {
+  @override
+  final String name;
+  @override
+  final String branch;
+  @override
+  final String course;
+  @override
+  final String year;
+  @override
+  final String type_of_lost_and_found;
+  @override
+  final String description;
+  @override
+  final String drive_link;
+
+  factory _$LostAndFoundPost(
+          [void Function(LostAndFoundPostBuilder) updates]) =>
+      (new LostAndFoundPostBuilder()..update(updates)).build();
+
+  _$LostAndFoundPost._(
+      {this.name,
+      this.branch,
+      this.course,
+      this.year,
+      this.type_of_lost_and_found,
+      this.description,
+      this.drive_link})
+      : super._() {
+    if (name == null) {
+      throw new BuiltValueNullFieldError('LostAndFoundPost', 'name');
+    }
+    if (branch == null) {
+      throw new BuiltValueNullFieldError('LostAndFoundPost', 'branch');
+    }
+    if (course == null) {
+      throw new BuiltValueNullFieldError('LostAndFoundPost', 'course');
+    }
+    if (year == null) {
+      throw new BuiltValueNullFieldError('LostAndFoundPost', 'year');
+    }
+    if (type_of_lost_and_found == null) {
+      throw new BuiltValueNullFieldError(
+          'LostAndFoundPost', 'type_of_lost_and_found');
+    }
+    if (description == null) {
+      throw new BuiltValueNullFieldError('LostAndFoundPost', 'description');
+    }
+  }
+
+  @override
+  LostAndFoundPost rebuild(void Function(LostAndFoundPostBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  LostAndFoundPostBuilder toBuilder() =>
+      new LostAndFoundPostBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is LostAndFoundPost &&
+        name == other.name &&
+        branch == other.branch &&
+        course == other.course &&
+        year == other.year &&
+        type_of_lost_and_found == other.type_of_lost_and_found &&
+        description == other.description &&
+        drive_link == other.drive_link;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(
+        $jc(
+            $jc(
+                $jc(
+                    $jc($jc($jc(0, name.hashCode), branch.hashCode),
+                        course.hashCode),
+                    year.hashCode),
+                type_of_lost_and_found.hashCode),
+            description.hashCode),
+        drive_link.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('LostAndFoundPost')
+          ..add('name', name)
+          ..add('branch', branch)
+          ..add('course', course)
+          ..add('year', year)
+          ..add('type_of_lost_and_found', type_of_lost_and_found)
+          ..add('description', description)
+          ..add('drive_link', drive_link))
+        .toString();
+  }
+}
+
+class LostAndFoundPostBuilder
+    implements Builder<LostAndFoundPost, LostAndFoundPostBuilder> {
+  _$LostAndFoundPost _$v;
+
+  String _name;
+  String get name => _$this._name;
+  set name(String name) => _$this._name = name;
+
+  String _branch;
+  String get branch => _$this._branch;
+  set branch(String branch) => _$this._branch = branch;
+
+  String _course;
+  String get course => _$this._course;
+  set course(String course) => _$this._course = course;
+
+  String _year;
+  String get year => _$this._year;
+  set year(String year) => _$this._year = year;
+
+  String _type_of_lost_and_found;
+  String get type_of_lost_and_found => _$this._type_of_lost_and_found;
+  set type_of_lost_and_found(String type_of_lost_and_found) =>
+      _$this._type_of_lost_and_found = type_of_lost_and_found;
+
+  String _description;
+  String get description => _$this._description;
+  set description(String description) => _$this._description = description;
+
+  String _drive_link;
+  String get drive_link => _$this._drive_link;
+  set drive_link(String drive_link) => _$this._drive_link = drive_link;
+
+  LostAndFoundPostBuilder();
+
+  LostAndFoundPostBuilder get _$this {
+    if (_$v != null) {
+      _name = _$v.name;
+      _branch = _$v.branch;
+      _course = _$v.course;
+      _year = _$v.year;
+      _type_of_lost_and_found = _$v.type_of_lost_and_found;
+      _description = _$v.description;
+      _drive_link = _$v.drive_link;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(LostAndFoundPost other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$LostAndFoundPost;
+  }
+
+  @override
+  void update(void Function(LostAndFoundPostBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$LostAndFoundPost build() {
+    final _$result = _$v ??
+        new _$LostAndFoundPost._(
+            name: name,
+            branch: branch,
+            course: course,
+            year: year,
+            type_of_lost_and_found: type_of_lost_and_found,
+            description: description,
+            drive_link: drive_link);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$LostAndFound extends LostAndFound {
+  @override
+  final int id;
+  @override
+  final String name;
+  @override
+  final String branch;
+  @override
+  final String course;
+  @override
+  final String year;
+  @override
+  final String type_of_lost_and_found;
+  @override
+  final String description;
+  @override
+  final String drive_link;
+
+  factory _$LostAndFound([void Function(LostAndFoundBuilder) updates]) =>
+      (new LostAndFoundBuilder()..update(updates)).build();
+
+  _$LostAndFound._(
+      {this.id,
+      this.name,
+      this.branch,
+      this.course,
+      this.year,
+      this.type_of_lost_and_found,
+      this.description,
+      this.drive_link})
+      : super._() {
+    if (id == null) {
+      throw new BuiltValueNullFieldError('LostAndFound', 'id');
+    }
+    if (name == null) {
+      throw new BuiltValueNullFieldError('LostAndFound', 'name');
+    }
+    if (branch == null) {
+      throw new BuiltValueNullFieldError('LostAndFound', 'branch');
+    }
+    if (course == null) {
+      throw new BuiltValueNullFieldError('LostAndFound', 'course');
+    }
+    if (year == null) {
+      throw new BuiltValueNullFieldError('LostAndFound', 'year');
+    }
+    if (type_of_lost_and_found == null) {
+      throw new BuiltValueNullFieldError(
+          'LostAndFound', 'type_of_lost_and_found');
+    }
+    if (description == null) {
+      throw new BuiltValueNullFieldError('LostAndFound', 'description');
+    }
+  }
+
+  @override
+  LostAndFound rebuild(void Function(LostAndFoundBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  LostAndFoundBuilder toBuilder() => new LostAndFoundBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is LostAndFound &&
+        id == other.id &&
+        name == other.name &&
+        branch == other.branch &&
+        course == other.course &&
+        year == other.year &&
+        type_of_lost_and_found == other.type_of_lost_and_found &&
+        description == other.description &&
+        drive_link == other.drive_link;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(
+        $jc(
+            $jc(
+                $jc(
+                    $jc(
+                        $jc($jc($jc(0, id.hashCode), name.hashCode),
+                            branch.hashCode),
+                        course.hashCode),
+                    year.hashCode),
+                type_of_lost_and_found.hashCode),
+            description.hashCode),
+        drive_link.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('LostAndFound')
+          ..add('id', id)
+          ..add('name', name)
+          ..add('branch', branch)
+          ..add('course', course)
+          ..add('year', year)
+          ..add('type_of_lost_and_found', type_of_lost_and_found)
+          ..add('description', description)
+          ..add('drive_link', drive_link))
+        .toString();
+  }
+}
+
+class LostAndFoundBuilder
+    implements Builder<LostAndFound, LostAndFoundBuilder> {
+  _$LostAndFound _$v;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
+
+  String _name;
+  String get name => _$this._name;
+  set name(String name) => _$this._name = name;
+
+  String _branch;
+  String get branch => _$this._branch;
+  set branch(String branch) => _$this._branch = branch;
+
+  String _course;
+  String get course => _$this._course;
+  set course(String course) => _$this._course = course;
+
+  String _year;
+  String get year => _$this._year;
+  set year(String year) => _$this._year = year;
+
+  String _type_of_lost_and_found;
+  String get type_of_lost_and_found => _$this._type_of_lost_and_found;
+  set type_of_lost_and_found(String type_of_lost_and_found) =>
+      _$this._type_of_lost_and_found = type_of_lost_and_found;
+
+  String _description;
+  String get description => _$this._description;
+  set description(String description) => _$this._description = description;
+
+  String _drive_link;
+  String get drive_link => _$this._drive_link;
+  set drive_link(String drive_link) => _$this._drive_link = drive_link;
+
+  LostAndFoundBuilder();
+
+  LostAndFoundBuilder get _$this {
+    if (_$v != null) {
+      _id = _$v.id;
+      _name = _$v.name;
+      _branch = _$v.branch;
+      _course = _$v.course;
+      _year = _$v.year;
+      _type_of_lost_and_found = _$v.type_of_lost_and_found;
+      _description = _$v.description;
+      _drive_link = _$v.drive_link;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(LostAndFound other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$LostAndFound;
+  }
+
+  @override
+  void update(void Function(LostAndFoundBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$LostAndFound build() {
+    final _$result = _$v ??
+        new _$LostAndFound._(
+            id: id,
+            name: name,
+            branch: branch,
+            course: course,
+            year: year,
+            type_of_lost_and_found: type_of_lost_and_found,
+            description: description,
+            drive_link: drive_link);
     replace(_$result);
     return _$result;
   }
