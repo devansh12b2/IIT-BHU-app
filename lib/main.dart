@@ -53,6 +53,7 @@ void main() async {
       '/allEntities': (BuildContext context) => EntitiesPage(),
       '/newProfile': (BuildContext context) => ProfilePage(),
       '/account': (BuildContext context) => AccountPage(),
+      '/Mess': (BuildContext context) => MessScreen(),
       '/settings': (BuildContext context) => SettingsScreen(),
       '/complaints': (BuildContext context) => ComplaintsScreen(),
       '/login': (BuildContext context) => LoginPage(),

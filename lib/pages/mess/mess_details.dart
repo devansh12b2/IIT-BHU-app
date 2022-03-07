@@ -2,29 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iit_app/model/appConstants.dart';
 import 'package:iit_app/pages/mess/hostel.dart';
-import 'package:iit_app/pages/mess/mess_list.dart';
 import 'package:iit_app/ui/drawer.dart';
 
-class MessScreen extends StatefulWidget {
+class MessDetails extends StatefulWidget {
+  final Mess mess;
+  final String name;
+  MessDetails(this.mess,this.name);
   @override
-  _MessScreenState createState() => _MessScreenState();
+  State<MessDetails> createState() => _MessDetailsState(mess,name);
 }
 
-class _MessScreenState extends State<MessScreen> {
+class _MessDetailsState extends State<MessDetails> {
   Color primaryColor = Color(0xFF176EDE);
+
   Color bgColor = Color(0xFFFFFFFF);
+
   Color secondaryColor = Color(0xFFBBD9FF);
+
   Color containerColor = Color(0xFFF3F9FF);
 
-  List hostels = [
-    Hostel("Aryabhatta",[Mess([], [], [])]),
-    Hostel("ASN Bose (Satvik)",[Mess([], [], [])]),
-    Hostel("CV Raman",[Mess([], [], [])]),
-    Hostel("Dhanrajgiri",[Mess([], [], [])]),
-    Hostel("GSC extention",[Mess([], [], [])]),
-    Hostel("GSC Old",[Mess([], [], [])]),
-    Hostel("GSC Old",[Mess([], [], [])]),
-    Hostel("GSC Old",[Mess([], [], [])]),
+  final Mess _mess;
+  final String _name;
+  _MessDetailsState(this._mess,this._name);
+
+  List _messKiDetails = [
+    'Menu',
+    'Bills',
+    'Complaints & \n Suggestions',
   ];
 
   @override
@@ -40,13 +44,14 @@ class _MessScreenState extends State<MessScreen> {
             crossAxisCount: 2,
           ),
           itemBuilder: (context, index) {
-            return hostelItem(hostels[index]);
+            return hostelItem(_messKiDetails[index]);
           },
-          itemCount: hostels.length,
+          itemCount: _messKiDetails.length,
         ),
       ),
     );
   }
+
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
       backgroundColor: primaryColor,
@@ -60,7 +65,7 @@ class _MessScreenState extends State<MessScreen> {
         iconSize: 30,
       ),
       title: Text(
-        'Mess',
+        _name,
         style: TextStyle(
           color: secondaryColor,
           fontWeight: FontWeight.w500,
@@ -82,16 +87,15 @@ class _MessScreenState extends State<MessScreen> {
                   decoration: AppConstants.isGuest
                       ? BoxDecoration()
                       : BoxDecoration(
-                    image: DecorationImage(
-                        image: AppConstants.currentUser == null ||
-                            AppConstants.currentUser.photo_url ==
-                                ''
-                            ? AssetImage('assets/guest.png')
-                            : NetworkImage(
-                            AppConstants.currentUser.photo_url),
-                        fit: BoxFit.cover),
-                    borderRadius: BorderRadius.circular(50.0),
-                  ),
+                          image: DecorationImage(
+                              image: AppConstants.currentUser == null ||
+                                      AppConstants.currentUser.photo_url == ''
+                                  ? AssetImage('assets/guest.png')
+                                  : NetworkImage(
+                                      AppConstants.currentUser.photo_url),
+                              fit: BoxFit.cover),
+                          borderRadius: BorderRadius.circular(50.0),
+                        ),
                 ),
               ),
             ),
@@ -100,11 +104,10 @@ class _MessScreenState extends State<MessScreen> {
       ],
     );
   }
-  InkWell hostelItem(Hostel hostelData) {
+
+  InkWell hostelItem(String detailType) {
     return InkWell(
-      onTap: () {
-       Navigator.of(context).push(MaterialPageRoute(builder: (context)=>MessListScreen(hostel: hostelData,)));
-      },
+      onTap: () => null,
       splashColor: primaryColor,
       borderRadius: BorderRadius.circular(15),
       child: Container(
@@ -129,12 +132,12 @@ class _MessScreenState extends State<MessScreen> {
               height: 3,
             ),
             Text(
-              hostelData.hostelName,
+              detailType,
               textAlign: TextAlign.center,
               style: GoogleFonts.lato(
-                  color: primaryColor,
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
+                color: primaryColor,
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ],
@@ -142,5 +145,4 @@ class _MessScreenState extends State<MessScreen> {
       ),
     );
   }
-
 }
