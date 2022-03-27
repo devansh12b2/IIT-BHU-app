@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iit_app/external_libraries/fab_circular_menu.dart';
@@ -15,7 +16,7 @@ class NewSearchBarWidget {
     return StatefulBuilder(
       builder: (context, setState) => TextFormField(
         style: GoogleFonts.notoSans(
-          textStyle: TextStyle(fontSize: 18, height: 2.0),
+          textStyle: TextStyle(fontSize: 18, height: kIsWeb ? 1.5 : 1.8),
           fontWeight: FontWeight.w500,
         ),
         focusNode: focusNode,
@@ -29,7 +30,7 @@ class NewSearchBarWidget {
         decoration: InputDecoration(
           hintText: 'Search',
           hintStyle: TextStyle(color: Colors.black38),
-          contentPadding: EdgeInsets.symmetric(vertical: 5.0),
+          contentPadding: EdgeInsets.symmetric(vertical: kIsWeb ? 12.0 : 6.5),
           focusedBorder: InputBorder.none,
           enabledBorder: InputBorder.none,
           prefixIcon: Icon(
