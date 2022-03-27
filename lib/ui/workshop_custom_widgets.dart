@@ -74,7 +74,7 @@ class WorkshopCustomWidgets {
     Widget _workshopValue({String value, IconData icon}) {
       return Container(
         child: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          Icon(icon, color: Colors.white, size: 12.0),
+          Icon(icon, color:  Color(0xff176EDE), size: 12.0),
           Container(width: 8.0),
           Text(value, style: Style.smallTextStyle),
         ]),

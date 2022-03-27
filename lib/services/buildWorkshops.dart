@@ -110,7 +110,7 @@ FutureBuilder<Response> buildWorkshopsFromSearch(
               'No Workshops found........',
               textAlign: TextAlign.center,
               textScaleFactor: 1.3,
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.black),
             ),
           );
         }
@@ -141,7 +141,7 @@ Widget _buildWorkshopsFromSearchPosts(
                   'Upcoming...',
                   style: TextStyle(
                       fontSize: 32,
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold),
                 ),
               ),
@@ -168,7 +168,7 @@ Widget _buildWorkshopsFromSearchPosts(
                   '..... Past .....',
                   style: TextStyle(
                       fontSize: 32,
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold),
                 ),
               ),
@@ -248,7 +248,7 @@ Widget _buildAllWorkshopsBodyPosts(
           child: Text(
             '..... Past .....',
             style: TextStyle(
-                fontSize: 32, color: Colors.white, fontWeight: FontWeight.bold),
+                fontSize: 32, color: Colors.black, fontWeight: FontWeight.bold),
           ),
         ),
       ),

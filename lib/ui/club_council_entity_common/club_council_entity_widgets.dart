@@ -734,14 +734,14 @@ class ClubCouncilAndEntityWidgets {
           style: TextStyle(
               fontFamily: 'Opensans',
               fontSize: 15.0,
-              color: ColorConstants.textColor,
+              color: ColorConstants.headingColor,
               fontWeight: FontWeight.w600)),
       SizedBox(width: 20),
       Container(
           height: 60.0,
           width: 120.0,
           decoration: BoxDecoration(
-              color: ColorConstants.workshopCardContainer,
+              color: ColorConstants.porHolderBackground,
               borderRadius: BorderRadius.circular(30.0)),
           child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -750,7 +750,7 @@ class ClubCouncilAndEntityWidgets {
                 Text(
                   '${data.subscribed_users}',
                   style: TextStyle(
-                      fontSize: 14.0, color: ColorConstants.textColor),
+                      fontSize: 14.0, color: ColorConstants.porTextColor),
                 ),
                 SizedBox(width: 15),
                 Icon(Icons.person,
@@ -802,31 +802,31 @@ class ClubCouncilAndEntityWidgets {
     if (map.youtube_url != null && map.youtube_url.length != 0)
       _icons.add(
         _buildButtonColumn(
-            FontAwesomeIcons.youtube, 'YouTube', map.youtube_url),
+            FontAwesomeIcons.youtube, 'YouTube', map.youtube_url, color: ColorConstants.iconColor),
       );
     if (map.website_url != null && map.website_url.length != 0)
       _icons.add(
-        _buildButtonColumn(Icons.web, 'Website', map.website_url),
+        _buildButtonColumn(Icons.web, 'Website', map.website_url, color: ColorConstants.iconColor),
       );
     if (map.linkedin_url != null && map.linkedin_url.length != 0)
       _icons.add(
         _buildButtonColumn(
-            FontAwesomeIcons.linkedin, 'LinkedIn', map.linkedin_url),
+            FontAwesomeIcons.linkedin, 'LinkedIn', map.linkedin_url, color: ColorConstants.iconColor),
       );
     if (map.instagram_url != null && map.instagram_url.length != 0)
       _icons.add(
         _buildButtonColumn(
-            FontAwesomeIcons.instagram, 'Instagaram', map.instagram_url),
+            FontAwesomeIcons.instagram, 'Instagaram', map.instagram_url, color: ColorConstants.iconColor),
       );
     if (map.facebook_url != null && map.facebook_url.length != 0)
       _icons.add(
         _buildButtonColumn(
-            FontAwesomeIcons.facebook, 'Facebook', map.facebook_url),
+            FontAwesomeIcons.facebook, 'Facebook', map.facebook_url, color: ColorConstants.iconColor),
       );
     if (map.twitter_url != null && map.twitter_url.length != 0)
       _icons.add(
         _buildButtonColumn(
-            FontAwesomeIcons.twitter, 'Twitter', map.twitter_url),
+            FontAwesomeIcons.twitter, 'Twitter', map.twitter_url, color: ColorConstants.iconColor),
       );
 
     return Container(
@@ -915,11 +915,14 @@ class ClubCouncilAndEntityWidgets {
         margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
         child: Row(
           children: <Widget>[
-            BackButton(
-                color: Colors.lightGreen,
-                onPressed: () => {
-                      Navigator.pop(context),
-                    }),
+            IconButton(
+              color: ColorConstants.iconColor,
+              iconSize: 30,
+              icon: Icon(Icons.arrow_back_ios_new_rounded),
+              onPressed: () async {
+                Navigator.of(context).pop();
+              },
+            ),
           ],
         ));
   }
@@ -975,13 +978,16 @@ class ClubCouncilAndEntityWidgets {
             child: Text(
               name,
               textAlign: TextAlign.center,
+              style: TextStyle(
+                color: ColorConstants.porTextColor
+              ),
               maxLines: 2,
             ),
             width: 100,
           ),
           desg == ''
               ? SizedBox(height: 1.0)
-              : Text(desg, textAlign: TextAlign.center),
+              : Text(desg, textAlign: TextAlign.center, style: TextStyle( color: ColorConstants.porTextColor),),
           SizedBox(height: 4.0),
         ],
       ),

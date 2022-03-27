@@ -278,7 +278,7 @@ class _DescriptionState extends State<Description> {
                                 if (snapshot.hasData) {
                                   Uri uri = snapshot.data;
                                   return IconButton(
-                                      color: ColorConstants.textColor,
+                                      color: ColorConstants.iconColor,
                                       icon: Icon(Icons.share),
                                       iconSize: 30.0,
                                       onPressed: () {

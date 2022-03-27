@@ -17,21 +17,27 @@ class ColorConstants {
   static Color grievanceBtn;
   static Color grievanceLabelText;
   static Color grievanceBack;
+  static Color btnColor;
+  static Color iconColor;
+  static Color porTextColor;
 
   static setLight() {
-    ColorConstants.homeBackground = Colors.blue[200];
-    ColorConstants.circularRingBackground = Colors.blue.withOpacity(0.8);
-    ColorConstants.shimmerSkeletonColor = Color(0x5F6237A0);
-    ColorConstants.workshopContainerBackground = Color(0xFF736AB7);
-    ColorConstants.workshopCardContainer = Color(0xFF333366);
-    ColorConstants.backgroundThemeColor = Color(0xFF736AB7);
+    ColorConstants.homeBackground = Color(0xffFFFFFF);
+    ColorConstants.circularRingBackground = Color(0xff176EDE);
+    ColorConstants.shimmerSkeletonColor = Color(0xffB9D8FF);
+    ColorConstants.workshopContainerBackground = Color(0xffFFFFFF);
+    ColorConstants.workshopCardContainer = Color(0xFFF3F9FF);
+    ColorConstants.backgroundThemeColor = Color.fromRGBO(23, 110, 222, 0.75);
     ColorConstants.panelColor = Colors.white;
-    ColorConstants.headingColor = Color(0xFF736AB7);
-    ColorConstants.porHolderBackground = Colors.grey[300];
-    ColorConstants.textColor = Colors.black;
+    ColorConstants.headingColor = Color(0xff176EDE);
+    ColorConstants.porHolderBackground = Color(0xff176EDE);
+    ColorConstants.textColor =  Colors.black;
     ColorConstants.grievanceBtn = Color(0xff176EDE);
     ColorConstants.grievanceBack = Color(0xffB9D8FF);
     ColorConstants.grievanceLabelText = Color(0xffD7F2FF);
+    ColorConstants.btnColor = Color(0xffB9D8FF);
+    ColorConstants.iconColor = Color(0xff176EDE);
+    ColorConstants.porTextColor = Color(0xffF3F9FF);
   }
 
   static setDark() {
@@ -49,5 +55,8 @@ class ColorConstants {
     ColorConstants.grievanceBtn = Color(0xff176EDE);
     ColorConstants.grievanceBack = Color(0xffB9D8FF);
     ColorConstants.grievanceLabelText = Color(0xffD7F2FF);
+    ColorConstants.btnColor = Color(0xffB9D8FF);
+    ColorConstants.iconColor = Color(0xff176EDE);
+    ColorConstants.porTextColor = Color(0xffF3F9FF);
   }
 }

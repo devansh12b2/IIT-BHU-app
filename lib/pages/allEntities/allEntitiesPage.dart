@@ -46,12 +46,19 @@ class _EntitiesPageState extends State<EntitiesPage> {
             backgroundColor: ColorConstants.homeBackground,
             appBar: AppBar(
               leading: IconButton(
-                icon: Icon(Icons.arrow_back, color: ColorConstants.textColor),
-                onPressed: () => Navigator.pop(context),
+                color: ColorConstants.btnColor,
+                iconSize: 30,
+                icon: Icon(Icons.arrow_back_ios_new_rounded),
+                onPressed: () async {
+                  Navigator.of(context).pop();
+                },
               ),
-              backgroundColor: ColorConstants.homeBackground,
+              backgroundColor: ColorConstants.headingColor,
               automaticallyImplyLeading: false,
-              title: Text("All Entities and Fests"),
+              title: Text("All Entities and Fests",
+              style: TextStyle(
+                color: ColorConstants.btnColor
+              ),),
             ),
             drawer: SideBar(context: context),
             body: RefreshIndicator(

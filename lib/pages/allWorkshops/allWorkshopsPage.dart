@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iit_app/model/colorConstants.dart';
+import 'package:iit_app/screens/newScreens/new_home_app_bar.dart';
+import 'package:iit_app/screens/newScreens/new_workshop_events_app_bar.dart';
 import 'package:iit_app/ui/drawer.dart';
 import 'package:iit_app/services/buildWorkshops.dart' as buildWorkshop;
 import 'package:iit_app/ui/search_workshop.dart';
@@ -70,23 +72,24 @@ class _AllWorkshopsScreenState extends State<AllWorkshopsScreen>
           minimum: const EdgeInsets.all(2.0),
           child: Scaffold(
             backgroundColor: ColorConstants.homeBackground,
-            appBar: AppBar(
-              leading: IconButton(
-                icon: Icon(Icons.arrow_back, color: ColorConstants.textColor),
-                onPressed: () => Navigator.pop(context),
-              ),
-              backgroundColor: ColorConstants.homeBackground,
-              automaticallyImplyLeading: false,
-              title: Text("All Workshops"),
-              actions: <Widget>[
-                Expanded(
-                    child: Padding(
-                  padding: const EdgeInsets.fromLTRB(50.0, 5.0, 20, 0),
-                  child: searchBarWidget.getSearchTextField(context,
-                      searchFocusNode: searchFocusNode),
-                )),
-              ],
-            ),
+            appBar: newWorkshopEventAppBar(context, searchBarWidget, searchFocusNode),
+            // AppBar(
+            //   leading: IconButton(
+            //     icon: Icon(Icons.arrow_back, color: ColorConstants.textColor),
+            //     onPressed: () => Navigator.pop(context),
+            //   ),
+            //   backgroundColor: ColorConstants.homeBackground,
+            //   automaticallyImplyLeading: false,
+            //   title: Text("All Workshops"),
+            //   actions: <Widget>[
+            //     Expanded(
+            //         child: Padding(
+            //       padding: const EdgeInsets.fromLTRB(50.0, 5.0, 20, 0),
+            //       child: searchBarWidget.getSearchTextField(context,
+            //           searchFocusNode: searchFocusNode),
+            //     )),
+            //   ],
+            // ),
             drawer: SideBar(context: context),
             body: GestureDetector(
               onTap: () {

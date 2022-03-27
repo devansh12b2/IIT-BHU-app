@@ -12,7 +12,7 @@ class ClubAndEntityWidgets {
       return w.length == 0
           ? Center(
               child:
-                  Text('No Activity :(', style: TextStyle(color: Colors.white)))
+                  Text('No Activity :(', style: TextStyle(color: ColorConstants.headingColor)))
           : ListView.builder(
               shrinkWrap: true,
               physics: const ClampingScrollPhysics(),
@@ -42,7 +42,7 @@ class ClubAndEntityWidgets {
               SizedBox(height: 15),
               Text(
                 'Past:',
-                style: TextStyle(color: Colors.white, fontSize: 25),
+                style: TextStyle(color: ColorConstants.headingColor, fontSize: 25),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 15),
@@ -69,10 +69,14 @@ class ClubAndEntityWidgets {
         children: [
           TabBar(
             indicatorSize: TabBarIndicatorSize.tab,
-            indicatorColor: ColorConstants.workshopCardContainer,
+            indicatorColor: ColorConstants.headingColor,
             tabs: [
-              Tab(text: 'Workshops'),
-              Tab(text: 'Events'),
+              Tab(child: Text('Workshops',
+                style: TextStyle(color: ColorConstants.headingColor),
+              ),),
+              Tab(child: Text('Events',
+                style: TextStyle(color: ColorConstants.headingColor),
+              ),),
             ],
             controller: tabController,
           ),
