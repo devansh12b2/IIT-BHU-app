@@ -22,6 +22,27 @@ abstract class PostApiService extends ChopperService {
   @Get(path: '/academics/study-materials/{dept}/')
   Future<Response> getStudyMaterials(@Path('dept') String dept);
 
+  @Get(path: '/parliamentSuggestions/')
+  Future<Response> getParliamentSuggestions();
+
+  @Get(path: '/parliamentSuggestions/{id}/')
+  Future<Response> getParliamentSuggestionDetails(
+      @Path('id') int id,@Header('Authorization') String token);
+
+  @Get(path: '/parliamentSuggestions/{id}/upvote/')
+  Future<Response> upvoteASuggestion(
+      @Path('id') int id,@Header('Authorization') String token);
+
+  @Get(path: '/parliamentSuggestions/{id}/downvote/')
+  Future<Response> downvoteASuggestion(
+      @Path('id') int id,@Header('Authorization') String token);
+
+  @Get(path: '/parliamentUpdates/')
+  Future<Response> getParliamentUpdates();
+
+  @Get(path: '/parliamentContact/')
+  Future<Response> getParliamentContacts();
+
   @Get(path: '/workshops/')
   Future<Response<BuiltAllWorkshopsPost>> getAllWorkshops();
 

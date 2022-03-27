@@ -16,7 +16,11 @@ import 'package:iit_app/pages/complaints/complaints.dart';
 import 'package:iit_app/pages/Home/homePage.dart';
 import 'package:iit_app/pages/login/loginPage.dart';
 import 'package:iit_app/pages/about/aboutPage.dart';
+
+import 'package:iit_app/pages/parliament/parliamentPage.dart';
+
 import 'package:iit_app/pages/newHomePage/newHomePage.dart';
+
 import 'package:iit_app/pages/settings/settingsPage.dart';
 
 void main() async {
@@ -47,10 +51,11 @@ void main() async {
       '/newhome': (BuildContext context) => NewHomePage(),
       '/home': (BuildContext context) => HomePage(),
       '/mapPage': (BuildContext context) => MapPage(),
-      '/academicsPage':(BuildContext context) =>AcademicsPage(),
+      '/academicsPage': (BuildContext context) => AcademicsPage(),
       '/mess': (BuildContext context) => MessScreen(),
       '/allWorkshops': (BuildContext context) => AllWorkshopsScreen(),
       '/allEntities': (BuildContext context) => EntitiesPage(),
+      '/parliamentPage': (BuildContext context) => ParliamentPage(),
       '/newProfile': (BuildContext context) => ProfilePage(),
       '/account': (BuildContext context) => AccountPage(),
       '/Mess': (BuildContext context) => MessScreen(),

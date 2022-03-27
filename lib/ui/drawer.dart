@@ -117,6 +117,7 @@ class SideBar extends Drawer {
             getNavItem(Icons.chrome_reader_mode_rounded, "Academics",
                 '/academicsPage'),
             _getActiveEntities(),
+            getNavItem(Icons.house_rounded, "Parliament", "/parliamentPage"),
             AppConstants.isGuest
                 ? ListTile(
                     title: Text("Account",
