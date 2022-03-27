@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:iit_app/data/internet_connection_interceptor.dart';
@@ -610,8 +608,10 @@ class _CreateEditScreenState extends State<CreateEditScreen> {
                               },
                               controller: this._searchContactsController,
                               validator: (value) {
-                                if (value.isNotEmpty && value.length < 3)
-                                  return '${this._searchByValue} must contain atleast 3 characters';
+                                if (value.isNotEmpty && value.length < 3) {
+                                  return "$this._searchByValue must contain atleast 3 characters";
+                                }
+                                return null;
                               },
                             ),
                           ),

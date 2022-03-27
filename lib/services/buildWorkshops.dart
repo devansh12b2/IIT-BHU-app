@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:iit_app/data/internet_connection_interceptor.dart';

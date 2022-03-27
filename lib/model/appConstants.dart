@@ -4,7 +4,6 @@ import 'package:iit_app/model/appConstants_conflicts.dart';
 
 import 'package:chopper/chopper.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
 import 'package:iit_app/data/internet_connection_interceptor.dart';
 import 'package:iit_app/data/post_api_service.dart';
 import 'package:iit_app/model/LocalDatabase/databaseQuery.dart';
@@ -13,9 +12,7 @@ import 'package:iit_app/model/built_post.dart';
 import 'package:iit_app/model/LocalDatabase/database_helpers.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:iit_app/services/connectivityCheck.dart';
-import 'package:http/http.dart' as http;
 import 'package:iit_app/ui/internet_error_flushbar.dart';
-import 'package:path_provider/path_provider.dart';
 
 class AppConstants {
   static String minSupportedVersion;

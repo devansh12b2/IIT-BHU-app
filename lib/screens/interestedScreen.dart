@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:iit_app/model/appConstants.dart';
 import 'package:iit_app/model/colorConstants.dart';
 import 'package:iit_app/pages/Home/homePage.dart';
@@ -40,13 +41,13 @@ class _InterestedScreenState extends State<InterestedScreen>
               style: Style.baseTextStyle.copyWith(color: Colors.white),
             ),
             backgroundColor: ColorConstants.homeBackground,
-            brightness: Brightness.light,
             iconTheme: IconThemeData(color: Colors.black87),
             leading: IconButton(
               icon: Icon(Icons.arrow_back, color: Colors.white),
               onPressed: () => Navigator.push(
                   context, MaterialPageRoute(builder: (context) => HomePage())),
             ),
+            systemOverlayStyle: SystemUiOverlayStyle.light,
           ),
           body: Container(
             child: AppConstants.isGuest

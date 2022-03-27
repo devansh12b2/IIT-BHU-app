@@ -16,7 +16,6 @@ import 'package:iit_app/pages/club_entity/clubPage.dart';
 import 'package:iit_app/screens/create.dart';
 import 'package:iit_app/ui/club_council_entity_common/description.dart';
 import 'package:iit_app/pages/club_entity/entityPage.dart';
-import 'package:iit_app/ui/council_custom_widgets.dart';
 import 'package:iit_app/ui/separator.dart';
 import 'package:iit_app/ui/text_style.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

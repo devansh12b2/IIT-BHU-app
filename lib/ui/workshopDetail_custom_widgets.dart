@@ -1,7 +1,5 @@
 import 'package:iit_app/ui/web_conflicts/workshop_detail_io.dart';
 import 'package:iit_app/ui/web_conflicts/workshop_detail_web.dart';
-import 'dart:typed_data';
-import 'package:universal_io/prefer_universal/io.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +16,6 @@ import 'package:iit_app/ui/dialogBoxes.dart';
 import 'package:iit_app/ui/separator.dart';
 import 'package:iit_app/ui/text_style.dart';
 import 'package:iit_app/ui/workshop_custom_widgets.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:skeleton_text/skeleton_text.dart';

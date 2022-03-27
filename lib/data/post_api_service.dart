@@ -1,5 +1,4 @@
 import 'package:chopper/chopper.dart';
-import 'package:flutter/material.dart';
 import 'package:iit_app/model/built_post.dart';
 import 'package:built_collection/built_collection.dart';
 import 'built_value_converter.dart';

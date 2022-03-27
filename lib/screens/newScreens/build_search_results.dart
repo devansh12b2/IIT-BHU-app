@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:iit_app/data/internet_connection_interceptor.dart';
 import 'package:iit_app/model/appConstants.dart';
 import 'package:iit_app/model/built_post.dart';
-import 'package:iit_app/model/colorConstants.dart';
-import 'package:iit_app/pages/worshop_detail/workshopDetailPage.dart';
 import 'package:built_collection/built_collection.dart';
 
 //import 'package:iit_app/screens/newScreens/new_home_app_bar.dart';

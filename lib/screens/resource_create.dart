@@ -5,7 +5,6 @@ import 'package:iit_app/model/built_post.dart';
 import 'package:iit_app/model/deprecatedWidgetsStyle.dart';
 
 class ResourceCreateScreen extends StatefulWidget {
-  @override
   BuiltWorkshopDetailPost workshop;
   int id;
   ResourceCreateScreen(this.workshop, [this.id]);

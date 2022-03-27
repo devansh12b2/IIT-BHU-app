@@ -1,6 +1,4 @@
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-import 'package:flutter/material.dart';
-import 'package:iit_app/model/built_post.dart';
 
 class DynamicLinkService {
   static Future<Uri> createDynamicLink(

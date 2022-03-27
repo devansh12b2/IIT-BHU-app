@@ -17,57 +17,54 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
+  built_value: ^6.7.0
+  chopper: ^2.4.2
+  clippy_flutter: ^1.1.1
+  connectivity: ^2.0.2
 
   cupertino_icons: ^0.1.2
+  fab_circular_menu:
+  firebase_auth: ^0.18.4+1
+
+  firebase_core: ^0.5.3
+  firebase_dynamic_links: ^0.6.3
+  firebase_messaging: "^8.0.0-dev.11"
+  firebase_storage: ^5.2.0
+  flushbar: ^1.10.4
+  flutter:
+    sdk: flutter
+  flutter_spinkit: ^4.1.2
+  font_awesome_flutter:
+  google_fonts:
+  google_maps_flutter:
+
+  # esys_flutter_share: ^1.0.2
+  google_sign_in: ^4.0.7
+  http: ^0.12.1
+  image_picker: ^0.6.7+14
+  intl:
+  package_info: ^0.4.3+2
+  path_provider: ^1.5.1
+  photo_view: ^0.10.3
+  provider: ^3.0.0+1
+  share_plus: ^1.2.0
+  shared_preferences: ^0.5.6+3
+  skeleton_text: ^1.0.0
+  sliding_up_panel: ^1.0.2
+  sqflite: ^1.2.0
+  url_launcher: ^5.1.6
 
   # web
   universal_io: ^1.0.2
   
 
-  firebase_core: ^0.5.3
-  firebase_auth: ^0.18.4+1
-  firebase_messaging: "^8.0.0-dev.11"
-  firebase_storage: ^5.2.0
-
-  # esys_flutter_share: ^1.0.2
-  google_sign_in: ^4.0.7
-  url_launcher: ^5.1.6
-  chopper: ^2.4.2
-  provider: ^3.0.0+1
-  connectivity: ^2.0.2
-  built_value: ^6.7.0
-  sqflite: ^1.2.0
-  path_provider: ^1.5.1
-  shared_preferences: ^0.5.6+3
-  http: ^0.12.1
-  sliding_up_panel: ^1.0.2
-  font_awesome_flutter:
-  skeleton_text: ^1.0.0
-  flutter_spinkit: ^4.1.2
-  google_maps_flutter:
-  intl:
-  fab_circular_menu:
-  image_picker: ^0.6.7+14
-  photo_view: ^0.10.3
-  flushbar: ^1.10.4
-  clippy_flutter: ^1.1.1
-  firebase_dynamic_links: ^0.6.3
-  google_fonts:
-  package_info: ^0.4.3+2
-  share_plus: ^1.2.0
-
-
-
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  chopper_generator: ^2.4.2
-  built_value_generator: ^6.7.0
   # No version number means the latest version
   build_runner:
-
+  built_value_generator: ^6.7.0
+  chopper_generator: ^2.4.2
+  flutter_test:
+    sdk: flutter
 
 flutter:
   uses-material-design: true
@@ -84,5 +81,3 @@ flutter:
           weight: 700
         - asset: assets/fonts/Gilroy-Medium.ttf
           weight: 500
-
-

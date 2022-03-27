@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:iit_app/model/appConstants.dart';
-import 'package:iit_app/pages/Home/homePage.dart';
 import 'package:iit_app/pages/club_entity/clubPage.dart';
 import 'package:iit_app/pages/club_entity/entityPage.dart';
 import 'package:iit_app/pages/login/loginPage.dart';
