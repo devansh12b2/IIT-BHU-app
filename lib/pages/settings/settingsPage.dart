@@ -124,14 +124,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         child: Text("Reset Saved Data")),
               ),
             ),
-            Container(
-              margin: EdgeInsets.all(20),
-              child: ElevatedButton(
-                style: raisedButtonStyle,
-                onPressed: () => _chooseTheme(),
-                child: Text('Pick Theme'),
-              ),
-            ),
+            // Container(
+            //   margin: EdgeInsets.all(20),
+            //   child: ElevatedButton(
+            //     style: raisedButtonStyle,
+            //     onPressed: () => _chooseTheme(),
+            //     child: Text('Pick Theme'),
+            //   ),
+            // ),
           ],
         ),
       ),

@@ -81,10 +81,10 @@ class _InitiationState extends State<Initiation> {
 
   _initTheme() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.getString(SharedPreferenceKeys.usertheme) == 'light') {
-      ColorConstants.setLight();
-    } else {
+    if (prefs.getString(SharedPreferenceKeys.usertheme) == 'dark') {
       ColorConstants.setDark();
+    } else {
+      ColorConstants.setLight();
     }
   }
 
