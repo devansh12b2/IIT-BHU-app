@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iit_app/external_libraries/spin_kit.dart';
 import 'package:iit_app/model/appConstants.dart';
+import 'package:iit_app/pages/parliament/addSuggestionScreen.dart';
 import 'package:iit_app/ui/snackbar.dart';
 
 class VoteScreen extends StatefulWidget {
@@ -67,7 +68,13 @@ class _VoteScreenState extends State<VoteScreen> {
         width: 50,
         child: FittedBox(
           child: FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context)=>AddSuggestion())
+              ).then((value) {
+                getSuggestions();
+              });
+            },
             backgroundColor: secondaryColor,
             child: Center(
               child: Icon(
@@ -103,6 +110,7 @@ class _VoteScreenState extends State<VoteScreen> {
           .getParliamentSuggestionDetails(response[i]['id'], AppConstants.djangoToken);
 
       print("Suggestion details are - ${suggestionDetails.body}");
+      votes = [];
       votes.add(suggestionDetails.body);
       print("After adding votes = $votes");
     }

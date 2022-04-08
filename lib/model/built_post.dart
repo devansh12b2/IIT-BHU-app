@@ -568,6 +568,10 @@ abstract class BuiltProfilePost
   @nullable
   String get photo_url;
 
+  bool get can_post_notice;
+
+  bool get can_add_parliament_details;
+
   BuiltProfilePost._();
 
   factory BuiltProfilePost([updates(BuiltProfilePostBuilder b)]) =

@@ -6730,6 +6730,10 @@ class _$BuiltProfilePost extends BuiltProfilePost {
   final BuiltList<EntityListPost> entity_privileges;
   @override
   final String photo_url;
+  @override
+  final bool can_post_notice;
+  @override
+  final bool can_add_parliament_details;
 
   factory _$BuiltProfilePost(
           [void Function(BuiltProfilePostBuilder) updates]) =>
@@ -6746,7 +6750,9 @@ class _$BuiltProfilePost extends BuiltProfilePost {
       this.entity_subscriptions,
       this.club_privileges,
       this.entity_privileges,
-      this.photo_url})
+      this.photo_url,
+      this.can_post_notice,
+      this.can_add_parliament_details})
       : super._();
 
   @override
@@ -6771,12 +6777,14 @@ class _$BuiltProfilePost extends BuiltProfilePost {
         entity_subscriptions == other.entity_subscriptions &&
         club_privileges == other.club_privileges &&
         entity_privileges == other.entity_privileges &&
-        photo_url == other.photo_url;
+        photo_url == other.photo_url&&
+        can_post_notice == other.can_post_notice&&
+        can_add_parliament_details == other.can_add_parliament_details;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
+    return $jf($jc($jc($jc(
         $jc(
             $jc(
                 $jc(
@@ -6793,7 +6801,9 @@ class _$BuiltProfilePost extends BuiltProfilePost {
                     entity_subscriptions.hashCode),
                 club_privileges.hashCode),
             entity_privileges.hashCode),
-        photo_url.hashCode));
+        photo_url.hashCode),
+        can_post_notice.hashCode),
+        can_add_parliament_details.hashCode));
   }
 
   @override
@@ -6809,7 +6819,9 @@ class _$BuiltProfilePost extends BuiltProfilePost {
           ..add('entity_subscriptions', entity_subscriptions)
           ..add('club_privileges', club_privileges)
           ..add('entity_privileges', entity_privileges)
-          ..add('photo_url', photo_url))
+          ..add('photo_url', photo_url)
+          ..add('can_post_notice',can_post_notice)
+          ..add('can_add_parliament_details',can_add_parliament_details))
         .toString();
   }
 }
@@ -6871,6 +6883,14 @@ class BuiltProfilePostBuilder
   String get photo_url => _$this._photo_url;
   set photo_url(String photo_url) => _$this._photo_url = photo_url;
 
+  bool _can_post_notice;
+  bool get can_post_notice => _$this._can_post_notice;
+  set can_post_notice(bool can_post_notice) => _$this._can_post_notice = can_post_notice;
+
+  bool _can_add_parliament_details;
+  bool get can_add_parliament_details => _$this._can_add_parliament_details;
+  set can_add_parliament_details(bool can_add_parliament_details) => _$this._can_add_parliament_details = can_add_parliament_details;
+
   BuiltProfilePostBuilder();
 
   BuiltProfilePostBuilder get _$this {
@@ -6886,6 +6906,8 @@ class BuiltProfilePostBuilder
       _club_privileges = _$v.club_privileges?.toBuilder();
       _entity_privileges = _$v.entity_privileges?.toBuilder();
       _photo_url = _$v.photo_url;
+      can_post_notice = _$v.can_post_notice;
+      can_add_parliament_details = _$v.can_add_parliament_details;
       _$v = null;
     }
     return this;
@@ -6920,7 +6942,10 @@ class BuiltProfilePostBuilder
               entity_subscriptions: _entity_subscriptions?.build(),
               club_privileges: _club_privileges?.build(),
               entity_privileges: _entity_privileges?.build(),
-              photo_url: photo_url);
+              photo_url: photo_url,
+              can_post_notice:can_post_notice,
+              can_add_parliament_details:can_add_parliament_details,
+          );
     } catch (_) {
       String _$failedField;
       try {

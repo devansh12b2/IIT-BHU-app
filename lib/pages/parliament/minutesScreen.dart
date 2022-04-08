@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iit_app/external_libraries/spin_kit.dart';
 import 'package:iit_app/model/appConstants.dart';
+import 'package:iit_app/pages/parliament/addMinutes.dart';
 
 class MinutesScreen extends StatefulWidget {
   //const MinutesScreen({Key? key}) : super(key: key);
@@ -37,28 +38,56 @@ class _MinutesScreenState extends State<MinutesScreen>
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: buildAppBar(context),
-        body: (isLoading) ? Center(
-          child: LoadingCircle,
-        ) :
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5),
-          child: ListView(
-            children: [
-              SizedBox(
-                height: 20,
+      appBar: buildAppBar(context),
+      body: (isLoading)
+          ? Center(
+              child: LoadingCircle,
+            )
+          : Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              child: ListView(
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ...minutes
+                      .map((e) =>
+                          showCommitteeMinutes(size, e[0]['committee'], e))
+                      .toList(),
+                  SizedBox(
+                    height: 20,
+                  )
+                ],
               ),
-              ...minutes.map((e) => showCommitteeMinutes(size, e[0]['committee'], e)).toList(),
-              SizedBox(
-                height: 20,
-              )
-            ],
-          ),
-        )
+            ),
+      floatingActionButton:
+          (AppConstants.currentUser.can_add_parliament_details != null &&
+                  AppConstants.currentUser.can_add_parliament_details == true)
+              ? Container(
+                  height: 50,
+                  width: 50,
+                  child: FittedBox(
+                    child: FloatingActionButton(
+                      onPressed: () {
+                        Navigator.push(context,
+                        MaterialPageRoute(builder: (context)=>AddMinutes())
+                        ).then((value){
+                          getMinutes();
+                        });
+                      },
+                      backgroundColor: secondaryColor,
+                      child: Center(
+                        child: Icon(
+                          Icons.add,
+                          color: primaryColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              : Container(),
     );
   }
 
@@ -71,20 +100,21 @@ class _MinutesScreenState extends State<MinutesScreen>
     List response = res.body;
     int numOfCommittees = 0;
     response.forEach((element) {
-      if(element['committee'] > numOfCommittees)
+      if (element['committee'] > numOfCommittees)
         numOfCommittees = element['committee'];
     });
-    for(int i = 0;i<numOfCommittees;i++) minutes.add([]);
+    minutes = [];
+    for (int i = 0; i < numOfCommittees; i++) minutes.add([]);
 
     response.forEach((e) {
-      Map<String,dynamic> data = {
+      Map<String, dynamic> data = {
         "committee": "Committee ${e['committee']}",
-        "id" : e['id'],
+        "id": e['id'],
         "title": e['title'],
-        "date":e['date'],
-        "description" : e['description']
+        "date": e['date'],
+        "description": e['description']
       };
-      minutes[e['committee']-1].add(data);
+      minutes[e['committee'] - 1].add(data);
     });
     setState(() {
       isLoading = false;
@@ -119,23 +149,23 @@ class _MinutesScreenState extends State<MinutesScreen>
                 ),
               ),
               !(visibility[committeeName] == false ||
-                  visibility[committeeName] == null)
+                      visibility[committeeName] == null)
                   ? Icon(Icons.keyboard_arrow_right_rounded)
                   : Icon(Icons.keyboard_arrow_down_rounded)
             ],
           ),
         ),
         !(visibility[committeeName] == false ||
-            visibility[committeeName] == null)
+                visibility[committeeName] == null)
             ? Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            ...committeeMinutes
-                .map((e) => minuteDetails(size, e))
-                .toList()
-          ],
-        )
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  ...committeeMinutes
+                      .map((e) => minuteDetails(size, e))
+                      .toList()
+                ],
+              )
             : Container(),
         //...committee1Minutes.map((e) => minuteDetails(size, e)).toList(),
       ],
@@ -172,7 +202,7 @@ class _MinutesScreenState extends State<MinutesScreen>
                 height: 10,
               ),
               Text(
-                minute['description']??"",
+                minute['description'] ?? "",
                 style: GoogleFonts.lato(
                   color: primaryColor,
                   fontSize: 15,
@@ -221,8 +251,8 @@ class _MinutesScreenState extends State<MinutesScreen>
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: (AppConstants.currentUser == null ||
-                    AppConstants.isGuest == true ||
-                    AppConstants.currentUser.photo_url == '')
+                        AppConstants.isGuest == true ||
+                        AppConstants.currentUser.photo_url == '')
                     ? AssetImage('assets/guest.png')
                     : NetworkImage(AppConstants.currentUser.photo_url),
                 fit: BoxFit.fill,
