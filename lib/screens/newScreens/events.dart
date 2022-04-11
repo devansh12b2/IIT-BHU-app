@@ -79,61 +79,64 @@ Widget builtAllWorkshopsBodyPosts(
     BuildContext context, BuiltAllWorkshopsPost posts,
     {Function reload}) {
   Size screensize = MediaQuery.of(context).size;
-  return Column(
-    children: <Widget>[
-      Container(
-        height: kIsWeb ? 250 : screensize.height * 0.4,
-        child: ListView.builder(
-          shrinkWrap: true,
-          scrollDirection: Axis.vertical,
-          itemCount: 5,
-          padding: EdgeInsets.only(top: 1.0, right: 10.0),
-          itemBuilder: (context, index) {
-            final w = posts.past_workshops[index];
-            final bool isClub = w.club != null;
-            var logoFile;
-            if (isClub)
-              logoFile = AppConstants.getImageFile(w.club.small_image_url);
-            else
-              logoFile = AppConstants.getImageFile(w.entity.small_image_url);
-            return GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                  PageRouteBuilder(
-                    pageBuilder: (_, __, ___) =>
-                        WorkshopDetailPage(w.id, workshop: w, isPast: true),
-                    transitionsBuilder:
-                        (context, animation, secondaryAnimation, child) =>
-                            FadeTransition(opacity: animation, child: child),
-                  ),
-                );
-                // .then((value) => reload());
-              },
-              child: EventCard(
-                time: w.time,
-                date: w.date,
-                title: w.title,
-                club: '${isClub ? w.club.name : w.entity.name}',
-                image: isClub
-                    ? (w.club.small_image_url == null ||
-                            w.club.small_image_url == ''
-                        ? AssetImage('assets/iitbhu.jpeg')
-                        : logoFile == null
-                            ? NetworkImage(w.club.small_image_url)
-                            : FileImage(logoFile))
-                    : (w.entity.small_image_url == null ||
-                            w.entity.small_image_url == ''
-                        ? AssetImage('assets/iitbhu.jpeg')
-                        : logoFile == null
-                            ? NetworkImage(w.entity.small_image_url)
-                            : FileImage(logoFile)),
-                eventstatus: true,
-              ),
-            );
-          },
+  return Container(
+    height: screensize.height * 0.5,
+    child: Column(
+      children: <Widget>[
+        Container(
+          height: kIsWeb ? 250 : screensize.height * 0.4,
+          child: ListView.builder(
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            itemCount: 5,
+            padding: EdgeInsets.only(top: 1.0, right: 10.0),
+            itemBuilder: (context, index) {
+              final w = posts.past_workshops[index];
+              final bool isClub = w.club != null;
+              var logoFile;
+              if (isClub)
+                logoFile = AppConstants.getImageFile(w.club.small_image_url);
+              else
+                logoFile = AppConstants.getImageFile(w.entity.small_image_url);
+              return GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    PageRouteBuilder(
+                      pageBuilder: (_, __, ___) =>
+                          WorkshopDetailPage(w.id, workshop: w, isPast: true),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) =>
+                              FadeTransition(opacity: animation, child: child),
+                    ),
+                  );
+                  // .then((value) => reload());
+                },
+                child: EventCard(
+                  time: w.time,
+                  date: w.date,
+                  title: w.title,
+                  club: '${isClub ? w.club.name : w.entity.name}',
+                  image: isClub
+                      ? (w.club.small_image_url == null ||
+                              w.club.small_image_url == ''
+                          ? AssetImage('assets/iitbhu.jpeg')
+                          : logoFile == null
+                              ? NetworkImage(w.club.small_image_url)
+                              : FileImage(logoFile))
+                      : (w.entity.small_image_url == null ||
+                              w.entity.small_image_url == ''
+                          ? AssetImage('assets/iitbhu.jpeg')
+                          : logoFile == null
+                              ? NetworkImage(w.entity.small_image_url)
+                              : FileImage(logoFile)),
+                  eventstatus: true,
+                ),
+              );
+            },
+          ),
         ),
-      ),
-    ],
+      ],
+    ),
   );
 }
 
@@ -158,94 +161,91 @@ class EventCard extends StatelessWidget {
     Size screensize = MediaQuery.of(context).size;
     var cardwidth = kIsWeb ? 200 : screensize.width;
     var cardheight = kIsWeb ? 200 : screensize.height * 0.15;
-    return GestureDetector(
-      onTap: null,
-      child: Container(
-        margin: EdgeInsets.only(left: 1.0, right: 1.0),
-        constraints: BoxConstraints.expand(),
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.center,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  margin: EdgeInsets.only(left: 60.0, right: 1.0),
-                  height: cardheight,
-                  width: cardwidth,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black12,
-                        offset: const Offset(
-                          1.0,
-                          1.0,
-                        ), //Offset
-                        blurRadius: 5.0,
-                        spreadRadius: 2.0,
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(20.0),
+    return Container(
+      height: cardheight * 1.1,
+      width: cardwidth * 1.5,
+      margin: EdgeInsets.only(left: 1.0, right: 1.0),
+      constraints: BoxConstraints.expand(),
+      child: Stack(
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+              padding: const EdgeInsets.all(8.0),
+              margin: EdgeInsets.only(left: 60.0, right: 1.0),
+              height: cardheight,
+              width: cardwidth,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    offset: const Offset(
+                      1.0,
+                      1.0,
+                    ), //Offset
+                    blurRadius: 5.0,
+                    spreadRadius: 2.0,
                   ),
-                  constraints: BoxConstraints.expand(),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 25, right: 5),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Container(height: 4.0),
-                        Text(title, style: Style.titleTextStyle),
-                        Container(height: 10.0),
-                        Text(club, style: Style.commonTextStyle),
-                        Separator(),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Expanded(
+                ],
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              constraints: BoxConstraints.expand(),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 25, right: 5),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Container(height: 4.0),
+                    Text(title, style: Style.titleTextStyle),
+                    Container(height: 10.0),
+                    Text(club, style: Style.commonTextStyle),
+                    Separator(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Expanded(
+                              flex: 1,
+                              child: _workshopValue(
+                                  value: date, icon: Icons.date_range)),
+                          Container(
+                            width: 15.0,
+                          ),
+                          time == null
+                              ? SizedBox(height: 1)
+                              : Expanded(
                                   flex: 1,
                                   child: _workshopValue(
-                                      value: date, icon: Icons.date_range)),
-                              Container(
-                                width: 15.0,
-                              ),
-                              time == null
-                                  ? SizedBox(height: 1)
-                                  : Expanded(
-                                      flex: 1,
-                                      child: _workshopValue(
-                                          value: time, icon: Icons.timer))
-                            ],
-                          ),
-                        ),
-                      ],
+                                      value: time, icon: Icons.timer))
+                        ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
             ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                height: 92.0,
-                width: 92.0,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Image(fit: BoxFit.contain, image: image),
-                ),
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              height: 92.0,
+              width: 92.0,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image(fit: BoxFit.contain, image: image),
               ),
             ),
-            if (eventstatus == true)
-              Positioned(
-                top: 0.0,
-                right: 10.0,
-                child: EventOnline(),
-              ),
-          ],
-        ),
+          ),
+          if (eventstatus == true)
+            Positioned(
+              top: 0.0,
+              right: 10.0,
+              child: EventOnline(),
+            ),
+        ],
       ),
     );
   }

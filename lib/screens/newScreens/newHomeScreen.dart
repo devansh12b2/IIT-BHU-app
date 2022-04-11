@@ -117,11 +117,7 @@ class _NewHomeScreenState extends State<NewHomeScreen>
           ),
           Align(
             alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 3.0),
-              child: Events(),
-              // child: Container(height: screensize.height * 0.28, child: Events()),
-            ),
+            child: Events(),
           ),
         ],
       ),
