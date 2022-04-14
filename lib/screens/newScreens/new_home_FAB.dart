@@ -28,9 +28,9 @@ FabCircularMenu newHomeFAB(BuildContext context, {fabKey}) {
     fabCloseColor: Color(0xFFb9d8ff),
     fabOpenColor: Color(0xFFb9d8ff),
     children: <Widget>[
-      FloatingItems(image: 'assets/siren.png', number: 'tel:+91 88888888888'),
-      FloatingItems(image: 'assets/siren.png', number: 'tel:+91 88888888888'),
-      FloatingItems(image: 'assets/siren.png', number: 'tel:+91 88888888888'),
+      FloatingItems(image: 'assets/siren.png', number: 'tel:+91 9876543210'),
+      FloatingItems(image: 'assets/police.png', number: 'tel:+91 100'),
+      FloatingItems(image: 'assets/emergency-call.png', number: 'tel:+91 101'),
     ],
   );
 }
@@ -47,7 +47,7 @@ class FloatingItems extends StatelessWidget {
       child: Container(
         height: 45.0,
         decoration: BoxDecoration(
-            color: Color(0xFF176ede),
+            color: Color(0xFFd1e6ff),
             shape: BoxShape.circle,
             image: DecorationImage(image: AssetImage(image))),
       ),
