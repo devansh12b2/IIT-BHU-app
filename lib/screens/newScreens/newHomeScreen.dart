@@ -53,7 +53,8 @@ class _NewHomeScreenState extends State<NewHomeScreen>
           Align(
             alignment: Alignment.centerLeft,
             child: Padding(
-              padding: const EdgeInsets.only(left: 18.0, bottom: 8.0),
+              padding:
+                  const EdgeInsets.only(left: 18.0, bottom: 8.0, top: 10.0),
               child: Text(
                 'Noticeboard',
                 style: TextStyle(
@@ -123,7 +124,7 @@ class _NewHomeScreenState extends State<NewHomeScreen>
               children: [
                 SingleChildScrollView(
                   child: SizedBox(
-                    height: screensize.height * 0.5,
+                    height: screensize.height * 0.4,
                     child: Events(),
                   ),
                 ),
