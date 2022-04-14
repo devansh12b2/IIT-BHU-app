@@ -115,9 +115,20 @@ class _NewHomeScreenState extends State<NewHomeScreen>
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Events(),
+          Padding(
+            padding: const EdgeInsets.only(left: 10.0, right: 8.0, bottom: 5.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SingleChildScrollView(
+                  child: SizedBox(
+                    height: screensize.height * 0.5,
+                    child: Events(),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
