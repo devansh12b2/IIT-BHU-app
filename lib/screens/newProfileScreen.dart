@@ -227,7 +227,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                widget.profileDetails.phone_number.isEmpty
+                                widget.profileDetails.phone_number==null || widget.profileDetails.phone_number.isEmpty 
                                     ? 'Phone No. not provided'
                                     : widget.profileDetails.phone_number,
                                 style: TextStyle(
@@ -272,22 +272,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           SizedBox(
                             height: 10,
                           ),
-                          InkWell(
-                            onTap: () {
-                              showSnackBar(
-                                  context,
-                                  'This feature is currently under development',
-                                  primaryColor,
-                                  bgColor);
-                            },
-                            child: Text(
-                              'E-Id Card',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: secondaryColor,
-                                  fontSize: 14),
-                            ),
-                          ),
+                        
                           SizedBox(
                             height: 10,
                           )
