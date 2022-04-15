@@ -35,7 +35,7 @@ FabCircularMenu newHomeFAB(BuildContext context, {fabKey}) {
       ),
       FloatingItems(
         image: 'assets/ambulance.png',
-        number: 'tel:+91 102',
+        number: 'tel:+91 54223 09259',
         title: 'Ambulance',
       ),
       FloatingItems(
