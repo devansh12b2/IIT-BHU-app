@@ -379,7 +379,7 @@ class _GrievancePageState extends State<GrievancePage> {
                     color: ColorConstants.grievanceBack,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   child: Form(
                     key: _formKey,
                     child: Column(
@@ -468,7 +468,7 @@ class _GrievancePageState extends State<GrievancePage> {
                               ),
                             ),
                             SizedBox(
-                              width: 10,
+                              width: 5,
                             ),
                             Flexible(
                               flex: 1,
@@ -704,7 +704,7 @@ class _DialogueContentState extends State<DialogueContent> {
   Widget build(BuildContext context) {
     return Container(
       width: 200,
-      height: 200,
+      //height: 200,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Colors.white,
@@ -726,12 +726,16 @@ class _DialogueContentState extends State<DialogueContent> {
               ),
               builder: (ctx, result) {
                 if (result.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(),
+                  return SizedBox(
+                    height: 100,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   );
                 }
                 if (result.hasData) {
                   return Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       SizedBox(
                         height: 10,
@@ -757,10 +761,14 @@ class _DialogueContentState extends State<DialogueContent> {
                           ),
                         ),
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
                     ],
                   );
                 } else
                   return Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       SizedBox(
                         height: 10,
@@ -787,11 +795,15 @@ class _DialogueContentState extends State<DialogueContent> {
                           ),
                         ),
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
                     ],
                   );
               },
             )
           : Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -851,6 +863,9 @@ class _DialogueContentState extends State<DialogueContent> {
                       ),
                     )
                   ],
+                ),
+                SizedBox(
+                  height: 20,
                 ),
               ],
             ),
