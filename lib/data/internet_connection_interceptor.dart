@@ -1,13 +1,14 @@
 import 'dart:async';
 
 import 'package:chopper/chopper.dart';
+import 'package:flutter/foundation.dart';
 import 'package:iit_app/model/appConstants.dart';
 
 class InternetConnectionInterceptor implements RequestInterceptor {
   @override
   FutureOr<Request> onRequest(Request request) async {
     final connectivityResult =
-        await AppConstants.connectionStatus.checkConnection();
+        kIsWeb ? true : await AppConstants.connectionStatus.checkConnection();
 
     if (connectivityResult != true) {
       throw InternetConnectionException();

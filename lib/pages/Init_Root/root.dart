@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:iit_app/model/appConstants.dart';
 import 'package:iit_app/pages/Home/homePage.dart';
@@ -18,7 +19,7 @@ class _RootPageState extends State<RootPage> {
   @override
   void initState() {
     super.initState();
-    _initLink();
+    if (!kIsWeb) _initLink();
     _initFCM();
   }
 

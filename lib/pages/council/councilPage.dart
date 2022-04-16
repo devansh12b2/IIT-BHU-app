@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:iit_app/data/internet_connection_interceptor.dart';
@@ -38,10 +39,12 @@ class _CouncilPageState extends State<CouncilPage> {
       councilData = await AppConstants.getCouncilDetailsFromDatabase(
           councilId: widget.councilId, refresh: refresh);
 
-      _councilLargeLogoFile =
-          AppConstants.getImageFile(councilData.large_image_url);
+      if (kIsWeb)
+        _councilLargeLogoFile = kIsWeb
+            ? null
+            : AppConstants.getImageFile(councilData.large_image_url);
 
-      if (_councilLargeLogoFile == null) {
+      if (_councilLargeLogoFile == null && !kIsWeb) {
         AppConstants.writeImageFileIntoDisk(councilData.large_image_url);
       }
 

@@ -1,4 +1,7 @@
-import 'dart:io';
+import 'package:flutter/foundation.dart';
+import 'package:iit_app/model/appConstants_conflicts.dart';
+// import 'package:universal_io/io.dart';
+
 import 'package:chopper/chopper.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -84,52 +87,56 @@ class AppConstants {
 
   static PostApiService service;
   static BuiltList<BuiltAllNotices> noticeSummaryFromDatabase;
-  static BuiltList<BuiltWorkshopSummaryPost> workshopFromDatabase;
+  static BuiltList<BuiltWorkshopSummaryPost> workshopFromDatabase =
+      BuiltList<BuiltWorkshopSummaryPost>();
   static BuiltList<BuiltAllCouncilsPost> councilsSummaryfromDatabase;
   static BuiltList<EntityListPost> entitiesSummaryFromDatabase;
 
   static Future setDeviceDirectoryForImages() async {
-    String path = (await getApplicationDocumentsDirectory()).path + '/Images';
+    if (!kIsWeb) AppConstantConflicts.setDeviceDirectoryForImages();
+    // String path = (await getApplicationDocumentsDirectory()).path + '/Images';
 
-    Directory(path).exists().then((exist) {
-      if (exist == false) {
-        Directory(path).createSync();
-      }
-      AppConstants.deviceDirectoryPathImages = path;
-    });
+    // Directory(path).exists().then((exist) {
+    //   if (exist == false) {
+    //     Directory(path).createSync();
+    //   }
+    //   AppConstants.deviceDirectoryPathImages = path;
+    // });
   }
 
   static Future populateWorkshopsAndCouncilAndEntityButtons() async {
-    DatabaseHelper helper = DatabaseHelper.instance;
-    var database = await helper.database;
+    try {
+      final workshopSnapshots = await service.getActiveWorkshops();
+      final workshopPosts = workshopSnapshots.body;
 
-    councilsSummaryfromDatabase =
-        await DatabaseQuery.getAllCouncilsSummary(db: database);
-    workshopFromDatabase =
-        await DatabaseQuery.getAllWorkshopsSummary(db: database);
-    entitiesSummaryFromDatabase =
-        await DatabaseQuery.getAllEntitiesSummary(db: database);
-    // print(' workshops is empty: ${(workshops.isEmpty == true).toString()}');
+      final councilSummarySnapshots = await service.getAllCouncils();
+      final councilSummaryPosts = councilSummarySnapshots.body;
 
-    if (workshopFromDatabase == null) {
-      // insert all workshop information for the first time
-      await DatabaseWrite.deleteAllWorkshopsSummary(db: database);
-      await DatabaseWrite.deleteAllCouncilsSummary(db: database);
-      await DatabaseWrite.deleteAllEntitySummary(db: database);
+      final entitySummarySnapshots = await service.getAllEntity();
+      final entitySummaryPosts = entitySummarySnapshots.body;
 
-      print(
-          'fetching workshops and all councils and entites summary from json');
+      if (!kIsWeb) {
+        DatabaseHelper helper = DatabaseHelper.instance;
+        var database = await helper.database;
 
-      // API calls to fetch the data
-      try {
-        final workshopSnapshots = await service.getActiveWorkshops();
-        final workshopPosts = workshopSnapshots.body;
+        councilsSummaryfromDatabase =
+            await DatabaseQuery.getAllCouncilsSummary(db: database);
+        workshopFromDatabase =
+            await DatabaseQuery.getAllWorkshopsSummary(db: database);
+        entitiesSummaryFromDatabase =
+            await DatabaseQuery.getAllEntitiesSummary(db: database);
+        // print(' workshops is empty: ${(workshops.isEmpty == true).toString()}');
 
-        final councilSummarySnapshots = await service.getAllCouncils();
-        final councilSummaryPosts = councilSummarySnapshots.body;
+        if (workshopFromDatabase == null) {
+          // insert all workshop information for the first time
+          await DatabaseWrite.deleteAllWorkshopsSummary(db: database);
+          await DatabaseWrite.deleteAllCouncilsSummary(db: database);
+          await DatabaseWrite.deleteAllEntitySummary(db: database);
+        }
 
-        final entitySummarySnapshots = await service.getAllEntity();
-        final entitySummaryPosts = entitySummarySnapshots.body;
+        print(
+            'fetching workshops and all councils and entites summary from json');
+        // API calls to fetch the data
 
 // storing the data fetched from json objects into local database
         // ? remember, we use council summary in database while fetching other data (most of time)
@@ -156,23 +163,23 @@ class AppConstants {
               ? post.entity.small_image_url
               : post.club.small_image_url);
         }
+      }
 
 // fetching the data from local database and storing it into variables
 // whose scope is throughout the app
 
-        councilsSummaryfromDatabase = councilSummaryPosts;
-        // await helper.getAllCouncilsSummary(db: database);
-        workshopFromDatabase = workshopPosts;
-        // await helper.getAllWorkshopsSummary(db: database);
-        entitiesSummaryFromDatabase = entitySummaryPosts;
-      } on InternetConnectionException catch (error) {
-        throw error;
-      } catch (err) {
-        print(err);
-      }
-    }
+      councilsSummaryfromDatabase = councilSummaryPosts;
+      // await helper.getAllCouncilsSummary(db: database);
+      workshopFromDatabase = workshopPosts;
+      // await helper.getAllWorkshopsSummary(db: database);
+      entitiesSummaryFromDatabase = entitySummaryPosts;
 
-    print('workshops and all councils and entities summary fetched ');
+      print('workshops and all councils and entities summary fetched ');
+    } on InternetConnectionException catch (error) {
+      throw error;
+    } catch (err) {
+      print(err);
+    }
   }
 
   static writeCouncilAndEntityLogoIntoDisk() async {
@@ -186,70 +193,80 @@ class AppConstants {
   }
 
   static writeImageFileIntoDisk(String url) async {
-    if (url == null || url.isEmpty) return null;
+    if (!kIsWeb) AppConstantConflicts.writeImageFileIntoDisk(url);
+    // if (url == null || url.isEmpty) return null;
 
-    final parsed = _diskRWableImageUrl(url);
+    // final parsed = _diskRWableImageUrl(url);
 
-    File file = File('${AppConstants.deviceDirectoryPathImages}/$parsed');
+    // File file = File('${AppConstants.deviceDirectoryPathImages}/$parsed');
 
-    if (file.existsSync() == false) {
-      http.get(url).catchError((error) {
-        print('Error in downloading image : $error');
-      }).then((response) {
-        if (response != null && response.statusCode == 200) {
-          final imageData = response.bodyBytes.toList();
-          final File writingFile =
-              File('${AppConstants.deviceDirectoryPathImages}/$parsed');
-          writingFile.writeAsBytesSync(imageData);
-          print('image saved into disk ');
-        }
-      });
-    }
+    // if (file.existsSync() == false) {
+    //   http.get(url).catchError((error) {
+    //     print('Error in downloading image : $error');
+    //   }).then((response) {
+    //     if (response != null && response.statusCode == 200) {
+    //       final imageData = response.bodyBytes.toList();
+    //       final File writingFile =
+    //           File('${AppConstants.deviceDirectoryPathImages}/$parsed');
+    //       writingFile.writeAsBytesSync(imageData);
+    //       print('image saved into disk ');
+    //     }
+    //   });
+    // }
   }
 
-  static String _diskRWableImageUrl(String imageUrl) {
-    String parsedUrl = '';
-    for (var element in imageUrl.split('/')) {
-      parsedUrl += element;
-    }
-    return parsedUrl;
-  }
+  // static String _diskRWableImageUrl(String imageUrl) {
+  //   String parsedUrl = '';
+  //   for (var element in imageUrl.split('/')) {
+  //     parsedUrl += element;
+  //   }
+  //   return parsedUrl;
+  // }
 
   /// if file doesn't exist, null is returned
-  static File getImageFile(String url) {
-    if (url == null || url.isEmpty) return null;
-
-    File file;
-
-    final parsed = _diskRWableImageUrl(url);
-
-    file = File('${AppConstants.deviceDirectoryPathImages}/$parsed');
-
-    if (file.existsSync()) {
-      return file;
-    } else
+  static getImageFile(String url) {
+    if (!kIsWeb)
+      return AppConstantConflicts.getImageFile(url);
+    else
       return null;
+    // if (url == null || url.isEmpty) return null;
+
+    // File file;
+
+    // final parsed = _diskRWableImageUrl(url);
+
+    // file = File('${AppConstants.deviceDirectoryPathImages}/$parsed');
+
+    // if (file.existsSync()) {
+    //   return file;
+    // } else
+    //   return null;
   }
 
 // TODO: we fetch council and entity summaries only once in while initializing empty database, make it refreshable.
 
   static Future updateAndPopulateWorkshops() async {
-    DatabaseHelper helper = DatabaseHelper.instance;
-    var database = await helper.database;
-
     print('fetching workshops infos from json for updation');
     try {
       Response<BuiltList<BuiltWorkshopSummaryPost>> workshopSnapshots =
           await service.getActiveWorkshops();
 
-      if (workshopSnapshots.body != null) {
-        await DatabaseWrite.deleteAllWorkshopsSummary(db: database);
-        final workshopPosts = workshopSnapshots.body;
+      if (!kIsWeb) {
+        DatabaseHelper helper = DatabaseHelper.instance;
+        var database = await helper.database;
 
-        for (var post in workshopPosts) {
-          await DatabaseWrite.insertWorkshopSummaryIntoDatabase(
-              post: post, db: database);
+        if (workshopSnapshots.body != null) {
+          await DatabaseWrite.deleteAllWorkshopsSummary(db: database);
+          final workshopPosts = workshopSnapshots.body;
+
+          for (var post in workshopPosts) {
+            await DatabaseWrite.insertWorkshopSummaryIntoDatabase(
+                post: post, db: database);
+          }
+          workshopFromDatabase = workshopPosts;
         }
+      } else {
+        final workshopPosts = workshopSnapshots.body;
         workshopFromDatabase = workshopPosts;
       }
     } on InternetConnectionException catch (error) {
@@ -261,22 +278,28 @@ class AppConstants {
   }
 
   static Future updateAndPopulateNotices() async {
-    DatabaseHelper helper = DatabaseHelper.instance;
-    var database = await helper.database;
-
     print('fetching notice summaries from json for updation');
+
     try {
       Response<BuiltList<BuiltAllNotices>> noticesSnapshots =
           await service.getAllNotices();
-      //print(noticesSnapshots.body.toString());
-      if (noticesSnapshots.body != null) {
-        await DatabaseWrite.deleteAllNotices(db: database);
-        final notices = noticesSnapshots.body;
-        for (var notice in notices) {
-          await DatabaseWrite.insertNoticesSummaryIntoDatabase(
-              db: database, notice: notice);
-          //print("notice added: ${notice.id}");
+
+      if (!kIsWeb) {
+        DatabaseHelper helper = DatabaseHelper.instance;
+        var database = await helper.database;
+        //print(noticesSnapshots.body.toString());
+        if (noticesSnapshots.body != null) {
+          await DatabaseWrite.deleteAllNotices(db: database);
+          final notices = noticesSnapshots.body;
+          for (var notice in notices) {
+            await DatabaseWrite.insertNoticesSummaryIntoDatabase(
+                db: database, notice: notice);
+            //print("notice added: ${notice.id}");
+          }
+          noticeSummaryFromDatabase = notices;
         }
+      } else {
+        final notices = noticesSnapshots.body;
         noticeSummaryFromDatabase = notices;
       }
     } on InternetConnectionException catch (error) {
@@ -287,29 +310,44 @@ class AppConstants {
     print('notices fetched and updated');
   }
 
-static Future<BuiltList<BuiltAllNotices>> getAllNoticesFromDatabase(
-      { bool refresh = false}) async {
-    DatabaseHelper helper = DatabaseHelper.instance;
-    var database = await helper.database;
+  static Future<BuiltList<BuiltAllNotices>> getAllNoticesFromDatabase(
+      {bool refresh = false}) async {
+    BuiltList<BuiltAllNotices> notices = BuiltList<BuiltAllNotices>();
+    if (!kIsWeb) {
+      DatabaseHelper helper = DatabaseHelper.instance;
+      var database = await helper.database;
 
-    BuiltList<BuiltAllNotices> notices =
-        await DatabaseQuery.getAllNoticesSummary(db: database);
+      notices = await DatabaseQuery.getAllNoticesSummary(db: database);
 
-    if (notices == null || refresh == true) {
+      if (notices == null || refresh == true) {
+        try {
+          Response<BuiltList<BuiltAllNotices>> noticesSnapshots =
+              await AppConstants.service.getAllNotices().catchError((onError) {
+            print("Error in fetching notices: ${onError.toString()}");
+          });
+
+          if (noticesSnapshots.body != null) {
+            notices = noticesSnapshots.body;
+            for (var notice in notices) {
+              await DatabaseWrite.insertNoticesSummaryIntoDatabase(
+                  notice: notice, db: database);
+            }
+          }
+        } on InternetConnectionException catch (error) {
+          throw error;
+        } catch (err) {
+          print(err);
+        }
+      }
+    } else {
       try {
-        Response<BuiltList<BuiltAllNotices>> noticesSnapshots = await AppConstants.service
-            .getAllNotices()
-            .catchError((onError) {
+        Response<BuiltList<BuiltAllNotices>> noticesSnapshots =
+            await AppConstants.service.getAllNotices().catchError((onError) {
           print("Error in fetching notices: ${onError.toString()}");
         });
 
         if (noticesSnapshots.body != null) {
           notices = noticesSnapshots.body;
-        for (var notice in notices){
-          await DatabaseWrite.insertNoticesSummaryIntoDatabase(
-              notice:notice, db: database);
-        }
-          
         }
       } on InternetConnectionException catch (error) {
         throw error;
@@ -323,22 +361,39 @@ static Future<BuiltList<BuiltAllNotices>> getAllNoticesFromDatabase(
 
   static Future getNoticeDetailFromDatabase(
       {@required int noticeId, bool refresh = true}) async {
-    DatabaseHelper helper = DatabaseHelper.instance;
-    var database = await helper.database;
+    BuiltNoticeDetail noticePost = BuiltNoticeDetail();
+    if (!kIsWeb) {
+      try {
+        DatabaseHelper helper = DatabaseHelper.instance;
+        var database = await helper.database;
 
-    BuiltNoticeDetail noticePost =
-        await DatabaseQuery.getNoticeDetail(db: database, noticeId: noticeId);
-    print('fetching notice detail from json for updation');
-    if (noticePost == null || refresh == true) {
+        noticePost = await DatabaseQuery.getNoticeDetail(
+            db: database, noticeId: noticeId);
+        print('fetching notice detail from json for updation');
+        if (noticePost == null || refresh == true) {
+          Response<BuiltNoticeDetail> noticeSnapshots = await AppConstants
+              .service
+              .getNotice(AppConstants.djangoToken, noticeId);
+          print({noticeSnapshots.body.toString()});
+          if (noticeSnapshots.body != null) {
+            noticePost = noticeSnapshots.body;
+
+            await DatabaseWrite.insertNoticeDetailIntoDatabase(
+                notice: noticePost, db: database);
+          }
+        }
+      } on InternetConnectionException catch (error) {
+        throw error;
+      } catch (err) {
+        print(err);
+      }
+    } else {
       try {
         Response<BuiltNoticeDetail> noticeSnapshots = await AppConstants.service
             .getNotice(AppConstants.djangoToken, noticeId);
         print({noticeSnapshots.body.toString()});
         if (noticeSnapshots.body != null) {
           noticePost = noticeSnapshots.body;
-
-          await DatabaseWrite.insertNoticeDetailIntoDatabase(
-              notice: noticePost, db: database);
         }
       } on InternetConnectionException catch (error) {
         throw error;
@@ -352,21 +407,29 @@ static Future<BuiltList<BuiltAllNotices>> getAllNoticesFromDatabase(
   }
 
   static Future updateAndPopulateAllEntities() async {
-    DatabaseHelper helper = DatabaseHelper.instance;
-    var database = await helper.database;
     try {
-      final entitySummarySnapshots = await service.getAllEntity();
-      final entitySummaryPosts = entitySummarySnapshots.body;
+      final Response<BuiltList<EntityListPost>> entitySummarySnapshots =
+          await service.getAllEntity();
 
-      if (entitySummaryPosts != null) {
-        await DatabaseWrite.deleteAllEntitySummary(db: database);
-        await DatabaseWrite.insertEntitiesSummaryIntoDatabase(
-            db: database, entities: entitySummaryPosts);
+      if (!kIsWeb) {
+        DatabaseHelper helper = DatabaseHelper.instance;
+        var database = await helper.database;
+
+        if (entitySummarySnapshots.body != null) {
+          await DatabaseWrite.deleteAllEntitySummary(db: database);
+          final entitySummaryPosts = entitySummarySnapshots.body;
+
+          await DatabaseWrite.insertEntitiesSummaryIntoDatabase(
+              db: database, entities: entitySummaryPosts);
 
 // using forEach instead of for loop so that image being written to disk in backgroud without affecting main processes.
-        entitySummaryPosts.forEach((entity) async {
-          await writeImageFileIntoDisk(entity.small_image_url);
-        });
+          entitySummaryPosts.forEach((entity) async {
+            await writeImageFileIntoDisk(entity.small_image_url);
+          });
+          entitiesSummaryFromDatabase = entitySummaryPosts;
+        }
+      } else {
+        final entitySummaryPosts = entitySummarySnapshots.body;
         entitiesSummaryFromDatabase = entitySummaryPosts;
       }
     } on InternetConnectionException catch (error) {
@@ -378,35 +441,55 @@ static Future<BuiltList<BuiltAllNotices>> getAllNoticesFromDatabase(
 
   static Future getCouncilDetailsFromDatabase(
       {@required int councilId, bool refresh = false}) async {
-    DatabaseHelper helper = DatabaseHelper.instance;
-    var database = await helper.database;
+    if (!kIsWeb) {
+      DatabaseHelper helper = DatabaseHelper.instance;
+      var database = await helper.database;
 
-    BuiltCouncilPost councilPost = await DatabaseQuery.getCouncilDetail(
-        db: database, councilId: councilId);
+      BuiltCouncilPost councilPost = await DatabaseQuery.getCouncilDetail(
+          db: database, councilId: councilId);
 
-    if (councilPost == null || refresh == true) {
+      if (councilPost == null || refresh == true) {
+        try {
+          Response<BuiltCouncilPost> councilSnapshots = await AppConstants
+              .service
+              .getCouncil(AppConstants.djangoToken, councilId);
+
+          if (councilSnapshots.body != null) {
+            councilPost = councilSnapshots.body;
+
+            await DatabaseWrite.insertCouncilDetailsIntoDatabase(
+                councilPost: councilPost, db: database);
+          }
+        } on InternetConnectionException catch (error) {
+          throw error;
+        } catch (err) {
+          print(err);
+        }
+      }
+
+      return councilPost;
+    } else {
+      BuiltCouncilPost councilPost;
       try {
         Response<BuiltCouncilPost> councilSnapshots = await AppConstants.service
             .getCouncil(AppConstants.djangoToken, councilId);
 
         if (councilSnapshots.body != null) {
           councilPost = councilSnapshots.body;
-
-          await DatabaseWrite.insertCouncilDetailsIntoDatabase(
-              councilPost: councilPost, db: database);
         }
       } on InternetConnectionException catch (error) {
         throw error;
       } catch (err) {
         print(err);
       }
+      return councilPost;
     }
-
-    return councilPost;
   }
 
   static Future<List<int>> updateCouncilSubscriptionInDatabase(
       {@required int councilId, @required bool isSubscribed}) async {
+    // Already checked for web while calling function.
+    // The buttons should never be activable.
     DatabaseHelper helper = DatabaseHelper.instance;
     var database = await helper.database;
 
@@ -417,13 +500,37 @@ static Future<BuiltList<BuiltAllNotices>> getAllNoticesFromDatabase(
 
   static Future<BuiltClubPost> getClubDetailsFromDatabase(
       {@required int clubId, bool refresh = false}) async {
-    DatabaseHelper helper = DatabaseHelper.instance;
-    var database = await helper.database;
+    if (!kIsWeb) {
+      DatabaseHelper helper = DatabaseHelper.instance;
+      var database = await helper.database;
 
-    BuiltClubPost clubPost =
-        await DatabaseQuery.getClubDetails(db: database, clubId: clubId);
+      BuiltClubPost clubPost =
+          await DatabaseQuery.getClubDetails(db: database, clubId: clubId);
 
-    if (clubPost == null || refresh == true) {
+      if (clubPost == null || refresh == true) {
+        try {
+          Response<BuiltClubPost> clubSnapshots = await AppConstants.service
+              .getClub(clubId, AppConstants.djangoToken)
+              .catchError((onError) {
+            print("Error in fetching clubs: ${onError.toString()}");
+          });
+
+          if (clubSnapshots.body != null) {
+            clubPost = clubSnapshots.body;
+
+            await DatabaseWrite.insertClubDetailsIntoDatabase(
+                clubPost: clubPost, db: database);
+          }
+        } on InternetConnectionException catch (error) {
+          throw error;
+        } catch (err) {
+          print(err);
+        }
+      }
+
+      return clubPost;
+    } else {
+      BuiltClubPost clubPost;
       try {
         Response<BuiltClubPost> clubSnapshots = await AppConstants.service
             .getClub(clubId, AppConstants.djangoToken)
@@ -433,24 +540,22 @@ static Future<BuiltList<BuiltAllNotices>> getAllNoticesFromDatabase(
 
         if (clubSnapshots.body != null) {
           clubPost = clubSnapshots.body;
-
-          await DatabaseWrite.insertClubDetailsIntoDatabase(
-              clubPost: clubPost, db: database);
         }
       } on InternetConnectionException catch (error) {
         throw error;
       } catch (err) {
         print(err);
       }
+      return clubPost;
     }
-
-    return clubPost;
   }
 
   static Future updateClubSubscriptionInDatabase(
       {@required int clubId,
       @required bool isSubscribed,
       @required int currentSubscribedUsers}) async {
+    // Already checked for web while calling function.
+    // The buttons should never be activable.
     DatabaseHelper helper = DatabaseHelper.instance;
     var database = await helper.database;
 
@@ -465,13 +570,36 @@ static Future<BuiltList<BuiltAllNotices>> getAllNoticesFromDatabase(
 
   static Future getEntityDetailsFromDatabase(
       {@required int entityId, bool refresh = false}) async {
-    DatabaseHelper helper = DatabaseHelper.instance;
-    var database = await helper.database;
+    if (!kIsWeb) {
+      DatabaseHelper helper = DatabaseHelper.instance;
+      var database = await helper.database;
 
-    BuiltEntityPost entityPost;
-    await DatabaseQuery.getEntityDetails(db: database, entityId: entityId);
+      BuiltEntityPost entityPost;
+      await DatabaseQuery.getEntityDetails(db: database, entityId: entityId);
 
-    if (entityPost == null || refresh == true) {
+      if (entityPost == null || refresh == true) {
+        try {
+          Response<BuiltEntityPost> entitySnapshots = await AppConstants.service
+              .getEntity(entityId, AppConstants.djangoToken)
+              .catchError((onError) {
+            print("Error in fetching entity: ${onError.toString()}");
+          });
+          if (entitySnapshots.body != null) {
+            entityPost = entitySnapshots.body;
+
+            await DatabaseWrite.insertEntityDetailsIntoDatabase(
+                entityPost: entityPost, db: database);
+          }
+        } on InternetConnectionException catch (error) {
+          throw error;
+        } catch (err) {
+          print(err);
+        }
+      }
+
+      return entityPost;
+    } else {
+      BuiltEntityPost entityPost;
       try {
         Response<BuiltEntityPost> entitySnapshots = await AppConstants.service
             .getEntity(entityId, AppConstants.djangoToken)
@@ -480,24 +608,22 @@ static Future<BuiltList<BuiltAllNotices>> getAllNoticesFromDatabase(
         });
         if (entitySnapshots.body != null) {
           entityPost = entitySnapshots.body;
-
-          await DatabaseWrite.insertEntityDetailsIntoDatabase(
-              entityPost: entityPost, db: database);
         }
       } on InternetConnectionException catch (error) {
         throw error;
       } catch (err) {
         print(err);
       }
+      return entityPost;
     }
-
-    return entityPost;
   }
 
   static Future updateEntitySubscriptionInDatabase(
       {@required int entityId,
       @required bool isSubscribed,
       @required int currentSubscribedUsers}) async {
+    // Already checked for web while calling function.
+    // The buttons should never be activable.
     DatabaseHelper helper = DatabaseHelper.instance;
     var database = await helper.database;
 
@@ -512,26 +638,31 @@ static Future<BuiltList<BuiltAllNotices>> getAllNoticesFromDatabase(
 
   /// All locally stored data will be deleted ( only database not images).
   static Future deleteLocalDatabaseOnly() async {
-    DatabaseHelper helper = DatabaseHelper.instance;
-    var database = await helper.database;
-    await DatabaseWrite.deleteWholeDatabase(db: database);
+    if (!kIsWeb) {
+      DatabaseHelper helper = DatabaseHelper.instance;
+      var database = await helper.database;
+      await DatabaseWrite.deleteWholeDatabase(db: database);
+    }
   }
 
   /// All locally stored data will be deleted (database and images).
   static Future deleteAllLocalDataWithImages() async {
-    DatabaseHelper helper = DatabaseHelper.instance;
-    var database = await helper.database;
-    await DatabaseWrite.deleteWholeDatabase(db: database);
-    print('-----------------------------');
-    Directory(AppConstants.deviceDirectoryPathImages)
-        .listSync(recursive: true)
-        .forEach((f) {
-      print('deleted : ' +
-          (f.path.split('Images/').length > 1
-              ? f.path.split('Images/')[1]
-              : 'nothing was here'));
-      f.deleteSync();
-    });
+    if (!kIsWeb) {
+      DatabaseHelper helper = DatabaseHelper.instance;
+      var database = await helper.database;
+      await DatabaseWrite.deleteWholeDatabase(db: database);
+      await AppConstantConflicts.deleteAllLocalImages();
+      print('-----------------------------');
+      // Directory(AppConstants.deviceDirectoryPathImages)
+      //     .listSync(recursive: true)
+      //     .forEach((f) {
+      //   print('deleted : ' +
+      //       (f.path.split('Images/').length > 1
+      //           ? f.path.split('Images/')[1]
+      //           : 'nothing was here'));
+      //   f.deleteSync();
+      // });
+    }
 
     AppConstants.firstTimeFetching = true;
     AppConstants.workshopFromDatabase = null;

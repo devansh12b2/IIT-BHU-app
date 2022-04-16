@@ -1,7 +1,7 @@
 import 'dart:io';
-
 import 'package:chopper/chopper.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:iit_app/data/internet_connection_interceptor.dart';
 import 'package:iit_app/model/appConstants.dart';
@@ -44,9 +44,10 @@ class _EntityPageState extends State<EntityPage>
       entityMap = await AppConstants.getEntityDetailsFromDatabase(
           entityId: widget.entityId, refresh: refresh);
       if (entityMap != null) {
-        _entityLargeLogoFile =
-            AppConstants.getImageFile(entityMap.large_image_url);
-        if (_entityLargeLogoFile == null) {
+        _entityLargeLogoFile = kIsWeb
+            ? null
+            : AppConstants.getImageFile(entityMap.large_image_url);
+        if (_entityLargeLogoFile == null && !kIsWeb) {
           AppConstants.writeImageFileIntoDisk(entityMap.large_image_url);
         }
       }
@@ -117,10 +118,11 @@ class _EntityPageState extends State<EntityPage>
 
       if (snapshot.statusCode == 200) {
         try {
-          await AppConstants.updateEntitySubscriptionInDatabase(
-              entityId: widget.entityId,
-              isSubscribed: !entityMap.is_subscribed,
-              currentSubscribedUsers: entityMap.subscribed_users);
+          if (!kIsWeb)
+            await AppConstants.updateEntitySubscriptionInDatabase(
+                entityId: widget.entityId,
+                isSubscribed: !entityMap.is_subscribed,
+                currentSubscribedUsers: entityMap.subscribed_users);
 
           entityMap = await AppConstants.getEntityDetailsFromDatabase(
               entityId: widget.entityId);

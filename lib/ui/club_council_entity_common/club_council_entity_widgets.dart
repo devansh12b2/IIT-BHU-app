@@ -1,4 +1,7 @@
+import 'package:iit_app/ui/web_conflicts/club_council_entity_thumbnail_io.dart';
+import 'package:iit_app/ui/web_conflicts/club_council_entity_thumbnail_web.dart';
 import 'dart:io';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:chopper/chopper.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -73,17 +76,21 @@ class ClubCouncilAndEntityWidgets {
               children: [
                 Stack(
                   children: [
-                    Container(
-                      child: largeLogoFile != null
-                          ? Image.file(largeLogoFile,
-                              fit: BoxFit.cover, height: 300.0)
-                          : _data.large_image_url != null &&
-                                  _data.large_image_url != ''
-                              ? Image.network(_data.large_image_url,
-                                  fit: BoxFit.cover, height: 300.0)
-                              : Image(image: AssetImage('assets/iitbhu.jpeg')),
-                      constraints: BoxConstraints.expand(height: 295.0),
-                    ),
+                    kIsWeb
+                        ? getPanelBackgroundImageWeb(_data.large_image_url)
+                        : getPanelBackgroundImageIO(
+                            largeLogoFile, _data.large_image_url),
+                    // Container(
+                    //   child: largeLogoFile != null && !kIsWeb
+                    //       ? Image.file(largeLogoFile,
+                    //           fit: BoxFit.cover, height: 300.0)
+                    //       : _data.large_image_url != null &&
+                    //               _data.large_image_url != ''
+                    //           ? Image.network(_data.large_image_url,
+                    //               fit: BoxFit.cover, height: 300.0)
+                    //           : Image(image: AssetImage('assets/iitbhu.jpeg')),
+                    //   constraints: BoxConstraints.expand(height: 295.0),
+                    // ),
                     ClubCouncilAndEntityWidgets.getGradient(),
                     Container(
                       padding: EdgeInsets.fromLTRB(0.0, 72.0, 0.0, 0.0),
@@ -205,9 +212,9 @@ class ClubCouncilAndEntityWidgets {
     // bool _toggling = false;
 
     final _disableMuteButton =
-        isCouncil == false && data?.is_subscribed == false;
+        (isCouncil == false && data?.is_subscribed == false) || (kIsWeb);
     final _disableUnmuteButton =
-        isCouncil == false && data?.is_subscribed == true;
+        (isCouncil == false && data?.is_subscribed == true) || (kIsWeb);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -391,12 +398,13 @@ class ClubCouncilAndEntityWidgets {
 
                                 if (snapshot.statusCode == 200) {
                                   try {
-                                    await AppConstants
-                                        .updateEntitySubscriptionInDatabase(
-                                            entityId: entityId,
-                                            isSubscribed: false,
-                                            currentSubscribedUsers:
-                                                data.subscribed_users);
+                                    if (!kIsWeb)
+                                      await AppConstants
+                                          .updateEntitySubscriptionInDatabase(
+                                              entityId: entityId,
+                                              isSubscribed: false,
+                                              currentSubscribedUsers:
+                                                  data.subscribed_users);
 
                                     BuiltEntityPost entityMap =
                                         await AppConstants
@@ -605,12 +613,13 @@ class ClubCouncilAndEntityWidgets {
 
                               if (snapshot.statusCode == 200) {
                                 try {
-                                  await AppConstants
-                                      .updateEntitySubscriptionInDatabase(
-                                          entityId: entityId,
-                                          isSubscribed: true,
-                                          currentSubscribedUsers:
-                                              data.subscribed_users);
+                                  if (!kIsWeb)
+                                    await AppConstants
+                                        .updateEntitySubscriptionInDatabase(
+                                            entityId: entityId,
+                                            isSubscribed: true,
+                                            currentSubscribedUsers:
+                                                data.subscribed_users);
 
                                   BuiltEntityPost entityMap = await AppConstants
                                       .getEntityDetailsFromDatabase(
@@ -1001,80 +1010,92 @@ class ClubCouncilAndEntityWidgets {
 
     assert(_counter == 1, 'All three, council club entity , can not be true');
 
-    File logoFile = AppConstants.getImageFile(imageUrl);
+    final clubThumbnail = kIsWeb
+        ? getClubThumbnailWeb(horizontal, id, clubTypeForHero, imageUrl)
+        : getClubThumbnailIO(horizontal, id, clubTypeForHero, imageUrl);
 
-    if (logoFile == null) {
-      AppConstants.writeImageFileIntoDisk(imageUrl);
-    }
-    logoFile = AppConstants.getImageFile(imageUrl);
+    final entityThumbnail = kIsWeb
+        ? getEntityThumbnailWeb(horizontal, id, entityTypeForHero, imageUrl)
+        : getEntityThumbnailIO(horizontal, id, entityTypeForHero, imageUrl);
 
-    final clubThumbnail = Container(
-      margin: EdgeInsets.symmetric(vertical: 16.0),
-      alignment:
-          horizontal ? FractionalOffset.centerLeft : FractionalOffset.center,
-      child: Hero(
-        tag: "club-hero-$id-$clubTypeForHero",
-        child: Container(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image(
-              fit: BoxFit.contain,
-              image: imageUrl == null || imageUrl == ''
-                  ? AssetImage('assets/iitbhu.jpeg')
-                  : logoFile == null
-                      ? NetworkImage(imageUrl)
-                      : FileImage(logoFile),
-            ),
-          ),
-          height: horizontal ? 50 : 82,
-          width: horizontal ? 50 : 82,
-        ),
-      ),
-    );
+    final councilThumbnail = kIsWeb
+        ? getCouncilThumbnailWeb(horizontal, id, imageUrl)
+        : getCouncilThumbnailIO(horizontal, id, imageUrl);
 
-    final councilThumbnail = Container(
-      margin: EdgeInsets.symmetric(vertical: 16.0),
-      alignment: FractionalOffset.center,
-      child: Container(
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: Image(
-            fit: BoxFit.contain,
-            image: imageUrl == null || imageUrl == ''
-                ? AssetImage('assets/iitbhu.jpeg')
-                : logoFile == null
-                    ? NetworkImage(imageUrl)
-                    : FileImage(logoFile),
-          ),
-        ),
-        height: 92.0,
-        width: 92.0,
-      ),
-    );
+    // File logoFile = AppConstants.getImageFile(imageUrl);
 
-    final entityThumbnail = Container(
-      margin: EdgeInsets.symmetric(vertical: 16.0),
-      alignment:
-          horizontal ? FractionalOffset.centerLeft : FractionalOffset.center,
-      child: Hero(
-        tag: "entity-hero-$id-$entityTypeForHero",
-        child: Container(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image(
-              fit: BoxFit.contain,
-              image: imageUrl == null || imageUrl == ''
-                  ? AssetImage('assets/iitbhu.jpeg')
-                  : logoFile == null
-                      ? NetworkImage(imageUrl)
-                      : FileImage(logoFile),
-            ),
-          ),
-          height: horizontal ? 50 : 82,
-          width: horizontal ? 50 : 82,
-        ),
-      ),
-    );
+    // if (logoFile == null) {
+    //   AppConstants.writeImageFileIntoDisk(imageUrl);
+    // }
+    // logoFile = AppConstants.getImageFile(imageUrl);
+
+    // final clubThumbnail = Container(
+    //   margin: EdgeInsets.symmetric(vertical: 16.0),
+    //   alignment:
+    //       horizontal ? FractionalOffset.centerLeft : FractionalOffset.center,
+    //   child: Hero(
+    //     tag: "club-hero-$id-$clubTypeForHero",
+    //     child: Container(
+    //       child: ClipRRect(
+    //         borderRadius: BorderRadius.circular(20),
+    //         child: Image(
+    //           fit: BoxFit.contain,
+    //           image: imageUrl == null || imageUrl == ''
+    //               ? AssetImage('assets/iitbhu.jpeg')
+    //               : logoFile == null || kIsWeb
+    //                   ? NetworkImage(imageUrl)
+    //                   : FileImage(logoFile),
+    //         ),
+    //       ),
+    //       height: horizontal ? 50 : 82,
+    //       width: horizontal ? 50 : 82,
+    //     ),
+    //   ),
+    // );
+
+    // final councilThumbnail = Container(
+    //   margin: EdgeInsets.symmetric(vertical: 16.0),
+    //   alignment: FractionalOffset.center,
+    //   child: Container(
+    //     child: ClipRRect(
+    //       borderRadius: BorderRadius.circular(20),
+    //       child: Image(
+    //         fit: BoxFit.contain,
+    //         image: imageUrl == null || imageUrl == ''
+    //             ? AssetImage('assets/iitbhu.jpeg')
+    //             : logoFile == null || kIsWeb
+    //                 ? NetworkImage(imageUrl)
+    //                 : FileImage(logoFile),
+    //       ),
+    //     ),
+    //     height: 92.0,
+    //     width: 92.0,
+    //   ),
+    // );
+
+    // final entityThumbnail = Container(
+    //   margin: EdgeInsets.symmetric(vertical: 16.0),
+    //   alignment:
+    //       horizontal ? FractionalOffset.centerLeft : FractionalOffset.center,
+    //   child: Hero(
+    //     tag: "entity-hero-$id-$entityTypeForHero",
+    //     child: Container(
+    //       child: ClipRRect(
+    //         borderRadius: BorderRadius.circular(20),
+    //         child: Image(
+    //           fit: BoxFit.contain,
+    //           image: imageUrl == null || imageUrl == ''
+    //               ? AssetImage('assets/iitbhu.jpeg')
+    //               : logoFile == null || kIsWeb
+    //                   ? NetworkImage(imageUrl)
+    //                   : FileImage(logoFile),
+    //         ),
+    //       ),
+    //       height: horizontal ? 50 : 82,
+    //       width: horizontal ? 50 : 82,
+    //     ),
+    //   ),
+    // );
 
     final clubCardContent = Container(
       margin: EdgeInsets.only(left: horizontal ? 40.0 : 10.0, right: 10.0),

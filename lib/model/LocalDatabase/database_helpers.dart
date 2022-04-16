@@ -5,6 +5,8 @@ import 'package:sqflite/sqflite.dart';
 
 import 'stringConstants.dart';
 
+// TODO: Time to use moor
+
 // singleton class to manage the database
 class DatabaseHelper {
 // This is the actual database filename that is saved in the docs directory.

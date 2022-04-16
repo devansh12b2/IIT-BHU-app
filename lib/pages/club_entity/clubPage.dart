@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:iit_app/data/internet_connection_interceptor.dart';
 import 'package:iit_app/model/appConstants.dart';
@@ -50,9 +51,10 @@ class _ClubPageState extends State<ClubPage>
           clubId: widget.clubId, refresh: refresh);
 
       if (clubMap != null) {
-        _clubLargeLogoFile = AppConstants.getImageFile(clubMap.large_image_url);
+        _clubLargeLogoFile =
+            kIsWeb ? null : AppConstants.getImageFile(clubMap.large_image_url);
 
-        if (_clubLargeLogoFile == null) {
+        if (_clubLargeLogoFile == null && !kIsWeb) {
           AppConstants.writeImageFileIntoDisk(clubMap.large_image_url);
         }
       }
@@ -120,10 +122,11 @@ class _ClubPageState extends State<ClubPage>
 
       if (snapshot.statusCode == 200) {
         try {
-          await AppConstants.updateClubSubscriptionInDatabase(
-              clubId: widget.clubId,
-              isSubscribed: !clubMap.is_subscribed,
-              currentSubscribedUsers: clubMap.subscribed_users);
+          if (!kIsWeb)
+            await AppConstants.updateClubSubscriptionInDatabase(
+                clubId: widget.clubId,
+                isSubscribed: !clubMap.is_subscribed,
+                currentSubscribedUsers: clubMap.subscribed_users);
 
           clubMap = await AppConstants.getClubDetailsFromDatabase(
               clubId: widget.clubId);

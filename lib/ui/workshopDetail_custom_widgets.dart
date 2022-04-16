@@ -1,5 +1,7 @@
-import 'dart:io';
+import 'package:iit_app/ui/web_conflicts/workshop_detail_io.dart';
+import 'package:iit_app/ui/web_conflicts/workshop_detail_web.dart';
 import 'dart:typed_data';
+import 'package:universal_io/prefer_universal/io.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -331,24 +333,27 @@ class WorkshopDetailCustomWidgets {
     }
 
     Future<void> _shareWithImage(Uri uri) async {
-      try {
-        var request = (imageUrl != null && imageUrl != '')
-            ? await HttpClient().getUrl(Uri.parse(imageUrl))
-            : await HttpClient().getUrl(Uri.parse(logoImageUrl));
-        var response = await request.close();
-        Uint8List bytes = await consolidateHttpClientResponseBytes(response);
+      if (!kIsWeb) {
+        await shareWithImageIO(uri, imageUrl, logoImageUrl, workshopDetail);
+        // try {
+        //   var request = (imageUrl != null && imageUrl != '')
+        //       ? await HttpClient().getUrl(Uri.parse(imageUrl))
+        //       : await HttpClient().getUrl(Uri.parse(logoImageUrl));
+        //   var response = await request.close();
+        //   Uint8List bytes = await consolidateHttpClientResponseBytes(response);
 
-        final tempDir = await getTemporaryDirectory();
-        final file =
-            await new File('${tempDir.path}/pic_to_share.png').create();
-        await file.writeAsBytes(bytes);
+        //   final tempDir = await getTemporaryDirectory();
+        //   final file =
+        //       await new File('${tempDir.path}/pic_to_share.png').create();
+        //   await file.writeAsBytes(bytes);
 
-        await Share.shareFiles(['${tempDir.path}/pic_to_share.png'],
-            subject: '${workshopDetail.title}',
-            text:
-                'Checkout this amazing workshop ${workshopDetail.title} to be held on ${workshopDetail.date} at ${workshopDetail.time}. To know more, follow this link: ${uri.toString()}');
-      } catch (err) {
-        _shareWithoutImage(uri);
+        //   await Share.shareFiles(['${tempDir.path}/pic_to_share.png'],
+        //       subject: '${workshopDetail.title}',
+        //       text:
+        //           'Checkout this amazing workshop ${workshopDetail.title} to be held on ${workshopDetail.date} at ${workshopDetail.time}. To know more, follow this link: ${uri.toString()}');
+        // } catch (err) {
+        //   _shareWithoutImage(uri);
+        // }
       }
     }
 
@@ -397,7 +402,7 @@ class WorkshopDetailCustomWidgets {
                           ),
                         ),
                       ),
-                      workshopDetail == null
+                      workshopDetail == null || kIsWeb
                           ? Container()
                           : Container(
                               child: FutureBuilder<Uri>(
@@ -419,7 +424,7 @@ class WorkshopDetailCustomWidgets {
                                 },
                               ),
                             ),
-                      workshopDetail == null
+                      workshopDetail == null || kIsWeb
                           ? Container()
                           : Container(
                               child: FutureBuilder<Uri>(
@@ -495,21 +500,28 @@ class WorkshopDetailCustomWidgets {
 
       if (logoImageUrl?.isEmpty == true) logoImageUrl = null;
 
-      final File logoFile =
-          logoImageUrl != null ? AppConstants.getImageFile(logoImageUrl) : null;
+      _image = kIsWeb
+          ? getLogoImageFileWeb(logoImageUrl)
+          : getImageFileIO(logoImageUrl);
+      _providerImage = kIsWeb
+          ? getProviderImageFileWeb(logoImageUrl)
+          : getProviderImageFileIO(logoImageUrl);
 
-      if (logoFile == null) {}
-      _image = logoFile == null
-          ? (logoImageUrl == null || logoImageUrl == ''
-              ? Image.asset('assets/iitbhu.jpeg',
-                  fit: BoxFit.cover, height: 300.0)
-              : Image.network(logoImageUrl, fit: BoxFit.cover, height: 300.0))
-          : Image.file(logoFile, fit: BoxFit.cover, height: 300);
-      _providerImage = logoFile == null
-          ? (logoImageUrl == null || logoImageUrl == ''
-              ? AssetImage('assets/iitbhu.jpeg')
-              : NetworkImage(logoImageUrl))
-          : FileImage(logoFile);
+      // final File logoFile =
+      //     logoImageUrl != null ? AppConstants.getImageFile(logoImageUrl) : null;
+
+      // if (logoFile == null) {}
+      // _image = logoFile == null || kIsWeb
+      //     ? (logoImageUrl == null || logoImageUrl == ''
+      //         ? Image.asset('assets/iitbhu.jpeg',
+      //             fit: BoxFit.cover, height: 300.0)
+      //         : Image.network(logoImageUrl, fit: BoxFit.cover, height: 300.0))
+      //     : Image.file(logoFile, fit: BoxFit.cover, height: 300);
+      // _providerImage = logoFile == null || kIsWeb
+      //     ? (logoImageUrl == null || logoImageUrl == ''
+      //         ? AssetImage('assets/iitbhu.jpeg')
+      //         : NetworkImage(logoImageUrl))
+      //     : FileImage(logoFile);
       height = 295;
     }
 

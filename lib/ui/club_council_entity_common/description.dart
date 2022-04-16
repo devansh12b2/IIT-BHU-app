@@ -1,5 +1,6 @@
-import 'dart:io';
+import 'package:universal_io/prefer_universal/io.dart';
 import 'dart:typed_data';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 // import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/foundation.dart';
@@ -16,6 +17,8 @@ import 'package:iit_app/ui/separator.dart';
 import 'package:iit_app/ui/text_style.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
+
+import 'description_web_conflicts.dart';
 
 // TODO: we need only isPorHolder and description rather the whole model
 
@@ -156,24 +159,28 @@ class _DescriptionState extends State<Description> {
   }
 
   Future<void> _shareWithImage(Uri uri) async {
-    try {
-      var request =
-          await HttpClient().getUrl(Uri.parse(widget.map.small_image_url));
-
-      var response = await request.close();
-      var bytes = await consolidateHttpClientResponseBytes(response);
-
-      final tempDir = await getTemporaryDirectory();
-      final file = await new File('${tempDir.path}/pic_to_share.png').create();
-      await file.writeAsBytes(bytes);
-
-      await Share.shareFiles(['${tempDir.path}/pic_to_share.png'],
-          subject: '${widget.map.name}',
-          text:
-              'Do Subscribe ${widget.map.name} to stay updated about upcoming workshops and events: ${uri.toString()}');
-    } catch (err) {
-      _shareWithoutImage(uri);
+    // TODO: Implement for Flutter Web
+    if (!kIsWeb) {
+      await shareWithImageIO(uri, widget);
     }
+    //   try {
+    //     var request =
+    //         await HttpClient().getUrl(Uri.parse(widget.map.small_image_url));
+
+    //   var response = await request.close();
+    //   var bytes = await consolidateHttpClientResponseBytes(response);
+
+    //   final tempDir = await getTemporaryDirectory();
+    //   final file = await new File('${tempDir.path}/pic_to_share.png').create();
+    //   await file.writeAsBytes(bytes);
+
+    //   await Share.shareFiles(['${tempDir.path}/pic_to_share.png'],
+    //       subject: '${widget.map.name}',
+    //       text:
+    //           'Do Subscribe ${widget.map.name} to stay updated about upcoming workshops and events: ${uri.toString()}');
+    // } catch (err) {
+    //   _shareWithoutImage(uri);
+    // }
   }
 
   Future<void> _shareWithoutImage(Uri uri) async {
@@ -258,7 +265,7 @@ class _DescriptionState extends State<Description> {
                           )
                         : Container(),
                     SizedBox(width: 18.0),
-                    widget.isCouncil
+                    widget.isCouncil || kIsWeb
                         ? Container()
                         : Container(
                             child: FutureBuilder<Uri>(

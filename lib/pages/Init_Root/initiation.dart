@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:iit_app/data/post_api_service.dart';
@@ -37,8 +38,10 @@ class _InitiationState extends State<Initiation> {
 
     FirebaseMessaging.onBackgroundMessage(onBackgroundMessageHandler);
     AppConstants.service = PostApiService.create();
-    AppConstants.connectionStatus = ConnectionStatusSingleton.getInstance();
-    AppConstants.connectionStatus.initialize();
+    if (!kIsWeb) {
+      AppConstants.connectionStatus = ConnectionStatusSingleton.getInstance();
+      AppConstants.connectionStatus.initialize();
+    }
 
     await AppConstants.setDeviceDirectoryForImages();
     await _initTheme();
@@ -53,7 +56,8 @@ class _InitiationState extends State<Initiation> {
       });
     }
 
-    this._isOnline = await AppConstants.connectionStatus.checkConnection();
+    this._isOnline =
+        kIsWeb ? true : await AppConstants.connectionStatus.checkConnection();
     if (this._isOnline == true) {
       final isVersionQualified = await _checkConfigVars();
       if (isVersionQualified == false) {

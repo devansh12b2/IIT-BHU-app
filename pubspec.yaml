@@ -22,6 +22,10 @@ dependencies:
 
   cupertino_icons: ^0.1.2
 
+  # web
+  universal_io: ^1.0.2
+  
+
   firebase_core: ^0.5.3
   firebase_auth: ^0.18.4+1
   firebase_messaging: "^8.0.0-dev.11"
@@ -54,6 +58,8 @@ dependencies:
   package_info: ^0.4.3+2
   share_plus: ^1.2.0
 
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -61,6 +67,7 @@ dev_dependencies:
   built_value_generator: ^6.7.0
   # No version number means the latest version
   build_runner:
+
 
 flutter:
   uses-material-design: true

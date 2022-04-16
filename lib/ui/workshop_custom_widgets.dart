@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
+import 'package:iit_app/ui/web_conflicts/workshop_thumbnail_io.dart';
+import 'package:iit_app/ui/web_conflicts/workshop_thumbnal_web.dart';
 import 'package:flutter/material.dart';
 import 'package:iit_app/external_libraries/fab_circular_menu.dart';
 import 'package:iit_app/model/appConstants.dart';
@@ -26,41 +29,47 @@ class WorkshopCustomWidgets {
     final bool isClub = w.club != null;
     File logoFile;
     if (isClub)
-      logoFile = AppConstants.getImageFile(w.club.small_image_url);
+      logoFile =
+          kIsWeb ? null : AppConstants.getImageFile(w.club.small_image_url);
     else
-      logoFile = AppConstants.getImageFile(w.entity.small_image_url);
+      logoFile =
+          kIsWeb ? null : AppConstants.getImageFile(w.entity.small_image_url);
 
-    final workshopThumbnail = Container(
-      margin: EdgeInsets.symmetric(vertical: 16.0),
-      alignment:
-          horizontal ? FractionalOffset.centerLeft : FractionalOffset.center,
-      child: Hero(
-        tag: "w-hero-${w.id}",
-        child: Container(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image(
-              fit: BoxFit.contain,
-              image: isClub
-                  ? (w.club.small_image_url == null ||
-                          w.club.small_image_url == ''
-                      ? AssetImage('assets/iitbhu.jpeg')
-                      : logoFile == null
-                          ? NetworkImage(w.club.small_image_url)
-                          : FileImage(logoFile))
-                  : (w.entity.small_image_url == null ||
-                          w.entity.small_image_url == ''
-                      ? AssetImage('assets/iitbhu.jpeg')
-                      : logoFile == null
-                          ? NetworkImage(w.entity.small_image_url)
-                          : FileImage(logoFile)),
-            ),
-          ),
-          height: 92.0,
-          width: 92.0,
-        ),
-      ),
-    );
+    final workshopThumbnail = kIsWeb
+        ? getWorkshopThumbnailWeb(horizontal, isClub, w)
+        : getWorkshopThumbnailIO(horizontal, isClub, w, logoFile);
+
+    // final workshopThumbnail = Container(
+    //   margin: EdgeInsets.symmetric(vertical: 16.0),
+    //   alignment:
+    //       horizontal ? FractionalOffset.centerLeft : FractionalOffset.center,
+    //   child: Hero(
+    //     tag: "w-hero-${w.id}",
+    //     child: Container(
+    //       child: ClipRRect(
+    //         borderRadius: BorderRadius.circular(20),
+    //         child: Image(
+    //           fit: BoxFit.contain,
+    //           image: isClub
+    //               ? (w.club.small_image_url == null ||
+    //                       w.club.small_image_url == ''
+    //                   ? AssetImage('assets/iitbhu.jpeg')
+    //                   : logoFile == null || kIsWeb
+    //                       ? NetworkImage(w.club.small_image_url)
+    //                       : FileImage(logoFile))
+    //               : (w.entity.small_image_url == null ||
+    //                       w.entity.small_image_url == ''
+    //                   ? AssetImage('assets/iitbhu.jpeg')
+    //                   : logoFile == null || kIsWeb
+    //                       ? NetworkImage(w.entity.small_image_url)
+    //                       : FileImage(logoFile)),
+    //         ),
+    //       ),
+    //       height: 92.0,
+    //       width: 92.0,
+    //     ),
+    //   ),
+    // );
 
     Widget _workshopValue({String value, IconData icon}) {
       return Container(
@@ -127,57 +136,58 @@ class WorkshopCustomWidgets {
         ],
       ),
     );
-
-    return GestureDetector(
-        onTap: horizontal
-            ? () {
-                Navigator.of(context).push(
-                  PageRouteBuilder(
-                    pageBuilder: (_, __, ___) =>
-                        WorkshopDetailPage(w.id, workshop: w, isPast: isPast),
-                    transitionsBuilder:
-                        (context, animation, secondaryAnimation, child) =>
-                            FadeTransition(opacity: animation, child: child),
-                  ),
-                );
-                // .then((value) => reload());
-                try {
-                  if (fabKey.currentState.isOpen) {
-                    fabKey.currentState.close();
+    try {
+      return GestureDetector(
+          onTap: horizontal
+              ? () {
+                  Navigator.of(context).push(
+                    PageRouteBuilder(
+                      pageBuilder: (_, __, ___) =>
+                          WorkshopDetailPage(w.id, workshop: w, isPast: isPast),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) =>
+                              FadeTransition(opacity: animation, child: child),
+                    ),
+                  );
+                  // .then((value) => reload());
+                  try {
+                    if (fabKey.currentState.isOpen) {
+                      fabKey.currentState.close();
+                    }
+                  } catch (e) {
+                    print(e);
                   }
-                } catch (e) {
-                  print(e);
                 }
-              }
-            : () {
-                isClub
-                    ? Navigator.of(context).push(PageRouteBuilder(
-                        pageBuilder: (_, __, ___) =>
-                            ClubPage(clubId: w.club.id, editMode: true),
-                        transitionsBuilder: (context, animation,
-                                secondaryAnimation, child) =>
-                            FadeTransition(opacity: animation, child: child),
-                      ))
-                    : Navigator.of(context).push(PageRouteBuilder(
-                        pageBuilder: (_, __, ___) =>
-                            EntityPage(entityId: w.entity.id, editMode: true),
-                        transitionsBuilder: (context, animation,
-                                secondaryAnimation, child) =>
-                            FadeTransition(opacity: animation, child: child),
-                      ));
-              },
-        child: Container(
-          margin: const EdgeInsets.symmetric(
-            vertical: 10.0,
-            horizontal: 10.0,
-          ),
-          child: Stack(
-            children: <Widget>[
-              workshopCard,
-              workshopThumbnail,
-            ],
-          ),
-        ));
+              : () {
+                  isClub
+                      ? Navigator.of(context).push(PageRouteBuilder(
+                          pageBuilder: (_, __, ___) =>
+                              ClubPage(clubId: w.club.id, editMode: true),
+                          transitionsBuilder: (context, animation,
+                                  secondaryAnimation, child) =>
+                              FadeTransition(opacity: animation, child: child),
+                        ))
+                      : Navigator.of(context).push(PageRouteBuilder(
+                          pageBuilder: (_, __, ___) =>
+                              EntityPage(entityId: w.entity.id, editMode: true),
+                          transitionsBuilder: (context, animation,
+                                  secondaryAnimation, child) =>
+                              FadeTransition(opacity: animation, child: child),
+                        ));
+                },
+          child: Container(
+            margin: const EdgeInsets.symmetric(
+              vertical: 10.0,
+              horizontal: 10.0,
+            ),
+            child: Stack(
+              children: <Widget>[
+                workshopCard,
+                workshopThumbnail,
+              ],
+            ),
+          ));
+    } catch (e) {}
   }
 
   static ListView getPlaceholder() {
