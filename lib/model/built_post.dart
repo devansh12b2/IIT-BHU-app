@@ -719,6 +719,33 @@ abstract class NoticeCreatePost
   static Serializer<NoticeCreatePost> get serializer =>
       _$noticeCreatePostSerializer;
 }
+// !--------------------------------------------------------------------------------------------------------------------
+abstract class CreateSuggestion
+    implements Built<CreateSuggestion, CreateSuggestionBuilder> {
+
+  String get title;
+  String get description;
+
+
+  CreateSuggestion._();
+  factory CreateSuggestion([updates(CreateSuggestionBuilder b)]) = _$CreateSuggestion;
+  static Serializer<CreateSuggestion> get serializer => _$createSuggestionSerializer;
+}
+
+abstract class CreateSuggestionPost
+    implements Built<CreateSuggestionPost, CreateSuggestionPostBuilder> {
+  String get title;
+  String get description;
+
+
+  CreateSuggestionPost._();
+  factory CreateSuggestionPost([updates(CreateSuggestionPostBuilder b)]) =
+  _$CreateSuggestionPost;
+  static Serializer<CreateSuggestionPost> get serializer =>
+      _$createSuggestionPostSerializer;
+}
+
+
 
 // !--------------------------------------------------------------------------------------------------------------------
 abstract class GrievanceCount

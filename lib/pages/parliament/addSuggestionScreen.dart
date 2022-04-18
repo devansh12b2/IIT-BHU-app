@@ -3,6 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iit_app/external_libraries/spin_kit.dart';
 import 'package:iit_app/model/appConstants.dart';
+import 'package:iit_app/model/built_post.dart';
 
 class AddSuggestion extends StatefulWidget {
   //const AddSuggestion({Key? key}) : super(key: key);
@@ -53,7 +54,7 @@ class _AddSuggestionState extends State<AddSuggestion> {
             Center(
               child: GestureDetector(
                 onTap: (){
-                  //createSuggestion();
+                  createSuggestion();
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width*0.8,
@@ -88,14 +89,21 @@ class _AddSuggestionState extends State<AddSuggestion> {
     setState(() {
       addingSuggestion = true;
     });
-    Map<String,String> body = {
-      "title": titleController.text,
-      "description": descriptionController.text
-    };
-    //TODO:Post request to create parliament suggestion.
+
+    var result = await AppConstants.service.createParliamentSuggestion(
+      AppConstants.djangoToken,
+      CreateSuggestionPost(
+            (b) => b
+          ..title = titleController.text
+          ..description = descriptionController.text
+      ),
+    );
+
+    print("The result is - ${result.statusCode}");
     setState(() {
       addingSuggestion = false;
     });
+    Navigator.pop(context);
   }
   AppBar buildAppBar(BuildContext context) {
     return AppBar(

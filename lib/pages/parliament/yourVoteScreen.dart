@@ -105,12 +105,12 @@ class _VoteScreenState extends State<VoteScreen> {
   }
 
   Future<void> getAllSuggestionDetails(List<dynamic> response) async {
+    votes = [];
     for(var i=0;i<response.length;i++){
       final suggestionDetails = await AppConstants.service
           .getParliamentSuggestionDetails(response[i]['id'], AppConstants.djangoToken);
 
       print("Suggestion details are - ${suggestionDetails.body}");
-      votes = [];
       votes.add(suggestionDetails.body);
       print("After adding votes = $votes");
     }
@@ -122,8 +122,9 @@ class _VoteScreenState extends State<VoteScreen> {
     print("Reponse of Upvoting - ${response.body} - ${response.statusCode}");
     if (response.statusCode == 200) {
       setState(() {
-        votes[id - 1]['upvotes'] = votes[id - 1]['upvotes'] ?? 0;
-        votes[id - 1]['upvotes'] += 1;
+        var index = votes.indexWhere((element) => element['id'] == id);
+        votes[index]['upvotes'] = votes[id - 1]['upvotes'] ?? 0;
+        votes[index]['upvotes'] += 1;
       });
       showSnackBar(
           context, "Thanks for your feedback", Colors.white, Colors.green);
@@ -139,8 +140,9 @@ class _VoteScreenState extends State<VoteScreen> {
 
     if (response.statusCode == 200) {
       setState(() {
-        votes[id - 1]['downvotes'] = votes[id - 1]['downvotes'] ?? 0;
-        votes[id - 1]['downvotes'] += 1;
+        var index = votes.indexWhere((element) => element['id'] == id);
+        votes[index]['downvotes'] = votes[id - 1]['downvotes'] ?? 0;
+        votes[index]['downvotes'] += 1;
       });
       showSnackBar(
           context, "Thanks for your feedback", Colors.white, Colors.green);
@@ -182,6 +184,16 @@ class _VoteScreenState extends State<VoteScreen> {
                 style: GoogleFonts.lato(
                   color: primaryColor,
                   fontSize: 15,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                vote['date'].split('T')[0] ?? '',
+                style: GoogleFonts.lato(
+                  color: primaryColor,
+                  fontSize: 12,
                 ),
               ),
               SizedBox(

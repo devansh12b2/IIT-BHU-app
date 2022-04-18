@@ -46,6 +46,8 @@ part 'serializers.g.dart';
   GrievancePost,
   LostAndFound,
   LostAndFoundPost,
+  CreateSuggestion,
+  CreateSuggestionPost,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

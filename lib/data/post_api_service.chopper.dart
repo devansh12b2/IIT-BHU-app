@@ -59,6 +59,16 @@ class _$PostApiService extends PostApiService {
     return client.send<dynamic, dynamic>($request);
   }
 
+  Future<Response<CreateSuggestion>> createParliamentSuggestion(
+      String token, CreateSuggestionPost body) {
+    final $url = '/parliamentSuggestions/create/';
+    final $headers = {'Authorization': token};
+    final $body = body;
+    final $request =
+        Request('POST', $url, client.baseUrl, body: $body, headers: $headers);
+    return client.send<CreateSuggestion, CreateSuggestion>($request);
+  }
+
   Future<Response> getParliamentUpdates() {
     final $url = '/parliamentUpdates/';
     final $request = Request('GET', $url, client.baseUrl);
