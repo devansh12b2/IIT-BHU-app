@@ -48,6 +48,8 @@ part 'serializers.g.dart';
   LostAndFoundPost,
   CreateSuggestion,
   CreateSuggestionPost,
+  CreateMinute,
+  CreateMinutePost,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

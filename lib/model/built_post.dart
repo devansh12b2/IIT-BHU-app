@@ -720,6 +720,31 @@ abstract class NoticeCreatePost
       _$noticeCreatePostSerializer;
 }
 // !--------------------------------------------------------------------------------------------------------------------
+abstract class CreateMinute
+    implements Built<CreateMinute, CreateMinuteBuilder> {
+
+  String get title;
+  String get description;
+  int get committee;
+
+  CreateMinute._();
+  factory CreateMinute([updates(CreateMinuteBuilder b)]) = _$CreateMinute;
+  static Serializer<CreateMinute> get serializer => _$createMinuteSerializer;
+}
+
+abstract class CreateMinutePost
+    implements Built<CreateMinutePost, CreateMinutePostBuilder> {
+  String get title;
+  String get description;
+  int get committee;
+
+  CreateMinutePost._();
+  factory CreateMinutePost([updates(CreateMinutePostBuilder b)]) =
+  _$CreateMinutePost;
+  static Serializer<CreateMinutePost> get serializer =>
+      _$createMinutePostSerializer;
+}
+
 abstract class CreateSuggestion
     implements Built<CreateSuggestion, CreateSuggestionBuilder> {
 

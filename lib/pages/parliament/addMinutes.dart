@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iit_app/model/appConstants.dart';
+import 'package:iit_app/model/built_post.dart';
+import 'package:iit_app/ui/snackbar.dart';
 
 class AddMinutes extends StatefulWidget {
   //const AddMinutes({Key? key}) : super(key: key);
@@ -18,6 +20,7 @@ class _AddMinutesState extends State<AddMinutes> {
 
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  TextEditingController committeeController = TextEditingController();
 
   bool addingMinute = false;
   @override
@@ -51,7 +54,7 @@ class _AddMinutesState extends State<AddMinutes> {
             SizedBox(height: 15,),
 
             TextField(
-              controller: descriptionController,
+              controller: committeeController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                   border: UnderlineInputBorder(),
@@ -64,6 +67,7 @@ class _AddMinutesState extends State<AddMinutes> {
               child: GestureDetector(
                 onTap: (){
                   //createSuggestion();
+                  addParliamentMinute();
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width*0.8,
@@ -97,6 +101,32 @@ class _AddMinutesState extends State<AddMinutes> {
 
   addParliamentMinute()async{
     //TODO: Add a parliament minute post request.
+    setState(() {
+      addingMinute = true;
+    });
+
+    try{
+      var result = await AppConstants.service.createParliamentUpdate(
+        AppConstants.djangoToken,
+        CreateMinutePost(
+                (b) => b
+              ..title = titleController.text
+              ..description = descriptionController.text
+              ..committee =  int.parse(committeeController.text)
+        ),
+      );
+      print("The result is - ${result.statusCode}");
+      setState(() {
+        addingMinute = false;
+      });
+      Navigator.pop(context);
+    }catch(e){
+      print("The error is - $e");
+      showSnackBar(context, "An error Occurred!!", Colors.white, Colors.redAccent);
+      setState(() {
+        addingMinute = false;
+      });
+    }
   }
   AppBar buildAppBar(BuildContext context) {
     return AppBar(

@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iit_app/external_libraries/spin_kit.dart';
 import 'package:iit_app/model/appConstants.dart';
 import 'package:iit_app/model/built_post.dart';
+import 'package:iit_app/ui/snackbar.dart';
 
 class AddSuggestion extends StatefulWidget {
   //const AddSuggestion({Key? key}) : super(key: key);
@@ -89,21 +90,28 @@ class _AddSuggestionState extends State<AddSuggestion> {
     setState(() {
       addingSuggestion = true;
     });
+    try{
+      var result = await AppConstants.service.createParliamentSuggestion(
+        AppConstants.djangoToken,
+        CreateSuggestionPost(
+                (b) => b
+              ..title = titleController.text
+              ..description = descriptionController.text
+        ),
+      );
+      print("The result is - ${result.statusCode}");
+      setState(() {
+        addingSuggestion = false;
+      });
+      Navigator.pop(context);
+    }catch(e){
+      print("The error is $e");
+      showSnackBar(context, "An error Occurred!", Colors.white, Colors.redAccent);
+      setState(() {
+        addingSuggestion = false;
+      });
+    }
 
-    var result = await AppConstants.service.createParliamentSuggestion(
-      AppConstants.djangoToken,
-      CreateSuggestionPost(
-            (b) => b
-          ..title = titleController.text
-          ..description = descriptionController.text
-      ),
-    );
-
-    print("The result is - ${result.statusCode}");
-    setState(() {
-      addingSuggestion = false;
-    });
-    Navigator.pop(context);
   }
   AppBar buildAppBar(BuildContext context) {
     return AppBar(

@@ -209,6 +209,16 @@ class _MinutesScreenState extends State<MinutesScreen>
                 ),
               ),
               SizedBox(
+                height: 10,
+              ),
+              Text(
+                minute['date'].split('T')[0] ?? "",
+                style: GoogleFonts.lato(
+                  color: primaryColor,
+                  fontSize: 12,
+                ),
+              ),
+              SizedBox(
                 height: 15,
               ),
             ],
