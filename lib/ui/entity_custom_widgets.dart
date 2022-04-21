@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:iit_app/pages/council/councilPage.dart';
 import 'package:iit_app/ui/web_conflicts/club_council_entity_thumbnail_io.dart';
 import 'package:iit_app/ui/web_conflicts/club_council_entity_thumbnail_web.dart';
 import 'package:flutter/material.dart';
@@ -145,13 +146,15 @@ class EntityCustomWidgets {
   static ListView getPlaceholder() {
     final BorderRadius borderRadius = BorderRadius.circular(10.0);
     return ListView.builder(
+        shrinkWrap: true,
         scrollDirection: Axis.vertical,
-        physics: BouncingScrollPhysics(),
+        physics: NeverScrollableScrollPhysics(),
         itemCount: 10,
         itemBuilder: (BuildContext context, int index) {
           return Padding(
             padding: const EdgeInsets.all(10.0),
             child: Container(
+              constraints: BoxConstraints(maxHeight: double.infinity),
               decoration: BoxDecoration(
                   borderRadius: borderRadius, color: Colors.transparent),
               child: Container(
@@ -217,5 +220,101 @@ class EntityCustomWidgets {
             ),
           );
         });
+  }
+
+  static Widget getCouncilyCard(BuildContext context,
+      {BuiltAllCouncilsPost entity, bool horizontal = false, Function reload}) {
+    final entityThumbnail = kIsWeb
+        ? getEntityThumbnailWeb(
+            horizontal, entity.id, 'default', entity.small_image_url)
+        : getEntityThumbnailIO(
+            horizontal, entity.id, 'default', entity.small_image_url);
+
+    // final File entityLogoFile =
+    //     AppConstants.getImageFile(entity.small_image_url);
+
+    // final entityThumbnail = Container(
+    //   margin: EdgeInsets.symmetric(vertical: 16.0),
+    //   alignment:
+    //       horizontal ? FractionalOffset.centerLeft : FractionalOffset.center,
+    //   child: Hero(
+    //     tag: "e-hero-${entity.id}",
+    //     child: Container(
+    //       child: ClipRRect(
+    //         borderRadius: BorderRadius.circular(20),
+    //         child: Image(
+    //           fit: BoxFit.contain,
+    //           image:
+    //               entity.small_image_url == null || entity.small_image_url == ''
+    //                   ? AssetImage('assets/iitbhu.jpeg')
+    //                   : entityLogoFile == null || kIsWeb
+    //                       ? NetworkImage(entity.small_image_url)
+    //                       : FileImage(entityLogoFile),
+    //         ),
+    //       ),
+    //       height: horizontal ? 50 : 82,
+    //       width: horizontal ? 50 : 82,
+    //     ),
+    //   ),
+    // );
+
+    final entityCardContent = Container(
+        margin: EdgeInsets.only(left: horizontal ? 40.0 : 10.0, right: 10.0),
+        constraints: BoxConstraints.expand(),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: horizontal
+                ? CrossAxisAlignment.start
+                : CrossAxisAlignment.center,
+            children: <Widget>[
+              horizontal ? Container() : SizedBox(height: 4.0),
+              Text(entity.name, style: Style.titleTextStyle),
+              Container(height: horizontal ? 4 : 10),
+              horizontal ? Container() : Separator(),
+            ]));
+
+    final entityCard = Container(
+      child: entityCardContent,
+      height: horizontal ? 75.0 : 154.0,
+      margin:
+          horizontal ? EdgeInsets.only(left: 30.0) : EdgeInsets.only(top: 72.0),
+      decoration: BoxDecoration(
+        color: ColorConstants.workshopCardContainer,
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.circular(8.0),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 10.0,
+            offset: Offset(0.0, 10.0),
+          ),
+        ],
+      ),
+    );
+    try {
+      return GestureDetector(
+          onTap: () {
+            if (horizontal)
+              Navigator.of(context).push(PageRouteBuilder(
+                pageBuilder: (_, __, ___) => CouncilPage(entity.id),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) =>
+                        FadeTransition(opacity: animation, child: child),
+              ));
+            // .then((value) => reload());
+          },
+          child: Container(
+            margin: const EdgeInsets.symmetric(
+              vertical: 10.0,
+              horizontal: 10.0,
+            ),
+            child: Stack(
+              children: <Widget>[
+                entityCard,
+                entityThumbnail,
+              ],
+            ),
+          ));
+    } catch (e) {}
   }
 }

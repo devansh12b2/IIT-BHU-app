@@ -54,16 +54,43 @@ class _EntitiesPageState extends State<EntitiesPage> {
               ),
               backgroundColor: ColorConstants.headingColor,
               automaticallyImplyLeading: false,
-              title: Text("All Entities and Fests",
-              style: TextStyle(
-                color: ColorConstants.btnColor
-              ),),
+              title: Text(
+                "All Entities and Fests",
+                style: TextStyle(color: ColorConstants.btnColor),
+              ),
             ),
             drawer: SideBar(context: context),
             body: RefreshIndicator(
               displacement: 60,
               onRefresh: () async => reload(),
-              child: _getAllEntities(reload: reload),
+              child: Column(children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 15),
+                  child: Text(
+                    "Councils",
+                    style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xff176EDE)),
+                  ),
+                ),
+                Container(
+                    height: MediaQuery.of(context).size.height * 0.38,
+                    child: _getAllCouncils()),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Text(
+                    "Fests",
+                    style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xff176EDE)),
+                  ),
+                ),
+                Container(
+                    height: MediaQuery.of(context).size.height * 0.38,
+                    child: _getAllEntities()),
+              ]),
             ),
           )),
     );
@@ -99,6 +126,53 @@ class _EntitiesPageState extends State<EntitiesPage> {
         }
       },
     ));
+  }
+
+  Widget _getAllCouncils({Function reload}) {
+    return Container(
+        child: FutureBuilder<Response<BuiltList<BuiltAllCouncilsPost>>>(
+      future: AppConstants.service.getAllCouncils(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {
+            if (snapshot.error is InternetConnectionException) {
+              AppConstants.internetErrorFlushBar.showFlushbar(context);
+            }
+
+            return Center(
+              child: Text(
+                snapshot.error.toString(),
+                textAlign: TextAlign.center,
+                textScaleFactor: 1.3,
+              ),
+            );
+          }
+          final posts = snapshot.data.body?.toBuiltList();
+          return _buildAllCouncilBodyPosts(context, posts, reload: reload);
+        } else {
+          return Center(
+            child: EntityCustomWidgets.getPlaceholder(),
+          );
+        }
+      },
+    ));
+  }
+
+  Widget _buildAllCouncilBodyPosts(
+      BuildContext context, BuiltList<BuiltAllCouncilsPost> posts,
+      {Function reload}) {
+    return Container(
+      child: ListView.builder(
+          physics: AlwaysScrollableScrollPhysics(),
+          shrinkWrap: true,
+          scrollDirection: Axis.vertical,
+          itemCount: posts.length,
+          padding: EdgeInsets.all(8),
+          itemBuilder: (context, index) {
+            return EntityCustomWidgets.getCouncilyCard(context,
+                entity: posts[index], horizontal: true, reload: reload);
+          }),
+    );
   }
 
   Widget _buildAllEntitiesBodyPosts(
