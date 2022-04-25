@@ -568,8 +568,10 @@ abstract class BuiltProfilePost
   @nullable
   String get photo_url;
 
+  @nullable
   bool get can_post_notice;
 
+  @nullable
   bool get can_add_parliament_details;
 
   BuiltProfilePost._();
@@ -719,10 +721,10 @@ abstract class NoticeCreatePost
   static Serializer<NoticeCreatePost> get serializer =>
       _$noticeCreatePostSerializer;
 }
+
 // !--------------------------------------------------------------------------------------------------------------------
 abstract class CreateMinute
     implements Built<CreateMinute, CreateMinuteBuilder> {
-
   String get title;
   String get description;
   int get committee;
@@ -740,21 +742,21 @@ abstract class CreateMinutePost
 
   CreateMinutePost._();
   factory CreateMinutePost([updates(CreateMinutePostBuilder b)]) =
-  _$CreateMinutePost;
+      _$CreateMinutePost;
   static Serializer<CreateMinutePost> get serializer =>
       _$createMinutePostSerializer;
 }
 
 abstract class CreateSuggestion
     implements Built<CreateSuggestion, CreateSuggestionBuilder> {
-
   String get title;
   String get description;
 
-
   CreateSuggestion._();
-  factory CreateSuggestion([updates(CreateSuggestionBuilder b)]) = _$CreateSuggestion;
-  static Serializer<CreateSuggestion> get serializer => _$createSuggestionSerializer;
+  factory CreateSuggestion([updates(CreateSuggestionBuilder b)]) =
+      _$CreateSuggestion;
+  static Serializer<CreateSuggestion> get serializer =>
+      _$createSuggestionSerializer;
 }
 
 abstract class CreateSuggestionPost
@@ -762,15 +764,12 @@ abstract class CreateSuggestionPost
   String get title;
   String get description;
 
-
   CreateSuggestionPost._();
   factory CreateSuggestionPost([updates(CreateSuggestionPostBuilder b)]) =
-  _$CreateSuggestionPost;
+      _$CreateSuggestionPost;
   static Serializer<CreateSuggestionPost> get serializer =>
       _$createSuggestionPostSerializer;
 }
-
-
 
 // !--------------------------------------------------------------------------------------------------------------------
 abstract class GrievanceCount
