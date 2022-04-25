@@ -119,23 +119,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Container(
-                                  width: MediaQuery.of(context).size.width*0.75,
-                                  child: SingleChildScrollView(
-                                    
-                                    scrollDirection: Axis.horizontal,
-                                    child: Text(
-                                      widget.profileDetails.name,
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.75,
+                                  child: Center(
+                                    child: SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Text(
+                                        widget.profileDetails.name,
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        textAlign: TextAlign.center,
                                       ),
-                                      textAlign: TextAlign.center,
                                     ),
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 10,
+                                  height: 10,
                                 ),
                                 InkWell(
                                   onTap: () async {
@@ -233,7 +235,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           //   mainAxisAlignment: MainAxisAlignment.center,
                           //   children: [
                           //   //   Text(
-                          //   //     widget.profileDetails.phone_number==null || widget.profileDetails.phone_number.isEmpty 
+                          //   //     widget.profileDetails.phone_number==null || widget.profileDetails.phone_number.isEmpty
                           //   //         ? 'Phone No. not provided'
                           //   //         : widget.profileDetails.phone_number,
                           //   //     style: TextStyle(
@@ -278,7 +280,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           SizedBox(
                             height: 10,
                           ),
-                        
+
                           SizedBox(
                             height: 10,
                           )
@@ -624,14 +626,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
           fontSize: 23,
         ),
       ),
-      actions: [
-        IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.edit_rounded),
-          color: secondaryColor,
-        ),
-        IconButton(onPressed: () {}, icon: Icon(Icons.doorbell_rounded))
-      ],
+      // actions: [
+      //   IconButton(
+      //     onPressed: () {},
+      //     icon: Icon(Icons.edit_rounded),
+      //     color: secondaryColor,
+      //   ),
+      //   IconButton(onPressed: () {}, icon: Icon(Icons.doorbell_rounded))
+      // ],
     );
   }
 }
