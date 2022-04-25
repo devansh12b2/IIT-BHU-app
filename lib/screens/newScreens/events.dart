@@ -213,7 +213,7 @@ class EventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     Size screensize = MediaQuery.of(context).size;
     var cardwidth = kIsWeb ? 200 : screensize.width;
-    var cardheight = kIsWeb ? 200 : screensize.height * 0.15;
+    var cardheight = kIsWeb ? 200 : screensize.height * 0.155;
     return Container(
       height: cardheight * 1.1,
       width: cardwidth * 1.5,
@@ -250,8 +250,11 @@ class EventCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Container(height: 4.0),
-                    Text(title, style: Style.titleTextStyle),
-                    Container(height: 10.0),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Text(title, style: Style.titleTextStyle),
+                    ),
+                    Container(height: 8.0),
                     Text(club, style: Style.commonTextStyle),
                     Separator(),
                     Padding(
