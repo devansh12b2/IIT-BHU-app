@@ -133,9 +133,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
-                                  width: 10,
-                                ),
+                                // SizedBox(
+                                //   width: 5,
+                                // ),
                                 InkWell(
                                   onTap: () async {
                                     final name = await widget.asyncInputDialog(
