@@ -26,7 +26,11 @@ class _EntitiesPageState extends State<EntitiesPage> {
   void reload() async {
     try {
       await AppConstants.updateAndPopulateAllEntities();
-      setState(() {});
+      setState(() {
+        endPosts = [];
+        councilPosts = [];
+        endInd = -1;
+      });
     } on InternetConnectionException catch (_) {
       AppConstants.internetErrorFlushBar.showFlushbar(context);
       return;
@@ -34,6 +38,10 @@ class _EntitiesPageState extends State<EntitiesPage> {
       print(err);
     }
   }
+
+  List<dynamic> endPosts = [];
+  List<dynamic> councilPosts = [];
+  int endInd = -1;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +63,7 @@ class _EntitiesPageState extends State<EntitiesPage> {
               backgroundColor: ColorConstants.headingColor,
               automaticallyImplyLeading: false,
               title: Text(
-                "All Entities and Fests",
+                "All Entities and Councils",
                 style: TextStyle(color: ColorConstants.btnColor),
               ),
             ),
@@ -63,34 +71,7 @@ class _EntitiesPageState extends State<EntitiesPage> {
             body: RefreshIndicator(
               displacement: 60,
               onRefresh: () async => reload(),
-              child: Column(children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 15),
-                  child: Text(
-                    "Councils",
-                    style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xff176EDE)),
-                  ),
-                ),
-                Container(
-                    height: MediaQuery.of(context).size.height * 0.38,
-                    child: _getAllCouncils()),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Text(
-                    "Fests",
-                    style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xff176EDE)),
-                  ),
-                ),
-                Container(
-                    height: MediaQuery.of(context).size.height * 0.38,
-                    child: _getAllEntities()),
-              ]),
+              child: _getAllEntities(),
             ),
           )),
     );
@@ -116,9 +97,22 @@ class _EntitiesPageState extends State<EntitiesPage> {
             );
           }
           final posts = snapshot.data.body
-              ?.where((entity) => entity.is_permanent != true)
+              //?.where((entity) => entity.is_permanent != true)
               ?.toBuiltList();
-          return _buildAllEntitiesBodyPosts(context, posts, reload: reload);
+          endPosts = [];
+          posts.forEach((p0) {
+            endPosts.add(p0);
+          });
+          //allposts.addAll(posts);
+          return FutureBuilder(
+              builder: (ctx, snap) {
+                if (snap.connectionState == ConnectionState.done) {
+                  return snap.data;
+                } else {
+                  return EntityCustomWidgets.getPlaceholder();
+                }
+              },
+              future: _buildAllEntitiesBodyPosts(context, reload: reload));
         } else {
           return Center(
             child: EntityCustomWidgets.getPlaceholder(),
@@ -128,66 +122,28 @@ class _EntitiesPageState extends State<EntitiesPage> {
     ));
   }
 
-  Widget _getAllCouncils({Function reload}) {
+  Future<Widget> _buildAllEntitiesBodyPosts(BuildContext context,
+      {Function reload}) async {
+    var posts = endPosts;
+    endInd = posts.length;
+    final snap = await AppConstants.service.getAllCouncils();
+    final post = snap.body?.toBuiltList();
+    posts.addAll(post);
     return Container(
-        child: FutureBuilder<Response<BuiltList<BuiltAllCouncilsPost>>>(
-      future: AppConstants.service.getAllCouncils(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasError) {
-            if (snapshot.error is InternetConnectionException) {
-              AppConstants.internetErrorFlushBar.showFlushbar(context);
+      child: ListView.builder(
+          physics: AlwaysScrollableScrollPhysics(),
+          shrinkWrap: true,
+          scrollDirection: Axis.vertical,
+          itemCount: posts.length,
+          padding: EdgeInsets.all(8),
+          itemBuilder: (context, index) {
+            if (index < endInd) {
+              return EntityCustomWidgets.getEntityCard(context,
+                  entity: posts[index], horizontal: true, reload: reload);
+            } else {
+              return EntityCustomWidgets.getCouncilyCard(context,
+                  entity: posts[index], horizontal: true, reload: reload);
             }
-
-            return Center(
-              child: Text(
-                snapshot.error.toString(),
-                textAlign: TextAlign.center,
-                textScaleFactor: 1.3,
-              ),
-            );
-          }
-          final posts = snapshot.data.body?.toBuiltList();
-          return _buildAllCouncilBodyPosts(context, posts, reload: reload);
-        } else {
-          return Center(
-            child: EntityCustomWidgets.getPlaceholder(),
-          );
-        }
-      },
-    ));
-  }
-
-  Widget _buildAllCouncilBodyPosts(
-      BuildContext context, BuiltList<BuiltAllCouncilsPost> posts,
-      {Function reload}) {
-    return Container(
-      child: ListView.builder(
-          physics: AlwaysScrollableScrollPhysics(),
-          shrinkWrap: true,
-          scrollDirection: Axis.vertical,
-          itemCount: posts.length,
-          padding: EdgeInsets.all(8),
-          itemBuilder: (context, index) {
-            return EntityCustomWidgets.getCouncilyCard(context,
-                entity: posts[index], horizontal: true, reload: reload);
-          }),
-    );
-  }
-
-  Widget _buildAllEntitiesBodyPosts(
-      BuildContext context, BuiltList<EntityListPost> posts,
-      {Function reload}) {
-    return Container(
-      child: ListView.builder(
-          physics: AlwaysScrollableScrollPhysics(),
-          shrinkWrap: true,
-          scrollDirection: Axis.vertical,
-          itemCount: posts.length,
-          padding: EdgeInsets.all(8),
-          itemBuilder: (context, index) {
-            return EntityCustomWidgets.getEntityCard(context,
-                entity: posts[index], horizontal: true, reload: reload);
           }),
     );
   }
