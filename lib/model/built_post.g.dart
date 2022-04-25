@@ -58,6 +58,14 @@ Serializer<BuiltNoticeDetail> _$builtNoticeDetailSerializer =
     new _$BuiltNoticeDetailSerializer();
 Serializer<NoticeCreatePost> _$noticeCreatePostSerializer =
     new _$NoticeCreatePostSerializer();
+Serializer<CreateMinute> _$createMinuteSerializer =
+    new _$CreateMinuteSerializer();
+Serializer<CreateMinutePost> _$createMinutePostSerializer =
+    new _$CreateMinutePostSerializer();
+Serializer<CreateSuggestion> _$createSuggestionSerializer =
+    new _$CreateSuggestionSerializer();
+Serializer<CreateSuggestionPost> _$createSuggestionPostSerializer =
+    new _$CreateSuggestionPostSerializer();
 Serializer<GrievanceCount> _$grievanceCountSerializer =
     new _$GrievanceCountSerializer();
 Serializer<GrievancePost> _$grievancePostSerializer =
@@ -2174,7 +2182,14 @@ class _$BuiltProfilePostSerializer
   @override
   Iterable<Object> serialize(Serializers serializers, BuiltProfilePost object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[];
+    final result = <Object>[
+      'can_post_notice',
+      serializers.serialize(object.can_post_notice,
+          specifiedType: const FullType(bool)),
+      'can_add_parliament_details',
+      serializers.serialize(object.can_add_parliament_details,
+          specifiedType: const FullType(bool)),
+    ];
     if (object.id != null) {
       result
         ..add('id')
@@ -2311,6 +2326,14 @@ class _$BuiltProfilePostSerializer
         case 'photo_url':
           result.photo_url = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'can_post_notice':
+          result.can_post_notice = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'can_add_parliament_details':
+          result.can_add_parliament_details = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
       }
     }
@@ -2899,6 +2922,218 @@ class _$NoticeCreatePostSerializer
         case 'importance':
           result.importance = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$CreateMinuteSerializer implements StructuredSerializer<CreateMinute> {
+  @override
+  final Iterable<Type> types = const [CreateMinute, _$CreateMinute];
+  @override
+  final String wireName = 'CreateMinute';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, CreateMinute object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'title',
+      serializers.serialize(object.title,
+          specifiedType: const FullType(String)),
+      'description',
+      serializers.serialize(object.description,
+          specifiedType: const FullType(String)),
+      'committee',
+      serializers.serialize(object.committee,
+          specifiedType: const FullType(int)),
+    ];
+
+    return result;
+  }
+
+  @override
+  CreateMinute deserialize(Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new CreateMinuteBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'title':
+          result.title = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'description':
+          result.description = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'committee':
+          result.committee = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$CreateMinutePostSerializer
+    implements StructuredSerializer<CreateMinutePost> {
+  @override
+  final Iterable<Type> types = const [CreateMinutePost, _$CreateMinutePost];
+  @override
+  final String wireName = 'CreateMinutePost';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, CreateMinutePost object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'title',
+      serializers.serialize(object.title,
+          specifiedType: const FullType(String)),
+      'description',
+      serializers.serialize(object.description,
+          specifiedType: const FullType(String)),
+      'committee',
+      serializers.serialize(object.committee,
+          specifiedType: const FullType(int)),
+    ];
+
+    return result;
+  }
+
+  @override
+  CreateMinutePost deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new CreateMinutePostBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'title':
+          result.title = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'description':
+          result.description = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'committee':
+          result.committee = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$CreateSuggestionSerializer
+    implements StructuredSerializer<CreateSuggestion> {
+  @override
+  final Iterable<Type> types = const [CreateSuggestion, _$CreateSuggestion];
+  @override
+  final String wireName = 'CreateSuggestion';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, CreateSuggestion object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'title',
+      serializers.serialize(object.title,
+          specifiedType: const FullType(String)),
+      'description',
+      serializers.serialize(object.description,
+          specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  CreateSuggestion deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new CreateSuggestionBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'title':
+          result.title = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'description':
+          result.description = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$CreateSuggestionPostSerializer
+    implements StructuredSerializer<CreateSuggestionPost> {
+  @override
+  final Iterable<Type> types = const [
+    CreateSuggestionPost,
+    _$CreateSuggestionPost
+  ];
+  @override
+  final String wireName = 'CreateSuggestionPost';
+
+  @override
+  Iterable<Object> serialize(
+      Serializers serializers, CreateSuggestionPost object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'title',
+      serializers.serialize(object.title,
+          specifiedType: const FullType(String)),
+      'description',
+      serializers.serialize(object.description,
+          specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  CreateSuggestionPost deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new CreateSuggestionPostBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'title':
+          result.title = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'description':
+          result.description = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -6730,6 +6965,10 @@ class _$BuiltProfilePost extends BuiltProfilePost {
   final BuiltList<EntityListPost> entity_privileges;
   @override
   final String photo_url;
+  @override
+  final bool can_post_notice;
+  @override
+  final bool can_add_parliament_details;
 
   factory _$BuiltProfilePost(
           [void Function(BuiltProfilePostBuilder) updates]) =>
@@ -6746,8 +6985,18 @@ class _$BuiltProfilePost extends BuiltProfilePost {
       this.entity_subscriptions,
       this.club_privileges,
       this.entity_privileges,
-      this.photo_url})
-      : super._();
+      this.photo_url,
+      this.can_post_notice,
+      this.can_add_parliament_details})
+      : super._() {
+    if (can_post_notice == null) {
+      throw new BuiltValueNullFieldError('BuiltProfilePost', 'can_post_notice');
+    }
+    if (can_add_parliament_details == null) {
+      throw new BuiltValueNullFieldError(
+          'BuiltProfilePost', 'can_add_parliament_details');
+    }
+  }
 
   @override
   BuiltProfilePost rebuild(void Function(BuiltProfilePostBuilder) updates) =>
@@ -6771,7 +7020,9 @@ class _$BuiltProfilePost extends BuiltProfilePost {
         entity_subscriptions == other.entity_subscriptions &&
         club_privileges == other.club_privileges &&
         entity_privileges == other.entity_privileges &&
-        photo_url == other.photo_url;
+        photo_url == other.photo_url &&
+        can_post_notice == other.can_post_notice &&
+        can_add_parliament_details == other.can_add_parliament_details;
   }
 
   @override
@@ -6784,16 +7035,22 @@ class _$BuiltProfilePost extends BuiltProfilePost {
                         $jc(
                             $jc(
                                 $jc(
-                                    $jc($jc($jc(0, id.hashCode), name.hashCode),
-                                        email.hashCode),
-                                    phone_number.hashCode),
-                                department.hashCode),
-                            year_of_joining.hashCode),
-                        club_subscriptions.hashCode),
-                    entity_subscriptions.hashCode),
-                club_privileges.hashCode),
-            entity_privileges.hashCode),
-        photo_url.hashCode));
+                                    $jc(
+                                        $jc(
+                                            $jc(
+                                                $jc($jc(0, id.hashCode),
+                                                    name.hashCode),
+                                                email.hashCode),
+                                            phone_number.hashCode),
+                                        department.hashCode),
+                                    year_of_joining.hashCode),
+                                club_subscriptions.hashCode),
+                            entity_subscriptions.hashCode),
+                        club_privileges.hashCode),
+                    entity_privileges.hashCode),
+                photo_url.hashCode),
+            can_post_notice.hashCode),
+        can_add_parliament_details.hashCode));
   }
 
   @override
@@ -6809,7 +7066,9 @@ class _$BuiltProfilePost extends BuiltProfilePost {
           ..add('entity_subscriptions', entity_subscriptions)
           ..add('club_privileges', club_privileges)
           ..add('entity_privileges', entity_privileges)
-          ..add('photo_url', photo_url))
+          ..add('photo_url', photo_url)
+          ..add('can_post_notice', can_post_notice)
+          ..add('can_add_parliament_details', can_add_parliament_details))
         .toString();
   }
 }
@@ -6871,6 +7130,16 @@ class BuiltProfilePostBuilder
   String get photo_url => _$this._photo_url;
   set photo_url(String photo_url) => _$this._photo_url = photo_url;
 
+  bool _can_post_notice;
+  bool get can_post_notice => _$this._can_post_notice;
+  set can_post_notice(bool can_post_notice) =>
+      _$this._can_post_notice = can_post_notice;
+
+  bool _can_add_parliament_details;
+  bool get can_add_parliament_details => _$this._can_add_parliament_details;
+  set can_add_parliament_details(bool can_add_parliament_details) =>
+      _$this._can_add_parliament_details = can_add_parliament_details;
+
   BuiltProfilePostBuilder();
 
   BuiltProfilePostBuilder get _$this {
@@ -6886,6 +7155,8 @@ class BuiltProfilePostBuilder
       _club_privileges = _$v.club_privileges?.toBuilder();
       _entity_privileges = _$v.entity_privileges?.toBuilder();
       _photo_url = _$v.photo_url;
+      _can_post_notice = _$v.can_post_notice;
+      _can_add_parliament_details = _$v.can_add_parliament_details;
       _$v = null;
     }
     return this;
@@ -6920,7 +7191,9 @@ class BuiltProfilePostBuilder
               entity_subscriptions: _entity_subscriptions?.build(),
               club_privileges: _club_privileges?.build(),
               entity_privileges: _entity_privileges?.build(),
-              photo_url: photo_url);
+              photo_url: photo_url,
+              can_post_notice: can_post_notice,
+              can_add_parliament_details: can_add_parliament_details);
     } catch (_) {
       String _$failedField;
       try {
@@ -7966,6 +8239,410 @@ class NoticeCreatePostBuilder
             description: description,
             date: date,
             importance: importance);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$CreateMinute extends CreateMinute {
+  @override
+  final String title;
+  @override
+  final String description;
+  @override
+  final int committee;
+
+  factory _$CreateMinute([void Function(CreateMinuteBuilder) updates]) =>
+      (new CreateMinuteBuilder()..update(updates)).build();
+
+  _$CreateMinute._({this.title, this.description, this.committee}) : super._() {
+    if (title == null) {
+      throw new BuiltValueNullFieldError('CreateMinute', 'title');
+    }
+    if (description == null) {
+      throw new BuiltValueNullFieldError('CreateMinute', 'description');
+    }
+    if (committee == null) {
+      throw new BuiltValueNullFieldError('CreateMinute', 'committee');
+    }
+  }
+
+  @override
+  CreateMinute rebuild(void Function(CreateMinuteBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  CreateMinuteBuilder toBuilder() => new CreateMinuteBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is CreateMinute &&
+        title == other.title &&
+        description == other.description &&
+        committee == other.committee;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(
+        $jc($jc(0, title.hashCode), description.hashCode), committee.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('CreateMinute')
+          ..add('title', title)
+          ..add('description', description)
+          ..add('committee', committee))
+        .toString();
+  }
+}
+
+class CreateMinuteBuilder
+    implements Builder<CreateMinute, CreateMinuteBuilder> {
+  _$CreateMinute _$v;
+
+  String _title;
+  String get title => _$this._title;
+  set title(String title) => _$this._title = title;
+
+  String _description;
+  String get description => _$this._description;
+  set description(String description) => _$this._description = description;
+
+  int _committee;
+  int get committee => _$this._committee;
+  set committee(int committee) => _$this._committee = committee;
+
+  CreateMinuteBuilder();
+
+  CreateMinuteBuilder get _$this {
+    if (_$v != null) {
+      _title = _$v.title;
+      _description = _$v.description;
+      _committee = _$v.committee;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(CreateMinute other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$CreateMinute;
+  }
+
+  @override
+  void update(void Function(CreateMinuteBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$CreateMinute build() {
+    final _$result = _$v ??
+        new _$CreateMinute._(
+            title: title, description: description, committee: committee);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$CreateMinutePost extends CreateMinutePost {
+  @override
+  final String title;
+  @override
+  final String description;
+  @override
+  final int committee;
+
+  factory _$CreateMinutePost(
+          [void Function(CreateMinutePostBuilder) updates]) =>
+      (new CreateMinutePostBuilder()..update(updates)).build();
+
+  _$CreateMinutePost._({this.title, this.description, this.committee})
+      : super._() {
+    if (title == null) {
+      throw new BuiltValueNullFieldError('CreateMinutePost', 'title');
+    }
+    if (description == null) {
+      throw new BuiltValueNullFieldError('CreateMinutePost', 'description');
+    }
+    if (committee == null) {
+      throw new BuiltValueNullFieldError('CreateMinutePost', 'committee');
+    }
+  }
+
+  @override
+  CreateMinutePost rebuild(void Function(CreateMinutePostBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  CreateMinutePostBuilder toBuilder() =>
+      new CreateMinutePostBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is CreateMinutePost &&
+        title == other.title &&
+        description == other.description &&
+        committee == other.committee;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(
+        $jc($jc(0, title.hashCode), description.hashCode), committee.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('CreateMinutePost')
+          ..add('title', title)
+          ..add('description', description)
+          ..add('committee', committee))
+        .toString();
+  }
+}
+
+class CreateMinutePostBuilder
+    implements Builder<CreateMinutePost, CreateMinutePostBuilder> {
+  _$CreateMinutePost _$v;
+
+  String _title;
+  String get title => _$this._title;
+  set title(String title) => _$this._title = title;
+
+  String _description;
+  String get description => _$this._description;
+  set description(String description) => _$this._description = description;
+
+  int _committee;
+  int get committee => _$this._committee;
+  set committee(int committee) => _$this._committee = committee;
+
+  CreateMinutePostBuilder();
+
+  CreateMinutePostBuilder get _$this {
+    if (_$v != null) {
+      _title = _$v.title;
+      _description = _$v.description;
+      _committee = _$v.committee;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(CreateMinutePost other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$CreateMinutePost;
+  }
+
+  @override
+  void update(void Function(CreateMinutePostBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$CreateMinutePost build() {
+    final _$result = _$v ??
+        new _$CreateMinutePost._(
+            title: title, description: description, committee: committee);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$CreateSuggestion extends CreateSuggestion {
+  @override
+  final String title;
+  @override
+  final String description;
+
+  factory _$CreateSuggestion(
+          [void Function(CreateSuggestionBuilder) updates]) =>
+      (new CreateSuggestionBuilder()..update(updates)).build();
+
+  _$CreateSuggestion._({this.title, this.description}) : super._() {
+    if (title == null) {
+      throw new BuiltValueNullFieldError('CreateSuggestion', 'title');
+    }
+    if (description == null) {
+      throw new BuiltValueNullFieldError('CreateSuggestion', 'description');
+    }
+  }
+
+  @override
+  CreateSuggestion rebuild(void Function(CreateSuggestionBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  CreateSuggestionBuilder toBuilder() =>
+      new CreateSuggestionBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is CreateSuggestion &&
+        title == other.title &&
+        description == other.description;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc($jc(0, title.hashCode), description.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('CreateSuggestion')
+          ..add('title', title)
+          ..add('description', description))
+        .toString();
+  }
+}
+
+class CreateSuggestionBuilder
+    implements Builder<CreateSuggestion, CreateSuggestionBuilder> {
+  _$CreateSuggestion _$v;
+
+  String _title;
+  String get title => _$this._title;
+  set title(String title) => _$this._title = title;
+
+  String _description;
+  String get description => _$this._description;
+  set description(String description) => _$this._description = description;
+
+  CreateSuggestionBuilder();
+
+  CreateSuggestionBuilder get _$this {
+    if (_$v != null) {
+      _title = _$v.title;
+      _description = _$v.description;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(CreateSuggestion other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$CreateSuggestion;
+  }
+
+  @override
+  void update(void Function(CreateSuggestionBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$CreateSuggestion build() {
+    final _$result =
+        _$v ?? new _$CreateSuggestion._(title: title, description: description);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$CreateSuggestionPost extends CreateSuggestionPost {
+  @override
+  final String title;
+  @override
+  final String description;
+
+  factory _$CreateSuggestionPost(
+          [void Function(CreateSuggestionPostBuilder) updates]) =>
+      (new CreateSuggestionPostBuilder()..update(updates)).build();
+
+  _$CreateSuggestionPost._({this.title, this.description}) : super._() {
+    if (title == null) {
+      throw new BuiltValueNullFieldError('CreateSuggestionPost', 'title');
+    }
+    if (description == null) {
+      throw new BuiltValueNullFieldError('CreateSuggestionPost', 'description');
+    }
+  }
+
+  @override
+  CreateSuggestionPost rebuild(
+          void Function(CreateSuggestionPostBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  CreateSuggestionPostBuilder toBuilder() =>
+      new CreateSuggestionPostBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is CreateSuggestionPost &&
+        title == other.title &&
+        description == other.description;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc($jc(0, title.hashCode), description.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('CreateSuggestionPost')
+          ..add('title', title)
+          ..add('description', description))
+        .toString();
+  }
+}
+
+class CreateSuggestionPostBuilder
+    implements Builder<CreateSuggestionPost, CreateSuggestionPostBuilder> {
+  _$CreateSuggestionPost _$v;
+
+  String _title;
+  String get title => _$this._title;
+  set title(String title) => _$this._title = title;
+
+  String _description;
+  String get description => _$this._description;
+  set description(String description) => _$this._description = description;
+
+  CreateSuggestionPostBuilder();
+
+  CreateSuggestionPostBuilder get _$this {
+    if (_$v != null) {
+      _title = _$v.title;
+      _description = _$v.description;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(CreateSuggestionPost other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$CreateSuggestionPost;
+  }
+
+  @override
+  void update(void Function(CreateSuggestionPostBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$CreateSuggestionPost build() {
+    final _$result = _$v ??
+        new _$CreateSuggestionPost._(title: title, description: description);
     replace(_$result);
     return _$result;
   }
