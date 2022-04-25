@@ -568,6 +568,10 @@ abstract class BuiltProfilePost
   @nullable
   String get photo_url;
 
+  bool get can_post_notice;
+
+  bool get can_add_parliament_details;
+
   BuiltProfilePost._();
 
   factory BuiltProfilePost([updates(BuiltProfilePostBuilder b)]) =
@@ -715,6 +719,58 @@ abstract class NoticeCreatePost
   static Serializer<NoticeCreatePost> get serializer =>
       _$noticeCreatePostSerializer;
 }
+// !--------------------------------------------------------------------------------------------------------------------
+abstract class CreateMinute
+    implements Built<CreateMinute, CreateMinuteBuilder> {
+
+  String get title;
+  String get description;
+  int get committee;
+
+  CreateMinute._();
+  factory CreateMinute([updates(CreateMinuteBuilder b)]) = _$CreateMinute;
+  static Serializer<CreateMinute> get serializer => _$createMinuteSerializer;
+}
+
+abstract class CreateMinutePost
+    implements Built<CreateMinutePost, CreateMinutePostBuilder> {
+  String get title;
+  String get description;
+  int get committee;
+
+  CreateMinutePost._();
+  factory CreateMinutePost([updates(CreateMinutePostBuilder b)]) =
+  _$CreateMinutePost;
+  static Serializer<CreateMinutePost> get serializer =>
+      _$createMinutePostSerializer;
+}
+
+abstract class CreateSuggestion
+    implements Built<CreateSuggestion, CreateSuggestionBuilder> {
+
+  String get title;
+  String get description;
+
+
+  CreateSuggestion._();
+  factory CreateSuggestion([updates(CreateSuggestionBuilder b)]) = _$CreateSuggestion;
+  static Serializer<CreateSuggestion> get serializer => _$createSuggestionSerializer;
+}
+
+abstract class CreateSuggestionPost
+    implements Built<CreateSuggestionPost, CreateSuggestionPostBuilder> {
+  String get title;
+  String get description;
+
+
+  CreateSuggestionPost._();
+  factory CreateSuggestionPost([updates(CreateSuggestionPostBuilder b)]) =
+  _$CreateSuggestionPost;
+  static Serializer<CreateSuggestionPost> get serializer =>
+      _$createSuggestionPostSerializer;
+}
+
+
 
 // !--------------------------------------------------------------------------------------------------------------------
 abstract class GrievanceCount

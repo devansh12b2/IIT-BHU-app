@@ -22,6 +22,7 @@ import 'package:iit_app/pages/parliament/parliamentPage.dart';
 import 'package:iit_app/pages/newHomePage/newHomePage.dart';
 
 import 'package:iit_app/pages/settings/settingsPage.dart';
+import 'package:iit_app/screens/newScreens/emergency.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,15 +49,15 @@ void main() async {
 
       '/root': (BuildContext context) => RootPage(),
       // '/newhome': (BuildContext context) => NewHomeScreen(),
-      '/newhome': (BuildContext context) => NewHomePage(),
-      '/home': (BuildContext context) => HomePage(),
+      '/home': (BuildContext context) => NewHomePage(),
+      // '/home': (BuildContext context) => HomePage(),
       '/mapPage': (BuildContext context) => MapPage(),
       '/academicsPage': (BuildContext context) => AcademicsPage(),
       '/mess': (BuildContext context) => MessScreen(),
       '/allWorkshops': (BuildContext context) => AllWorkshopsScreen(),
       '/allEntities': (BuildContext context) => EntitiesPage(),
       '/parliamentPage': (BuildContext context) => ParliamentPage(),
-      '/newProfile': (BuildContext context) => ProfilePage(),
+      '/profile': (BuildContext context) => ProfilePage(),
       '/account': (BuildContext context) => AccountPage(),
       '/Mess': (BuildContext context) => MessScreen(),
       '/settings': (BuildContext context) => SettingsScreen(),
@@ -65,6 +66,7 @@ void main() async {
       '/about': (BuildContext context) => AboutPage(),
       '/grievance': (BuildContext context) => GrievancePage(),
       '/lostAndFound': (BuildContext context) => LostAndFoundPage(),
+      '/emergency': (BuildContext context) => Emergency(),
     },
   ));
 }

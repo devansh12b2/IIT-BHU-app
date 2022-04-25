@@ -36,8 +36,16 @@ abstract class PostApiService extends ChopperService {
   Future<Response> downvoteASuggestion(
       @Path('id') int id,@Header('Authorization') String token);
 
+  @Post(path: '/parliamentSuggestions/create/')
+  Future<Response<CreateSuggestion>> createParliamentSuggestion(
+      @Header('Authorization') String token, @Body() CreateSuggestionPost body);
+
   @Get(path: '/parliamentUpdates/')
   Future<Response> getParliamentUpdates();
+
+  @Post(path: '/parliamentUpdates/create/')
+  Future<Response<CreateMinute>> createParliamentUpdate(
+      @Header('Authorization') String token, @Body() CreateMinutePost body);
 
   @Get(path: '/parliamentContact/')
   Future<Response> getParliamentContacts();

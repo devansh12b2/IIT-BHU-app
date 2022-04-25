@@ -2,6 +2,7 @@
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 FabCircularMenu newHomeFAB(BuildContext context, {fabKey}) {
   Size screensize = MediaQuery.of(context).size;
@@ -11,13 +12,13 @@ FabCircularMenu newHomeFAB(BuildContext context, {fabKey}) {
         bottom: screensize.height * 0.025, right: screensize.width * 0.03),
     fabIconBorder: CircleBorder(),
     fabSize: 55.0,
-    fabElevation: 8.0,
+    fabElevation: 10.0,
     animationDuration: Duration(milliseconds: 800),
     ringColor: Color(0xFFb9d8ff),
-    ringDiameter: kIsWeb ? 250.0 : screensize.width * 0.54,
-    ringWidth: kIsWeb ? 50.0 : (screensize.width * 0.8) / 6.6,
+    ringDiameter: kIsWeb ? 250.0 : screensize.width * 0.6,
+    ringWidth: kIsWeb ? 50.0 : (screensize.width * 0.8) / 6,
     fabOpenIcon: Icon(
-      Icons.menu_rounded,
+      Icons.call,
       color: Color(0xFF176ede),
     ),
     fabCloseIcon: Icon(
@@ -27,22 +28,55 @@ FabCircularMenu newHomeFAB(BuildContext context, {fabKey}) {
     fabCloseColor: Color(0xFFb9d8ff),
     fabOpenColor: Color(0xFFb9d8ff),
     children: <Widget>[
-      FloatingItems(),
-      FloatingItems(),
-      FloatingItems(),
+      FloatingItems(
+        image: 'assets/police.png',
+        number: 'tel:+91 542236 9134',
+        title: 'Proctor Office',
+      ),
+      FloatingItems(
+        image: 'assets/ambulance.png',
+        number: 'tel:+91 54223 09259',
+        title: 'Ambulance',
+      ),
+      FloatingItems(
+        image: 'assets/counselor.png',
+        number: 'tel:+91 75240 53214',
+        title: 'Counselor',
+      ),
     ],
   );
 }
 
 class FloatingItems extends StatelessWidget {
+  const FloatingItems({this.image, this.number, this.title});
+
+  final String image;
+  final String number;
+  final String title;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: null,
+      onTap: () => launch(number),
       child: Container(
-        height: 45.0,
-        decoration:
-            BoxDecoration(color: Color(0xFF176ede), shape: BoxShape.circle),
+        height: 55.0,
+        child: Column(
+          children: [
+            Container(
+              height: 35.0,
+              decoration: BoxDecoration(
+                  color: Color(0xFFd1e6ff),
+                  shape: BoxShape.circle,
+                  image: DecorationImage(image: AssetImage(image))),
+            ),
+            Text(
+              title,
+              style: TextStyle(
+                  fontFamily: 'Gilroy',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 11.0),
+            ),
+          ],
+        ),
       ),
     );
   }

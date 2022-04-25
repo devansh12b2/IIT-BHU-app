@@ -103,8 +103,8 @@ class SideBar extends Drawer {
                 ),
               ),
             ),
-            getNavItem(Icons.home, "Home", '/home', homeRoute: true),
-            getNavItem(Icons.home, "New Home", '/newhome'),
+
+            getNavItem(Icons.home, "Home", '/home'),
 
             getNavItem(Icons.map, "Map", '/mapPage'),
             // getNavItem(Icons.local_dining, "Mess management", '/mess'),
@@ -117,26 +117,7 @@ class SideBar extends Drawer {
                 '/academicsPage'),
             _getActiveEntities(),
             getNavItem(Icons.house_rounded, "Parliament", "/parliamentPage"),
-            AppConstants.isGuest
-                ? ListTile(
-                    title: Text("Account",
-                        style: Style.baseTextStyle
-                            .copyWith(color: ColorConstants.textColor)),
-                    leading: Icon(Icons.account_box,
-                        color: ColorConstants.textColor),
-                    // TODO: ask user to log in , may be in a dialog box
 
-                    onTap: () {
-                      Navigator.pop(context);
-                      return ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(
-                        elevation: 10,
-                        content: Text('You must be logged in'),
-                        duration: Duration(seconds: 2),
-                      ));
-                    },
-                  )
-                : getNavItem(Icons.account_box, "Account", '/account'),
             AppConstants.isGuest
                 ? ListTile(
                     title: Text("New Profile",
@@ -156,11 +137,12 @@ class SideBar extends Drawer {
                       ));
                     },
                   )
-                : getNavItem(Icons.account_box, "New Profile", '/newProfile'),
+                : getNavItem(Icons.account_box, "Profile", '/profile'),
             // getNavItem(Icons.comment, "Complaints & Suggestions", '/complaints'),
             getNavItem(Icons.settings, "Settings", '/settings'),
             getNavItem(Icons.comment, "Grievances", '/grievance'),
             getNavItem(Icons.search_off, "Lost And Found", '/lostAndFound'),
+            getNavItem(Icons.warning_rounded, "Emergency", '/emergency'),
             ListTile(
               leading: Icon(Icons.exit_to_app, color: ColorConstants.textColor),
               title: AppConstants.isGuest

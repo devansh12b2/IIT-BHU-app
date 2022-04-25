@@ -16,7 +16,7 @@ class NewSearchBarWidget {
     return StatefulBuilder(
       builder: (context, setState) => TextFormField(
         style: GoogleFonts.notoSans(
-          textStyle: TextStyle(fontSize: 18, height: kIsWeb ? 1.5 : 1.8),
+          textStyle: TextStyle(fontSize: 18, height: kIsWeb ? 1.5 : 1.7),
           fontWeight: FontWeight.w500,
         ),
         focusNode: focusNode,

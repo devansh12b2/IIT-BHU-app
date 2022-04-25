@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:iit_app/model/appConstants.dart';
 import 'package:iit_app/screens/newScreens/searchBar.dart';
 
+import '../../model/colorConstants.dart';
+import '../../ui/text_style.dart';
+
 AppBar newHomeAppBar(BuildContext context, NewSearchBarWidget searchBarWidget,
     FocusNode focusNode) {
   Size screensize = MediaQuery.of(context).size;
@@ -13,7 +16,7 @@ AppBar newHomeAppBar(BuildContext context, NewSearchBarWidget searchBarWidget,
     leading: Padding(
         padding: const EdgeInsets.only(left: 5.0),
         child: Container(
-          margin: EdgeInsets.only(left: 5, right: 10),
+          margin: EdgeInsets.only(left: 5, right: 5),
           height: 35.0,
           width: 35.0,
           child: Builder(
@@ -53,7 +56,7 @@ AppBar newHomeAppBar(BuildContext context, NewSearchBarWidget searchBarWidget,
           //     child: searchBarWidget.getSearchTextField(context,
           //         fabKey: fabKey, searchFocusNode: focusNode)),
           Container(
-            width: screensize.width * 0.65,
+            width: screensize.width * 0.61,
             decoration: BoxDecoration(
               color: Color(0xFFb9d8ff),
               borderRadius: BorderRadius.circular(40.0),
@@ -92,19 +95,41 @@ AppBar newHomeAppBar(BuildContext context, NewSearchBarWidget searchBarWidget,
               //   ),
             ),
           ),
-          Container(
-            padding: EdgeInsets.all(8),
-            height: 40,
-            width: 40,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: (AppConstants.currentUser == null ||
-                        AppConstants.isGuest == true ||
-                        AppConstants.currentUser.photo_url == '')
-                    ? AssetImage('assets/guest.png')
-                    : NetworkImage(AppConstants.currentUser.photo_url),
-                fit: BoxFit.cover,
+          GestureDetector(
+            onTap: () {
+              AppConstants.isGuest
+                  ? ListTile(
+                      title: Text("New Profile",
+                          style: Style.baseTextStyle
+                              .copyWith(color: ColorConstants.textColor)),
+                      leading: Icon(Icons.account_box,
+                          color: ColorConstants.textColor),
+                      onTap: () {
+                        Navigator.pop(context);
+                        return ScaffoldMessenger.of(context)
+                            .showSnackBar(SnackBar(
+                          elevation: 10,
+                          content: Text('You must be logged in'),
+                          duration: Duration(seconds: 2),
+                        ));
+                      },
+                    )
+                  : Navigator.of(context).pushNamed('/profile');
+            },
+            child: Container(
+              padding: EdgeInsets.all(8),
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: (AppConstants.currentUser == null ||
+                          AppConstants.isGuest == true ||
+                          AppConstants.currentUser.photo_url == '')
+                      ? AssetImage('assets/guest.png')
+                      : NetworkImage(AppConstants.currentUser.photo_url),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           )
