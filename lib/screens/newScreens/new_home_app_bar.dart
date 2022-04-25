@@ -114,7 +114,7 @@ AppBar newHomeAppBar(BuildContext context, NewSearchBarWidget searchBarWidget,
                         ));
                       },
                     )
-                  : Navigator.of(context).pushNamed('/newProfile');
+                  : Navigator.of(context).pushNamed('/profile');
             },
             child: Container(
               padding: EdgeInsets.all(8),

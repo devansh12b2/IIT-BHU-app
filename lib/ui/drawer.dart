@@ -137,7 +137,7 @@ class SideBar extends Drawer {
                       ));
                     },
                   )
-                : getNavItem(Icons.account_box, "New Profile", '/newProfile'),
+                : getNavItem(Icons.account_box, "Profile", '/profile'),
             // getNavItem(Icons.comment, "Complaints & Suggestions", '/complaints'),
             getNavItem(Icons.settings, "Settings", '/settings'),
             getNavItem(Icons.comment, "Grievances", '/grievance'),

@@ -57,7 +57,7 @@ void main() async {
       '/allWorkshops': (BuildContext context) => AllWorkshopsScreen(),
       '/allEntities': (BuildContext context) => EntitiesPage(),
       '/parliamentPage': (BuildContext context) => ParliamentPage(),
-      '/newProfile': (BuildContext context) => ProfilePage(),
+      '/profile': (BuildContext context) => ProfilePage(),
       '/account': (BuildContext context) => AccountPage(),
       '/Mess': (BuildContext context) => MessScreen(),
       '/settings': (BuildContext context) => SettingsScreen(),
