@@ -54,31 +54,7 @@ class _NewHomeScreenState extends State<NewHomeScreen>
             alignment: Alignment.centerLeft,
             child: Padding(
               padding:
-                  const EdgeInsets.only(left: 18.0, top: 15.0, bottom: 8.0),
-              child: Text(
-                'Events',
-                style: TextStyle(
-                  fontFamily: 'Gilroy',
-                  color: Color(0xFF176ede),
-                  letterSpacing: .2,
-                  fontSize: 23.0,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 3.0),
-              child: Events(),
-              // child: Container(height: screensize.height * 0.28, child: Events()),
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 18.0, bottom: 8.0),
+                  const EdgeInsets.only(left: 18.0, bottom: 8.0, top: 10.0),
               child: Text(
                 'Noticeboard',
                 style: TextStyle(
@@ -99,8 +75,57 @@ class _NewHomeScreenState extends State<NewHomeScreen>
               children: [
                 SingleChildScrollView(
                   child: SizedBox(
-                    height: screensize.height * 0.5,
+                    height: screensize.height * 0.35,
                     child: NoticeBoard(),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(left: 18.0, top: 15.0, bottom: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Events',
+                    style: TextStyle(
+                      fontFamily: 'Gilroy',
+                      color: Color(0xFF176ede),
+                      letterSpacing: .2,
+                      fontSize: 23.0,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () =>
+                        Navigator.of(context).pushNamed('/allWorkshops'),
+                    child: Text(
+                      'View More',
+                      style: TextStyle(
+                        fontFamily: 'Gilroy',
+                        color: Color(0xFF176ede),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 10.0, right: 8.0, bottom: 5.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SingleChildScrollView(
+                  child: SizedBox(
+                    height: screensize.height * 0.4,
+                    child: Events(),
                   ),
                 ),
               ],
