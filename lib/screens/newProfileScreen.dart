@@ -118,17 +118,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
-                                  widget.profileDetails.name,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.75,
+                                  child: Center(
+                                    child: SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Text(
+                                        widget.profileDetails.name,
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
                                   ),
-                                  textAlign: TextAlign.center,
                                 ),
                                 SizedBox(
-                                  width: 10,
+                                  height: 10,
                                 ),
                                 InkWell(
                                   onTap: () async {
@@ -136,7 +145,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         context,
                                         'Name',
                                         widget.profileDetails.name);
-                                    print(name);
                                     widget.updateProfileDetails(name,
                                         widget.profileDetails.phone_number);
                                   },
@@ -160,46 +168,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           SizedBox(
                             height: 10,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Roll Number',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: secondaryColor,
-                                    fontSize: 14),
-                              ),
-                              SizedBox(width: 8),
-                              InkWell(
-                                onTap: () async {
-                                  final rollno = await widget.asyncInputDialog(
-                                      context, 'Roll No.', '');
-                                  print(rollno);
-                                  showSnackBar(
-                                      context,
-                                      'This feature is currently under development',
-                                      primaryColor,
-                                      bgColor);
-                                  // widget.updateProfileDetails(
-                                  //     widget.profileDetails.name, phoneNumber,rollno);
-                                },
-                                child: Container(
-                                  height: 15,
-                                  width: 15,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      shape: BoxShape.circle),
-                                  child: Center(
-                                      child: Icon(
-                                    Icons.edit_rounded,
-                                    size: 10,
-                                    color: primaryColor,
-                                  )),
-                                ),
-                              )
-                            ],
-                          ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.center,
+                          //   children: [
+                          //     Text(
+                          //       'Roll Number',
+                          //       style: TextStyle(
+                          //           fontWeight: FontWeight.w500,
+                          //           color: secondaryColor,
+                          //           fontSize: 14),
+                          //     ),
+                          //     SizedBox(width: 8),
+                          //     InkWell(
+                          //       onTap: () async {
+                          //         final rollno = await widget.asyncInputDialog(
+                          //             context, 'Roll No.', '');
+                          //         print(rollno);
+                          //         showSnackBar(
+                          //             context,
+                          //             'This feature is currently under development',
+                          //             primaryColor,
+                          //             bgColor);
+                          //         // widget.updateProfileDetails(
+                          //         //     widget.profileDetails.name, phoneNumber,rollno);
+                          //       },
+                          //       child: Container(
+                          //         height: 15,
+                          //         width: 15,
+                          //         decoration: BoxDecoration(
+                          //             color: Colors.white,
+                          //             shape: BoxShape.circle),
+                          //         child: Center(
+                          //             child: Icon(
+                          //           Icons.edit_rounded,
+                          //           size: 10,
+                          //           color: primaryColor,
+                          //         )),
+                          //       ),
+                          //     )
+                          //   ],
+                          // ),
                           SizedBox(
                             height: 5,
                           ),
@@ -223,71 +231,56 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           SizedBox(
                             height: 5,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                widget.profileDetails.phone_number.isEmpty
-                                    ? 'Phone No. not provided'
-                                    : widget.profileDetails.phone_number,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: secondaryColor,
-                                    fontSize: 14),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              InkWell(
-                                onTap: () async {
-                                  final phoneNumber =
-                                      await widget.asyncInputDialog(
-                                          context,
-                                          'Phone No.',
-                                          widget.profileDetails.phone_number ==
-                                                  ''
-                                              ? '+91'
-                                              : widget
-                                                  .profileDetails.phone_number);
-                                  print(phoneNumber);
-                                  widget.updateProfileDetails(
-                                      widget.profileDetails.name, phoneNumber);
-                                },
-                                child: Container(
-                                  height: 15,
-                                  width: 15,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      shape: BoxShape.circle),
-                                  child: Center(
-                                      child: Icon(
-                                    Icons.edit_rounded,
-                                    size: 10,
-                                    color: primaryColor,
-                                  )),
-                                ),
-                              )
-                            ],
-                          ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.center,
+                          //   children: [
+                          //   //   Text(
+                          //   //     widget.profileDetails.phone_number==null || widget.profileDetails.phone_number.isEmpty
+                          //   //         ? 'Phone No. not provided'
+                          //   //         : widget.profileDetails.phone_number,
+                          //   //     style: TextStyle(
+                          //   //         fontWeight: FontWeight.w500,
+                          //   //         color: secondaryColor,
+                          //   //         fontSize: 14),
+                          //   //   ),
+                          //   //   SizedBox(
+                          //   //     width: 10,
+                          //   //   ),
+                          //   //   InkWell(
+                          //   //     onTap: () async {
+                          //   //       final phoneNumber =
+                          //   //           await widget.asyncInputDialog(
+                          //   //               context,
+                          //   //               'Phone No.',
+                          //   //               widget.profileDetails.phone_number ==
+                          //   //                       ''
+                          //   //                   ? '+91'
+                          //   //                   : widget
+                          //   //                       .profileDetails.phone_number);
+                          //   //       print(phoneNumber);
+                          //   //       widget.updateProfileDetails(
+                          //   //           widget.profileDetails.name, phoneNumber);
+                          //   //     },
+                          //   //     child: Container(
+                          //   //       height: 15,
+                          //   //       width: 15,
+                          //   //       decoration: BoxDecoration(
+                          //   //           color: Colors.white,
+                          //   //           shape: BoxShape.circle),
+                          //   //       child: Center(
+                          //   //           child: Icon(
+                          //   //         Icons.edit_rounded,
+                          //   //         size: 10,
+                          //   //         color: primaryColor,
+                          //   //       )),
+                          //   //     ),
+                          //   //   )
+                          //   // ],
+                          // ),
                           SizedBox(
                             height: 10,
                           ),
-                          InkWell(
-                            onTap: () {
-                              showSnackBar(
-                                  context,
-                                  'This feature is currently under development',
-                                  primaryColor,
-                                  bgColor);
-                            },
-                            child: Text(
-                              'E-Id Card',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: secondaryColor,
-                                  fontSize: 14),
-                            ),
-                          ),
+
                           SizedBox(
                             height: 10,
                           )
@@ -633,14 +626,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
           fontSize: 23,
         ),
       ),
-      actions: [
-        IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.edit_rounded),
-          color: secondaryColor,
-        ),
-        IconButton(onPressed: () {}, icon: Icon(Icons.doorbell_rounded))
-      ],
+      // actions: [
+      //   IconButton(
+      //     onPressed: () {},
+      //     icon: Icon(Icons.edit_rounded),
+      //     color: secondaryColor,
+      //   ),
+      //   IconButton(onPressed: () {}, icon: Icon(Icons.doorbell_rounded))
+      // ],
     );
   }
 }
