@@ -122,23 +122,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   width:
                                       MediaQuery.of(context).size.width * 0.75,
                                   child: Center(
-                                    child: SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Text(
-                                        widget.profileDetails.name,
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        textAlign: TextAlign.center,
+                                    child: Text(
+                                      widget.profileDetails.name,
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
                                       ),
+                                      textAlign: TextAlign.center,
                                     ),
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 10,
-                                ),
+                                // SizedBox(
+                                //   width: 5,
+                                // ),
                                 InkWell(
                                   onTap: () async {
                                     final name = await widget.asyncInputDialog(

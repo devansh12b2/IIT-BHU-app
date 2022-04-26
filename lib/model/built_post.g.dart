@@ -2182,14 +2182,7 @@ class _$BuiltProfilePostSerializer
   @override
   Iterable<Object> serialize(Serializers serializers, BuiltProfilePost object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'can_post_notice',
-      serializers.serialize(object.can_post_notice,
-          specifiedType: const FullType(bool)),
-      'can_add_parliament_details',
-      serializers.serialize(object.can_add_parliament_details,
-          specifiedType: const FullType(bool)),
-    ];
+    final result = <Object>[];
     if (object.id != null) {
       result
         ..add('id')
@@ -2259,6 +2252,18 @@ class _$BuiltProfilePostSerializer
         ..add('photo_url')
         ..add(serializers.serialize(object.photo_url,
             specifiedType: const FullType(String)));
+    }
+    if (object.can_post_notice != null) {
+      result
+        ..add('can_post_notice')
+        ..add(serializers.serialize(object.can_post_notice,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.can_add_parliament_details != null) {
+      result
+        ..add('can_add_parliament_details')
+        ..add(serializers.serialize(object.can_add_parliament_details,
+            specifiedType: const FullType(bool)));
     }
     return result;
   }
@@ -6988,15 +6993,7 @@ class _$BuiltProfilePost extends BuiltProfilePost {
       this.photo_url,
       this.can_post_notice,
       this.can_add_parliament_details})
-      : super._() {
-    if (can_post_notice == null) {
-      throw new BuiltValueNullFieldError('BuiltProfilePost', 'can_post_notice');
-    }
-    if (can_add_parliament_details == null) {
-      throw new BuiltValueNullFieldError(
-          'BuiltProfilePost', 'can_add_parliament_details');
-    }
-  }
+      : super._();
 
   @override
   BuiltProfilePost rebuild(void Function(BuiltProfilePostBuilder) updates) =>
