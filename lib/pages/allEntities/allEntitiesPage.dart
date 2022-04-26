@@ -26,7 +26,11 @@ class _EntitiesPageState extends State<EntitiesPage> {
   void reload() async {
     try {
       await AppConstants.updateAndPopulateAllEntities();
-      setState(() {});
+      setState(() {
+        endPosts = [];
+        councilPosts = [];
+        endInd = -1;
+      });
     } on InternetConnectionException catch (_) {
       AppConstants.internetErrorFlushBar.showFlushbar(context);
       return;
@@ -34,6 +38,10 @@ class _EntitiesPageState extends State<EntitiesPage> {
       print(err);
     }
   }
+
+  List<dynamic> endPosts = [];
+  List<dynamic> councilPosts = [];
+  int endInd = -1;
 
   @override
   Widget build(BuildContext context) {
@@ -54,16 +62,16 @@ class _EntitiesPageState extends State<EntitiesPage> {
               ),
               backgroundColor: ColorConstants.headingColor,
               automaticallyImplyLeading: false,
-              title: Text("All Entities and Fests",
-              style: TextStyle(
-                color: ColorConstants.btnColor
-              ),),
+              title: Text(
+                "All Entities and Councils",
+                style: TextStyle(color: ColorConstants.btnColor),
+              ),
             ),
             drawer: SideBar(context: context),
             body: RefreshIndicator(
               displacement: 60,
               onRefresh: () async => reload(),
-              child: _getAllEntities(reload: reload),
+              child: _getAllEntities(),
             ),
           )),
     );
@@ -89,9 +97,22 @@ class _EntitiesPageState extends State<EntitiesPage> {
             );
           }
           final posts = snapshot.data.body
-              ?.where((entity) => entity.is_permanent != true)
+              //?.where((entity) => entity.is_permanent != true)
               ?.toBuiltList();
-          return _buildAllEntitiesBodyPosts(context, posts, reload: reload);
+          endPosts = [];
+          posts.forEach((p0) {
+            endPosts.add(p0);
+          });
+          //allposts.addAll(posts);
+          return FutureBuilder(
+              builder: (ctx, snap) {
+                if (snap.connectionState == ConnectionState.done) {
+                  return snap.data;
+                } else {
+                  return EntityCustomWidgets.getPlaceholder();
+                }
+              },
+              future: _buildAllEntitiesBodyPosts(context, reload: reload));
         } else {
           return Center(
             child: EntityCustomWidgets.getPlaceholder(),
@@ -101,9 +122,13 @@ class _EntitiesPageState extends State<EntitiesPage> {
     ));
   }
 
-  Widget _buildAllEntitiesBodyPosts(
-      BuildContext context, BuiltList<EntityListPost> posts,
-      {Function reload}) {
+  Future<Widget> _buildAllEntitiesBodyPosts(BuildContext context,
+      {Function reload}) async {
+    var posts = endPosts;
+    endInd = posts.length;
+    final snap = await AppConstants.service.getAllCouncils();
+    final post = snap.body?.toBuiltList();
+    posts.addAll(post);
     return Container(
       child: ListView.builder(
           physics: AlwaysScrollableScrollPhysics(),
@@ -112,8 +137,13 @@ class _EntitiesPageState extends State<EntitiesPage> {
           itemCount: posts.length,
           padding: EdgeInsets.all(8),
           itemBuilder: (context, index) {
-            return EntityCustomWidgets.getEntityCard(context,
-                entity: posts[index], horizontal: true, reload: reload);
+            if (index < endInd) {
+              return EntityCustomWidgets.getEntityCard(context,
+                  entity: posts[index], horizontal: true, reload: reload);
+            } else {
+              return EntityCustomWidgets.getCouncilyCard(context,
+                  entity: posts[index], horizontal: true, reload: reload);
+            }
           }),
     );
   }

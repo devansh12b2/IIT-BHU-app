@@ -110,8 +110,8 @@ class SideBar extends Drawer {
             // getNavItem(Icons.local_dining, "Mess management", '/mess'),
             getNavItem(
                 Icons.group_work, "All Workshops and Events", '/allWorkshops'),
-            getNavItem(
-                Icons.work_rounded, 'All Entities and Fests', '/allEntities'),
+            getNavItem(Icons.work_rounded, 'All Entities and Councils',
+                '/allEntities'),
             getNavItem(Icons.restaurant, 'Mess', '/Mess'),
             getNavItem(Icons.chrome_reader_mode_rounded, "Academics",
                 '/academicsPage'),
