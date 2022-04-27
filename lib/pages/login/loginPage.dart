@@ -228,11 +228,9 @@ class _LoginPageState extends State<LoginPage> {
             width: kIsWeb ? screensize.width * 0.15 : screensize.width * 0.20,
             child: FloatingActionButton.extended(
               onPressed: () async {
-                // await LoginPage.guestLoginSetup();
-                // Navigator.of(context).pushNamedAndRemoveUntil(
-                //     '/newhome', ModalRoute.withName('/root'));
-                print(screensize.width);
-                print(screensize.height);
+                await LoginPage.guestLoginSetup();
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    '/home', ModalRoute.withName('/root'));
               },
               label: Text(
                 'Guest',
