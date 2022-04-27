@@ -13,7 +13,6 @@ import 'package:iit_app/pages/mess/mess.dart';
 import 'package:iit_app/pages/account/accountPage.dart';
 import 'package:iit_app/pages/allWorkshops/allWorkshopsPage.dart';
 import 'package:iit_app/pages/complaints/complaints.dart';
-import 'package:iit_app/pages/Home/homePage.dart';
 import 'package:iit_app/pages/login/loginPage.dart';
 import 'package:iit_app/pages/about/aboutPage.dart';
 
@@ -21,8 +20,8 @@ import 'package:iit_app/pages/parliament/parliamentPage.dart';
 
 import 'package:iit_app/pages/newHomePage/newHomePage.dart';
 
-import 'package:iit_app/pages/settings/settingsPage.dart';
 import 'package:iit_app/screens/newScreens/emergency.dart';
+import 'package:iit_app/screens/newScreens/futureupdate.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -60,13 +59,14 @@ void main() async {
       '/profile': (BuildContext context) => ProfilePage(),
       '/account': (BuildContext context) => AccountPage(),
       '/Mess': (BuildContext context) => MessScreen(),
-      '/settings': (BuildContext context) => SettingsScreen(),
+      // '/reset': (BuildContext context) => SettingsScreen(),
       '/complaints': (BuildContext context) => ComplaintsScreen(),
       '/login': (BuildContext context) => LoginPage(),
       '/about': (BuildContext context) => AboutPage(),
       '/grievance': (BuildContext context) => GrievancePage(),
       '/lostAndFound': (BuildContext context) => LostAndFoundPage(),
       '/emergency': (BuildContext context) => Emergency(),
+      '/future': (BuildContext context) => FutureUpdate(),
     },
   ));
 }

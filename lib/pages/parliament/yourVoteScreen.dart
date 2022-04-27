@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iit_app/external_libraries/spin_kit.dart';
@@ -69,9 +68,10 @@ class _VoteScreenState extends State<VoteScreen> {
         child: FittedBox(
           child: FloatingActionButton(
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context)=>AddSuggestion())
-              ).then((value) {
+              Navigator.of(context)
+                  .push(
+                      MaterialPageRoute(builder: (context) => AddSuggestion()))
+                  .then((value) {
                 getSuggestions();
               });
             },
@@ -106,9 +106,10 @@ class _VoteScreenState extends State<VoteScreen> {
 
   Future<void> getAllSuggestionDetails(List<dynamic> response) async {
     votes = [];
-    for(var i=0;i<response.length;i++){
+    for (var i = 0; i < response.length; i++) {
       final suggestionDetails = await AppConstants.service
-          .getParliamentSuggestionDetails(response[i]['id'], AppConstants.djangoToken);
+          .getParliamentSuggestionDetails(
+              response[i]['id'], AppConstants.djangoToken);
 
       print("Suggestion details are - ${suggestionDetails.body}");
       votes.add(suggestionDetails.body);

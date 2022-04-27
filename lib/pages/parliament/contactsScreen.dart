@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iit_app/external_libraries/spin_kit.dart';
 import 'package:iit_app/model/appConstants.dart';
 
 class ContactsScreen extends StatefulWidget {
- // const ContactsScreen({Key? key}) : super(key: key);
+  // const ContactsScreen({Key? key}) : super(key: key);
 
   @override
   _ContactsScreenState createState() => _ContactsScreenState();
@@ -19,48 +18,48 @@ class _ContactsScreenState extends State<ContactsScreen> {
 
   List contacts = [
     {
-      "Name" : "Name Surname",
+      "Name": "Name Surname",
       "designation": "(V.P.)",
-      "phone":"+91 12345 67890"
+      "phone": "+91 12345 67890"
     },
     {
-      "Name" : "Name Surname",
+      "Name": "Name Surname",
       "designation": "(V.P.)",
-      "phone":"+91 12345 67890"
+      "phone": "+91 12345 67890"
     },
     {
-      "Name" : "Name Surname",
+      "Name": "Name Surname",
       "designation": "(V.P.)",
-      "phone":"+91 12345 67890"
+      "phone": "+91 12345 67890"
     },
     {
-      "Name" : "Name Surname",
+      "Name": "Name Surname",
       "designation": "(A.V.P.)",
-      "phone":"+91 12345 67890"
+      "phone": "+91 12345 67890"
     },
     {
-      "Name" : "Name Surname",
+      "Name": "Name Surname",
       "designation": "(V.P.)",
-      "phone":"+91 12345 67890"
+      "phone": "+91 12345 67890"
     },
     {
-      "Name" : "Name Surname",
+      "Name": "Name Surname",
       "designation": "(A.V.P.)",
-      "phone":"+91 12345 67890"
+      "phone": "+91 12345 67890"
     },
   ];
-  
+
   @override
   Widget build(BuildContext context) {
-    Size size =MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: buildAppBar(context),
       body: FutureBuilder<Object>(
-        future: getContacts(),
-        builder: (context, snapshot) {
-          if(snapshot.connectionState == ConnectionState.done){
-            contacts = snapshot.data as List;
-            return GridView.builder(
+          future: getContacts(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              contacts = snapshot.data as List;
+              return GridView.builder(
                   // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   // crossAxisCount: 2, mainAxisSpacing: 30.0, crossAxisSpacing: 0),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -72,18 +71,16 @@ class _ContactsScreenState extends State<ContactsScreen> {
                   itemBuilder: (context, index) {
                     return contactDetails(size, contacts[index]);
                   });
-          }else{
-            return Center(
-              child: LoadingCircle,
-            );
-          }
-          
-        }
-      ),
+            } else {
+              return Center(
+                child: LoadingCircle,
+              );
+            }
+          }),
     );
   }
 
-  getContacts()async{
+  getContacts() async {
     final response = await AppConstants.service.getParliamentContacts();
 
     print("The contacts are - ${response.body}");
@@ -91,69 +88,63 @@ class _ContactsScreenState extends State<ContactsScreen> {
     return response.body;
   }
 
-  Column contactDetails(Size size,contact) {
+  Column contactDetails(Size size, contact) {
     return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(),
-              Container(
-                height: size.width*0.35,
-                width: size.width*0.35,
-                decoration: BoxDecoration(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Row(),
+        Container(
+          height: size.width * 0.35,
+          width: size.width * 0.35,
+          decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: containerColor,
+              boxShadow: [
+                BoxShadow(
+                    color: secondaryColor.withOpacity(0.5),
+                    blurRadius: 1,
+                    spreadRadius: 1)
+              ]),
+          child: Center(
+            child: Container(
+              height: size.width * 0.25,
+              width: size.width * 0.25,
+              decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: containerColor,
-                    boxShadow: [
-                      BoxShadow(
-                          color: secondaryColor.withOpacity(0.5),
-                          blurRadius: 1,
-                          spreadRadius: 1
-                      )
-                    ]
-                ),
-                child: Center(
-                  child: Container(
-                    height: size.width*0.25,
-                    width: size.width*0.25,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                      image: DecorationImage(
-                        image: NetworkImage(contact["profile"]["photo_url"]),
-                        fit: BoxFit.cover,
-                      )
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 5,),
-              Text(contact["profile"]["name"]??"",
-                textAlign: TextAlign.center,
-                style: GoogleFonts.lato(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                  color: primaryColor
-                ),
-              ),
-              Text(contact['designation']??"",
-                textAlign: TextAlign.center,
-                style: GoogleFonts.lato(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    color: primaryColor
-                ),
-              ),
-              Text(contact['phone']??"",
-                textAlign: TextAlign.center,
-                style: GoogleFonts.lato(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: primaryColor
-                ),
-              ),
-            ],
-          );
+                  color: Colors.white,
+                  image: DecorationImage(
+                    image: NetworkImage(contact["profile"]["photo_url"]),
+                    fit: BoxFit.cover,
+                  )),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Text(
+          contact["profile"]["name"] ?? "",
+          textAlign: TextAlign.center,
+          style: GoogleFonts.lato(
+              fontSize: 15, fontWeight: FontWeight.w600, color: primaryColor),
+        ),
+        Text(
+          contact['designation'] ?? "",
+          textAlign: TextAlign.center,
+          style: GoogleFonts.lato(
+              fontSize: 15, fontWeight: FontWeight.w600, color: primaryColor),
+        ),
+        Text(
+          contact['phone'] ?? "",
+          textAlign: TextAlign.center,
+          style: GoogleFonts.lato(
+              fontSize: 15, fontWeight: FontWeight.bold, color: primaryColor),
+        ),
+      ],
+    );
   }
+
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
       backgroundColor: primaryColor,
@@ -187,8 +178,8 @@ class _ContactsScreenState extends State<ContactsScreen> {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: (AppConstants.currentUser == null ||
-                    AppConstants.isGuest == true ||
-                    AppConstants.currentUser.photo_url == '')
+                        AppConstants.isGuest == true ||
+                        AppConstants.currentUser.photo_url == '')
                     ? AssetImage('assets/guest.png')
                     : NetworkImage(AppConstants.currentUser.photo_url),
                 fit: BoxFit.fill,

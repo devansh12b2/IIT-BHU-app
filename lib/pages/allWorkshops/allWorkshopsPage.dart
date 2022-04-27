@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:iit_app/model/colorConstants.dart';
-import 'package:iit_app/screens/newScreens/new_home_app_bar.dart';
 import 'package:iit_app/screens/newScreens/new_workshop_events_app_bar.dart';
 import 'package:iit_app/ui/drawer.dart';
 import 'package:iit_app/services/buildWorkshops.dart' as buildWorkshop;
@@ -72,7 +71,8 @@ class _AllWorkshopsScreenState extends State<AllWorkshopsScreen>
           minimum: const EdgeInsets.all(2.0),
           child: Scaffold(
             backgroundColor: ColorConstants.homeBackground,
-            appBar: newWorkshopEventAppBar(context, searchBarWidget, searchFocusNode),
+            appBar: newWorkshopEventAppBar(
+                context, searchBarWidget, searchFocusNode),
             // AppBar(
             //   leading: IconButton(
             //     icon: Icon(Icons.arrow_back, color: ColorConstants.textColor),

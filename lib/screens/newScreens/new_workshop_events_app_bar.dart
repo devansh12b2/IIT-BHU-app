@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:iit_app/model/appConstants.dart';
 import 'package:iit_app/model/colorConstants.dart';
-import 'package:iit_app/screens/newScreens/searchBar.dart';
 import 'package:iit_app/ui/search_workshop.dart';
 
-AppBar newWorkshopEventAppBar(BuildContext context, SearchBarWidget searchBarWidget,
-    FocusNode focusNode) {
+AppBar newWorkshopEventAppBar(BuildContext context,
+    SearchBarWidget searchBarWidget, FocusNode focusNode) {
   Size screensize = MediaQuery.of(context).size;
   return AppBar(
     backgroundColor: ColorConstants.headingColor,
@@ -22,7 +21,6 @@ AppBar newWorkshopEventAppBar(BuildContext context, SearchBarWidget searchBarWid
     title: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-
         Container(
           width: screensize.width * 0.60,
           // decoration: BoxDecoration(
@@ -46,8 +44,8 @@ AppBar newWorkshopEventAppBar(BuildContext context, SearchBarWidget searchBarWid
             shape: BoxShape.circle,
             image: DecorationImage(
               image: (AppConstants.currentUser == null ||
-                  AppConstants.isGuest == true ||
-                  AppConstants.currentUser.photo_url == '')
+                      AppConstants.isGuest == true ||
+                      AppConstants.currentUser.photo_url == '')
                   ? AssetImage('assets/guest.png')
                   : NetworkImage(AppConstants.currentUser.photo_url),
               fit: BoxFit.cover,

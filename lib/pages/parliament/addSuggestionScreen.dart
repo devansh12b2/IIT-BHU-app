@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iit_app/external_libraries/spin_kit.dart';
 import 'package:iit_app/model/appConstants.dart';
 import 'package:iit_app/model/built_post.dart';
 import 'package:iit_app/ui/snackbar.dart';
@@ -28,37 +27,39 @@ class _AddSuggestionState extends State<AddSuggestion> {
     return Scaffold(
       appBar: buildAppBar(context),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         child: ListView(
           children: [
-            SizedBox(height: 20,),
-
+            SizedBox(
+              height: 20,
+            ),
             TextField(
               controller: titleController,
               decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                focusColor: primaryColor,
-                labelText: "Title"
-              ),
+                  border: UnderlineInputBorder(),
+                  focusColor: primaryColor,
+                  labelText: "Title"),
             ),
-            SizedBox(height: 15,),
-
+            SizedBox(
+              height: 15,
+            ),
             TextField(
               controller: descriptionController,
               decoration: InputDecoration(
                   border: UnderlineInputBorder(),
                   focusColor: primaryColor,
-                  labelText: "Description"
-              ),
+                  labelText: "Description"),
             ),
-            SizedBox(height: 40,),
+            SizedBox(
+              height: 40,
+            ),
             Center(
               child: GestureDetector(
-                onTap: (){
+                onTap: () {
                   createSuggestion();
                 },
                 child: Container(
-                  width: MediaQuery.of(context).size.width*0.8,
+                  width: MediaQuery.of(context).size.width * 0.8,
                   decoration: BoxDecoration(
                     color: secondaryColor,
                     borderRadius: BorderRadius.circular(15),
@@ -66,16 +67,18 @@ class _AddSuggestionState extends State<AddSuggestion> {
                   child: Center(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: (addingSuggestion)?SpinKitThreeBounce(
-                        color: primaryColor,
-                        size: 25,
-                      ):Text(
-                        "Add Suggestion",
-                        style: GoogleFonts.lato(
-                            color: primaryColor,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600),
-                      ),
+                      child: (addingSuggestion)
+                          ? SpinKitThreeBounce(
+                              color: primaryColor,
+                              size: 25,
+                            )
+                          : Text(
+                              "Add Suggestion",
+                              style: GoogleFonts.lato(
+                                  color: primaryColor,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600),
+                            ),
                     ),
                   ),
                 ),
@@ -86,33 +89,33 @@ class _AddSuggestionState extends State<AddSuggestion> {
       ),
     );
   }
-  createSuggestion()async{
+
+  createSuggestion() async {
     setState(() {
       addingSuggestion = true;
     });
-    try{
+    try {
       var result = await AppConstants.service.createParliamentSuggestion(
         AppConstants.djangoToken,
-        CreateSuggestionPost(
-                (b) => b
-              ..title = titleController.text
-              ..description = descriptionController.text
-        ),
+        CreateSuggestionPost((b) => b
+          ..title = titleController.text
+          ..description = descriptionController.text),
       );
       print("The result is - ${result.statusCode}");
       setState(() {
         addingSuggestion = false;
       });
       Navigator.pop(context);
-    }catch(e){
+    } catch (e) {
       print("The error is $e");
-      showSnackBar(context, "An error Occurred!", Colors.white, Colors.redAccent);
+      showSnackBar(
+          context, "An error Occurred!", Colors.white, Colors.redAccent);
       setState(() {
         addingSuggestion = false;
       });
     }
-
   }
+
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
       backgroundColor: primaryColor,
@@ -146,8 +149,8 @@ class _AddSuggestionState extends State<AddSuggestion> {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: (AppConstants.currentUser == null ||
-                    AppConstants.isGuest == true ||
-                    AppConstants.currentUser.photo_url == '')
+                        AppConstants.isGuest == true ||
+                        AppConstants.currentUser.photo_url == '')
                     ? AssetImage('assets/guest.png')
                     : NetworkImage(AppConstants.currentUser.photo_url),
                 fit: BoxFit.fill,

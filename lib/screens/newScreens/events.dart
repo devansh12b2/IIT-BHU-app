@@ -6,6 +6,7 @@ import 'package:iit_app/model/appConstants.dart';
 import 'package:iit_app/model/built_post.dart';
 import 'package:iit_app/pages/worshop_detail/workshopDetailPage.dart';
 import 'package:async/async.dart';
+import 'package:iit_app/ui/entity_custom_widgets.dart';
 
 import '../../ui/separator.dart';
 import '../../ui/text_style.dart';
@@ -55,16 +56,12 @@ class _EventsState extends State<Events> {
           return builtAllWorkshopsBodyPosts(context, posts, reload: reload);
         } else {
           return Container(
-            height: screensize.height * 0.36,
-            child: Row(
-              children: [
-                SizedBox(
-                  width: screensize.width * 0.44,
-                ),
-                Center(
-                  child: CircularProgressIndicator(
-                    color: Color(0xFF176ede),
-                  ),
+            width: double.infinity,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Expanded(
+                  child: EntityCustomWidgets.getPlaceholder(),
                 ),
               ],
             ),
