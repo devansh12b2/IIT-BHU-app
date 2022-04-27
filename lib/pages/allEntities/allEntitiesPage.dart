@@ -129,6 +129,9 @@ class _EntitiesPageState extends State<EntitiesPage> {
     final snap = await AppConstants.service.getAllCouncils();
     final post = snap.body?.toBuiltList();
     posts.addAll(post);
+    posts = posts.reversed.toList();
+    endInd = post.length;
+
     return Container(
       child: ListView.builder(
           physics: AlwaysScrollableScrollPhysics(),
@@ -137,7 +140,7 @@ class _EntitiesPageState extends State<EntitiesPage> {
           itemCount: posts.length,
           padding: EdgeInsets.all(8),
           itemBuilder: (context, index) {
-            if (index < endInd) {
+            if (index >= endInd) {
               return EntityCustomWidgets.getEntityCard(context,
                   entity: posts[index], horizontal: true, reload: reload);
             } else {
